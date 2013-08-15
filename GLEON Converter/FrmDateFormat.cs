@@ -195,12 +195,14 @@ namespace WindowsFormsApplication1
             {
                 string output = ConvertedDate.ToString("yyyy-MM-dd HH:mm:ss");
                 lblOut.Text = output;
+                lblOut.ForeColor = Color.Green;
                 validFormat = true;
             }
             else
             {
                 lblOut.Text = "Invalid format. Please reselect fields above or enter custom format below.";
                 validFormat = false;
+                lblOut.ForeColor = Color.Red;
             }
         }
 

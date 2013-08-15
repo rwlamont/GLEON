@@ -317,6 +317,13 @@ namespace WindowsFormsApplication1
                         txtGPSLat.Text = sitePropGPSLat.ToString();
                         txtGPSLong.Text = sitePropGPSLong.ToString();
                         txtSiteNotes.Text = sitePropNotes;
+                       // if(reader.Peek() >= 0)
+                          //  {
+
+                        //If next line does not read null
+                        // read in number of headers
+                        // for (how mnany headers were specified above)
+                        // read in new header, call function to save it to array 
 
                     }
                     catch (Exception excep)
