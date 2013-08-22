@@ -293,44 +293,78 @@ namespace WindowsFormsApplication1
 
             }
         }
-        public void openMeta()
+        /// <summary>
+        /// removes the parts of the meta file that make it user firendly to read 
+        /// </summary>
+        /// <param name="raw">the string as it is inputed</param>
+        /// <param name="toRemove">the number of characters to remove</param>
+        /// <returns></returns>
+        static string CleanMetaIn(string raw, int toRemove)
         {
-                if (File.Exists(System.Windows.Forms.Application.StartupPath + @"\Meta\" + OpenFile))
-                {
+            string clean;
+            clean = raw.Substring(toRemove);
+            return clean;
+        }
+
+        public void openMeta(string filepath)
+        {
+               //  if (File.Exists(System.Windows.Forms.Application.StartupPath + @"\Meta\" + OpenFile))
+               // {
                     try
                     {
-                        StreamReader reader = new StreamReader(System.Windows.Forms.Application.StartupPath + @"\Meta\" + OpenFile);
+                        int iss;
+                        string numSensors, loopStr;
+                        StreamReader reader = new StreamReader(filepath);
+                        reader.ReadLine(); // Throwing away asscoiated file
+                        sitePropName = reader.ReadLine();
                         sitePropOwnerName = reader.ReadLine();
-                        sitePropContactName = reader.ReadLine();
-                        sitePropContactNumber = reader.ReadLine();
-                        sitePropContactEmail = reader.ReadLine();
-                        sitePropElevation = reader.ReadLine();
                         sitePropGPSLat = reader.ReadLine();
                         sitePropGPSLong = reader.ReadLine();
-                        sitePropNotes = reader.ReadToEnd();
+                        sitePropGPSGrid = reader.ReadLine();
+                        sitePropElevation = reader.ReadLine();
+                        reader.ReadLine(); // Throwing away contact header
+                        sitePropContactName = reader.ReadLine();
+                        reader.ReadLine(); // throwing away contact org
+                        sitePropContactNumber = reader.ReadLine();
+                        sitePropContactEmail = reader.ReadLine();
+                        //sitePropNotes = reader.ReadToEnd();
+                        numSensors = reader.ReadLine();
 
-                        comboSiteName.Text = OpenFile.Substring(0, OpenFile.IndexOf('.'));
-                        txtOwner.Text = sitePropOwnerName;
-                        txtContactName.Text = sitePropContactName;
-                        txtContactNumber.Text = sitePropContactNumber;
-                        txtElevation.Text = sitePropElevation;
-                        txtGPSLat.Text = sitePropGPSLat.ToString();
-                        txtGPSLong.Text = sitePropGPSLong.ToString();
+                        iss = Int32.Parse(CleanMetaIn(numSensors, 19));
+                        reader.ReadLine();
+                        string[] arr4 = new string[iss + 1];
+                        for (int i = 0; i <= iss; i++)
+                        {
+                            loopStr = reader.ReadLine();
+                            arr4[i] = loopStr;
+                            
+                            while (!string.IsNullOrEmpty(loopStr))
+                            {
+
+                                loopStr = reader.ReadLine();
+
+                            }
+                        }
+
+                        
+                        comboSiteName.Text = CleanMetaIn(sitePropName, 11);
+                        txtOwner.Text = CleanMetaIn(sitePropOwnerName, 7);
+                        txtContactName.Text = CleanMetaIn(sitePropContactName, 6);
+                        txtContactNumber.Text = CleanMetaIn(sitePropContactNumber, 7);
+                        txtContactEmail.Text = CleanMetaIn(sitePropContactEmail, 7);
+                        txtElevation.Text = CleanMetaIn(sitePropElevation, 17);
+                        txtGPSLat.Text = CleanMetaIn(sitePropGPSLat.ToString(), 19);
+                        txtGPSLong.Text = CleanMetaIn(sitePropGPSLong.ToString(), 19);
                         txtSiteNotes.Text = sitePropNotes;
-                       // if(reader.Peek() >= 0)
-                          //  {
 
-                        //If next line does not read null
-                        // read in number of headers
-                        // for (how mnany headers were specified above)
-                        // read in new header, call function to save it to array 
+
 
                     }
                     catch (Exception excep)
                     {
                         MessageBox.Show(excep.ToString());
                     }
-                }
+               // }
         }
         private void openNotes()
         {
@@ -1375,10 +1409,10 @@ namespace WindowsFormsApplication1
 
         private void openSiteInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (getFiletoRead("Meta Files (*.meta)| *.meta", System.Windows.Forms.Application.StartupPath + @"\Meta\") != null)
-            {
-                openMeta();
-            }
+            //if (, System.Windows.Forms.Application.StartupPath + @"\Meta\") != null)
+            //{
+            openMeta(getFiletoRead("Meta Files (*.meta)| *.meta", System.Windows.Forms.Application.StartupPath));
+            //}
         }
         #endregion
         #region dataViewer
@@ -1995,7 +2029,7 @@ namespace WindowsFormsApplication1
 #endregion
 
         #region Site MetaData
-        public string sitePropSiteName, sitePropOwnerName, sitePropContactName, sitePropContactNumber, sitePropContactEmail, sitePropElevation, sitePropNotes, sitePropGPSLat, sitePropGPSLong;
+        public string sitePropSiteName, sitePropOwnerName, sitePropContactName, sitePropContactNumber, sitePropGPSGrid, sitePropName, sitePropContactEmail, sitePropElevation, sitePropNotes, sitePropGPSLat, sitePropGPSLong;
 
         private void comboFileExtension_SelectedIndexChanged(object sender, EventArgs e)
         {

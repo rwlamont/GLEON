@@ -42,6 +42,7 @@
             this.openSiteInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveHeadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadHeadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadInMetaFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertDatesToStandardFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.headerGuessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,7 +119,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataViewer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataViewer.Location = new System.Drawing.Point(0, 242);
+            this.dataViewer.Location = new System.Drawing.Point(3, 242);
             this.dataViewer.Name = "dataViewer";
             this.dataViewer.ReadOnly = true;
             this.dataViewer.Size = new System.Drawing.Size(659, 476);
@@ -217,7 +218,8 @@
             this.openFileToolStripMenuItem,
             this.openSiteInfoToolStripMenuItem,
             this.saveHeadersToolStripMenuItem,
-            this.loadHeadersToolStripMenuItem});
+            this.loadHeadersToolStripMenuItem,
+            this.loadInMetaFileToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -225,30 +227,36 @@
             // openFileToolStripMenuItem
             // 
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.openFileToolStripMenuItem.Text = "Open dataset";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
             // 
             // openSiteInfoToolStripMenuItem
             // 
             this.openSiteInfoToolStripMenuItem.Name = "openSiteInfoToolStripMenuItem";
-            this.openSiteInfoToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.openSiteInfoToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.openSiteInfoToolStripMenuItem.Text = "Open .meta file";
             this.openSiteInfoToolStripMenuItem.Click += new System.EventHandler(this.openSiteInfoToolStripMenuItem_Click);
             // 
             // saveHeadersToolStripMenuItem
             // 
             this.saveHeadersToolStripMenuItem.Name = "saveHeadersToolStripMenuItem";
-            this.saveHeadersToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.saveHeadersToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.saveHeadersToolStripMenuItem.Text = "Save Headers";
             this.saveHeadersToolStripMenuItem.Click += new System.EventHandler(this.saveHeadersToolStripMenuItem_Click);
             // 
             // loadHeadersToolStripMenuItem
             // 
             this.loadHeadersToolStripMenuItem.Name = "loadHeadersToolStripMenuItem";
-            this.loadHeadersToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.loadHeadersToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.loadHeadersToolStripMenuItem.Text = "Load Headers";
             this.loadHeadersToolStripMenuItem.Click += new System.EventHandler(this.loadHeadersToolStripMenuItem_Click);
+            // 
+            // loadInMetaFileToolStripMenuItem
+            // 
+            this.loadInMetaFileToolStripMenuItem.Name = "loadInMetaFileToolStripMenuItem";
+            this.loadInMetaFileToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.loadInMetaFileToolStripMenuItem.Text = "Load In MetaFile";
             // 
             // dataToolStripMenuItem
             // 
@@ -664,9 +672,10 @@
             // 
             this.txtSiteNotes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSiteNotes.Location = new System.Drawing.Point(9, 236);
+            this.txtSiteNotes.Location = new System.Drawing.Point(10, 236);
             this.txtSiteNotes.Multiline = true;
             this.txtSiteNotes.Name = "txtSiteNotes";
+            this.txtSiteNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtSiteNotes.Size = new System.Drawing.Size(306, 73);
             this.txtSiteNotes.TabIndex = 15;
             this.txtSiteNotes.TextChanged += new System.EventHandler(this.txtSiteNotes_TextChanged);
@@ -996,6 +1005,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveHeadersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadHeadersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadInMetaFileToolStripMenuItem;
     }
 }
 
