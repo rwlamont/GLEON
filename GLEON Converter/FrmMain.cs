@@ -85,9 +85,9 @@ namespace WindowsFormsApplication1
             blankPhrase = "!Empty";
         }
         #region OpenFile
-        private void openFile()
+        public void openFile(string filepath)
         {
-            string filepath = getFiletoRead("All Files (*.*)|*.*",null);
+            //string filepath = 
             if (filepath != "")
             {
                 FrmDelimiterSelection dSelect = new FrmDelimiterSelection();
@@ -356,8 +356,12 @@ namespace WindowsFormsApplication1
                         txtGPSLat.Text = CleanMetaIn(sitePropGPSLat.ToString(), 19);
                         txtGPSLong.Text = CleanMetaIn(sitePropGPSLong.ToString(), 19);
                         txtSiteNotes.Text = sitePropNotes;
-
-
+                        
+                        for (int i = 0; i <= iss; i++)
+                        {
+                            
+                            addSensorData(i+2, arr4[i]);
+                        }
 
                     }
                     catch (Exception excep)
@@ -366,6 +370,68 @@ namespace WindowsFormsApplication1
                     }
                // }
         }
+
+        private void addSensorData(int colNum, string header)
+    {
+        string comboMainName = colNum + "ComboMain";
+        Control comboMaintemp = panelVariableControls.Controls[comboMainName];
+        ComboBox comboMain = comboMaintemp as ComboBox;
+        string combo2Name = colNum + "Combo2";
+        Control combo2temp = panelVariableControls.Controls[combo2Name];
+        ComboBox combo2 = combo2temp as ComboBox;
+        string combo3Name = colNum + "Combo3";
+        Control combo3temp = panelVariableControls.Controls[combo3Name];
+        ComboBox combo3 = combo3temp as ComboBox;
+        string combo4Name = colNum + "Combo4";
+        Control combo4temp = panelVariableControls.Controls[combo4Name];
+        ComboBox combo4 = combo4temp as ComboBox;
+        string Text1Name = colNum + "Text1";
+        Control Text1temp = panelVariableControls.Controls[Text1Name];
+        TextBox Text1 = Text1temp as TextBox;
+        string Text2Name = colNum + "Text2";
+        Control Text2temp = panelVariableControls.Controls[Text2Name];
+        TextBox Text2 = Text2temp as TextBox;
+        string ButtonName = colNum + "Btn";
+        Control ButtonTemp = panelVariableControls.Controls[ButtonName];
+        Button ButtonNewHeader = ButtonTemp as Button;
+
+
+        if (header.Contains("_"))
+        {
+
+            string[] hdrSplit = header.Split('_');
+            if (!String.IsNullOrWhiteSpace(hdrSplit[0]) || !String.IsNullOrWhiteSpace(hdrSplit[1]))
+            {
+                String[] hdrSplitTwo = hdrSplit[1].Split('(');
+                string sen;
+                if (!String.IsNullOrWhiteSpace(hdrSplitTwo[1]))
+                {
+                    hdrSplitTwo[1] = hdrSplitTwo[1].TrimEnd(')'); // If it gets to here has unit and a header name of some sort
+                    if (!String.IsNullOrWhiteSpace(hdrSplitTwo[1]))
+                    {
+
+                        if (!string.IsNullOrWhiteSpace(hdrSplitTwo[0]))
+                        {
+                            sen = hdrSplitTwo[0][0].ToString();
+
+                            if (!String.IsNullOrEmpty(sen))
+                            {
+
+                                hdrSplitTwo[0] = hdrSplitTwo[0].TrimStart(sen[0]);
+                                combo2.Text = hdrSplit[0];
+                                combo3.Text = hdrSplitTwo[1];
+                                combo4.Text = sen;
+                                Text1.Text = hdrSplitTwo[0];
+                                ButtonNewHeader.Text = header;
+                                ButtonNewHeader.Enabled = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
         private void openNotes()
         {
             if (File.Exists(OpenFile.Substring(0, OpenFile.IndexOf('.')) + ".notes"))
@@ -436,6 +502,7 @@ namespace WindowsFormsApplication1
         {
             if (InputTable != null)
             {
+                List<int> incompleteLine = new List<int>();
                 int tableHeight = InputTable.Rows.Count;
                 int tableWidth = InputTable.Columns.Count;
                 for (int i = tableHeight - 1; i >= 0; i--)
@@ -443,17 +510,18 @@ namespace WindowsFormsApplication1
                     int rowWastage = 0;
                     for (int j = 0; j < tableWidth; j++)
                     {
-                        if (InputTable.Rows[i].ItemArray[j].ToString() == "")
+                        if (String.IsNullOrWhiteSpace(InputTable.Rows[i].ItemArray[j].ToString()))
                         {
-
-                            rowWastage++;
+                            break;
+                            //rowWastage++;
                         }
 
                     }
-                    if (rowWastage > (tableWidth / 2))
-                    {
-                        InputTable.Rows[i].Delete();
-                    }
+                    //if (rowWastage > (tableWidth / 2))
+                   // {
+                   //     InputTable.Rows[i].Delete();
+                   // }
+                    //InputTable.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
                 }
             }
             else
@@ -2524,7 +2592,7 @@ namespace WindowsFormsApplication1
         #region Menu Strip
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFile();
+            openFile(getFiletoRead("All Files (*.*)|*.*",null));
         }
 
 
@@ -2719,7 +2787,7 @@ namespace WindowsFormsApplication1
         {
             if (e.Control && e.KeyCode == Keys.O)
             {
-                openFile();
+                openFile(getFiletoRead("All Files (*.*)|*.*",null));
             }
         }
 

@@ -140,6 +140,7 @@
             this.panelVariableControls.Size = new System.Drawing.Size(659, 180);
             this.panelVariableControls.TabIndex = 36;
             this.panelVariableControls.Scroll += new System.Windows.Forms.ScrollEventHandler(this.panelVariableControls_Scroll);
+            //this.panelVariableControls.Paint += new System.Windows.Forms.PaintEventHandler(this.panelVariableControls_Paint);
             // 
             // btnExport
             // 

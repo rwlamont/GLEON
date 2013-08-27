@@ -55,7 +55,7 @@ namespace WindowsFormsApplication1
             try
             {
                 StreamReader reader = new StreamReader(_filename);
-
+                
                 for(int lineNum = 1; lineNum <=30; lineNum++)
                 {
                     line = reader.ReadLine();
@@ -90,6 +90,7 @@ namespace WindowsFormsApplication1
                     {
                         dRow[index.ToString()] = value.Trim();
                         index++;
+                        
 
                     }
                     InputTable.Rows.Add(dRow);
