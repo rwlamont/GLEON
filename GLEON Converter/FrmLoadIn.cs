@@ -14,7 +14,7 @@ namespace WindowsFormsApplication1
         public FrmLoadIn()
         {
             InitializeComponent();
-            btnNext.Enabled = false;
+            btnNext.Enabled = true;
         }
 
         private void btnData_Click(object sender, EventArgs e)
@@ -53,11 +53,15 @@ namespace WindowsFormsApplication1
                     m.OpenFile = txtData.Text;
                     
                     m.openFile(txtData.Text);
+                    
+                    m.standardizeDateColumn();
                     m.openMeta(txtMeta.Text);
                     m.Show();
                 }
             }
 
         }
+
+
     }
 }

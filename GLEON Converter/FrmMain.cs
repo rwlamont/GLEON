@@ -41,7 +41,7 @@ namespace WindowsFormsApplication1
         public void Form1_Load(object sender, EventArgs e)
         {
             checkFoldersExist();
-            HeaderSelected = false;
+            //HeaderSelected = false;
             getAbbreviations();
             getCountries();
             getSiteNameSuggestions();
@@ -356,11 +356,14 @@ namespace WindowsFormsApplication1
                         txtGPSLat.Text = CleanMetaIn(sitePropGPSLat.ToString(), 19);
                         txtGPSLong.Text = CleanMetaIn(sitePropGPSLong.ToString(), 19);
                         txtSiteNotes.Text = sitePropNotes;
-                        
+                        string comboMainName = "0ComboMain";
+                        Control comboMaintemp = panelVariableControls.Controls[comboMainName];
+                        ComboBox comboMain = comboMaintemp as ComboBox;
+                        comboMain.Text = "DateTime";
                         for (int i = 0; i <= iss; i++)
                         {
                             
-                            addSensorData(i+2, arr4[i]);
+                            addSensorData(i+1, arr4[i]);
                         }
 
                     }
@@ -507,21 +510,27 @@ namespace WindowsFormsApplication1
                 int tableWidth = InputTable.Columns.Count;
                 for (int i = tableHeight - 1; i >= 0; i--)
                 {
-                    int rowWastage = 0;
+                    bool rowWastage = false;
                     for (int j = 0; j < tableWidth; j++)
                     {
                         if (String.IsNullOrWhiteSpace(InputTable.Rows[i].ItemArray[j].ToString()))
                         {
-                            break;
-                            //rowWastage++;
+
+                           
+                            rowWastage = true;
                         }
 
                     }
-                    //if (rowWastage > (tableWidth / 2))
-                   // {
-                   //     InputTable.Rows[i].Delete();
-                   // }
-                    //InputTable.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
+                    if (rowWastage)
+                    {
+                        
+
+                        foreach (DataGridViewCell dCell in dataViewer.Rows[i].Cells)
+                        {
+                            dCell.Style.ForeColor = Color.Red;
+                            //dCell.Style.BackColor = Color.LightYellow;
+                        }
+                    }
                 }
             }
             else
@@ -3536,6 +3545,11 @@ namespace WindowsFormsApplication1
         private void testerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             checkFoldersExist();
+        }
+
+        private void markIncompleteRowsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            stripMetadata();
         }
 
 

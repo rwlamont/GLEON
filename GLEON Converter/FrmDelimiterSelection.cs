@@ -7,6 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Resources;
 
 
 namespace WindowsFormsApplication1
@@ -17,7 +21,7 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
         }
-        private DataTable InputTable;
+        public DataTable InputTable;
         public bool exitByCancel;
         public string _filename;
         public char newDelimiter;
@@ -48,6 +52,7 @@ namespace WindowsFormsApplication1
         private void LoadData(char newDelim)
         {
             InputTable = new DataTable();
+            List<int> incompleteRows = new List<int>();
             string line;
             int lineCount = 0;
             int m_iColumnCount = 0;
@@ -85,27 +90,53 @@ namespace WindowsFormsApplication1
                     }
 
                     int index = 0;
+                    int rowWastage = 0;
                     DataRow dRow = InputTable.NewRow();
                     foreach (string value in row)
                     {
                         dRow[index.ToString()] = value.Trim();
+                        if (String.IsNullOrWhiteSpace(value.Trim()))
+                        {
+                            rowWastage++;
+                        }
                         index++;
                         
 
                     }
+                    if (rowWastage < (index/2))
+                    {
+                        incompleteRows.Add(lineNum);
+                    }
                     InputTable.Rows.Add(dRow);
 
                 }
+
             }
             catch (Exception excep)
             {
                 MessageBox.Show(excep.ToString());
             }
+           // foreach (int i in incompleteRows)
+           // {
+              // DataRow dRow = InputTable.Rows[i];
+                
+              /*      
+                {
+                    if (dCell.Index == i)
+                    {
+                        foreach (DataGridViewCell cello in dCell)
+                        {
+                            cello.Style.ForeColor = Color.Red;
+                        }
+                    }
+                } */
+            //}
             dataTemp.DataSource = InputTable;
             foreach (DataGridViewColumn column in dataTemp.Columns)
             {
                 column.SortMode = DataGridViewColumnSortMode.Programmatic;
             }
+
         }
 
         private void comboDelimiters_SelectedIndexChanged(object sender, EventArgs e)

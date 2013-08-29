@@ -193,7 +193,7 @@ namespace WindowsFormsApplication1
             input = input.Replace('-', ' ');
             if (DateTime.TryParseExact(input, format, null, DateTimeStyles.None, out ConvertedDate))
             {
-                string output = ConvertedDate.ToString("yyyy-MM-dd HH:mm:ss");
+                string output = ConvertedDate.ToString("yyyy-MM-dd HH:mm");
                 lblOut.Text = output;
                 lblOut.ForeColor = Color.Green;
                 validFormat = true;

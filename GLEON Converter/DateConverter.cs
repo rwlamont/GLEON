@@ -26,7 +26,7 @@ namespace WindowsFormsApplication1
                 {
                     if(DateTime.TryParseExact(inDate,stringAttempt, null, DateTimeStyles.None, out ConvertedDate))
                     {
-                        output = ConvertedDate.ToString("yyyy-MM-dd HH:mm:ss");
+                        output = ConvertedDate.ToString("yyyy-MM-dd HH:mm");
                         acceptedFormat = stringAttempt;
                         return output;
                     }
@@ -40,18 +40,18 @@ namespace WindowsFormsApplication1
                         {
                             DateTime DaysInYearDateTime = new DateTime(Convert.ToInt16(inDate.Substring(0, 4)), 1, 1);
                             DaysInYearDateTime = DaysInYearDateTime.AddDays(Convert.ToDouble(inDate.Substring(4, 3)) - 1);
-                            output = DaysInYearDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                            output = DaysInYearDateTime.ToString("yyyy-MM-dd HH:mm");
                             return output;
                         }
                         else
                         {
-                            output = ExcelNumStartDate.AddDays(IntNum).ToString("yyyy-MM-dd HH:mm:ss");
+                            output = ExcelNumStartDate.AddDays(IntNum).ToString("yyyy-MM-dd HH:mm");
                             return output;
                         }
                     }
                     else
                     {
-                        output = ExcelNumStartDate.AddDays(IntNum).ToString("yyyy-MM-dd HH:mm:ss");
+                        output = ExcelNumStartDate.AddDays(IntNum).ToString("yyyy-MM-dd HH:mm");
                         return output;
                     }
 
@@ -59,7 +59,7 @@ namespace WindowsFormsApplication1
                 }
                 else if (double.TryParse(inDate, out Num))
                 {
-                    output = ExcelNumStartDate.AddDays(Num).ToString("yyyy-MM-dd HH:mm:ss");
+                    output = ExcelNumStartDate.AddDays(Num).ToString("yyyy-MM-dd HH:mm");
                     return output;
                 }
             }
@@ -67,7 +67,7 @@ namespace WindowsFormsApplication1
             {
                 if (DateTime.TryParseExact(inDate, acceptedFormat, null, DateTimeStyles.None, out ConvertedDate))
                 {
-                    output = ConvertedDate.ToString("yyyy-MM-dd HH:mm:ss");
+                    output = ConvertedDate.ToString("yyyy-MM-dd HH:mm");
                     return output;
                 }
                 else

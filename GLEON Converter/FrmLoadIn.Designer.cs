@@ -61,6 +61,7 @@
             this.txtMeta.Name = "txtMeta";
             this.txtMeta.Size = new System.Drawing.Size(227, 20);
             this.txtMeta.TabIndex = 2;
+            this.txtMeta.Text = "C:\\Users\\rwlamont\\Documents\\meta file testdatastd.meta";
             // 
             // txtData
             // 
@@ -68,6 +69,7 @@
             this.txtData.Name = "txtData";
             this.txtData.Size = new System.Drawing.Size(227, 20);
             this.txtData.TabIndex = 3;
+            this.txtData.Text = "C:\\Users\\rwlamont\\Documents\\test.csv";
             // 
             // btnData
             // 
