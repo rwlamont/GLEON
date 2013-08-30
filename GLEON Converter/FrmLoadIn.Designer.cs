@@ -35,6 +35,7 @@
             this.btnData = new System.Windows.Forms.Button();
             this.btnMeta = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
+            this.brnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblData
@@ -101,11 +102,22 @@
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
+            // brnCancel
+            // 
+            this.brnCancel.Location = new System.Drawing.Point(12, 317);
+            this.brnCancel.Name = "brnCancel";
+            this.brnCancel.Size = new System.Drawing.Size(75, 23);
+            this.brnCancel.TabIndex = 7;
+            this.brnCancel.Text = "Cancel";
+            this.brnCancel.UseVisualStyleBackColor = true;
+            this.brnCancel.Click += new System.EventHandler(this.brnCancel_Click);
+            // 
             // FrmLoadIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(603, 352);
+            this.Controls.Add(this.brnCancel);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnMeta);
             this.Controls.Add(this.btnData);
@@ -129,5 +141,6 @@
         private System.Windows.Forms.Button btnData;
         private System.Windows.Forms.Button btnMeta;
         private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Button brnCancel;
     }
 }

@@ -28,7 +28,8 @@ namespace WindowsFormsApplication1
         bool HeaderSelected;
         public DataTable InputTable;
         private DataTable aggregatedTable;
-        public string OpenFile;
+        public string OpenFileLocation;
+        public string MetaFileLocation;
         public char delimiter;
         private bool OpenEmptyRowStrip;
         private bool OpenHeaderDetect;
@@ -84,7 +85,7 @@ namespace WindowsFormsApplication1
 
             blankPhrase = "!Empty";
         }
-        #region OpenFile
+        #region OpenFileLocation
         public void openFile(string filepath)
         {
             //string filepath = 
@@ -116,8 +117,9 @@ namespace WindowsFormsApplication1
                     openNotes();
                     setColOrderingToNatural();
                     Cursor.Current = Cursors.Default;
+                    
                 }
-                
+              
             }
         }
         public string getFiletoRead(string filter,string startLocation)
@@ -132,7 +134,7 @@ namespace WindowsFormsApplication1
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 filepath = dialog.FileName;
-                OpenFile = dialog.SafeFileName;
+                OpenFileLocation = dialog.SafeFileName;
             }
             return filepath;
         }
@@ -184,11 +186,11 @@ namespace WindowsFormsApplication1
                     InputTable.Rows.Add(dRow);
 
                 }
-                if (Regex.IsMatch(OpenFile, @".*\([A-Z]{2}\)_[0-9]{6}-[0-9]{6}(_.*)?\.gln"))
+                if (Regex.IsMatch(OpenFileLocation, @".*\([A-Z]{2}\)_[0-9]{6}-[0-9]{6}(_.*)?\.gln"))
                 {
-                    sitePropSiteName = OpenFile.Substring(0, OpenFile.IndexOf("("));
+                    sitePropSiteName = OpenFileLocation.Substring(0, OpenFileLocation.IndexOf("("));
                     comboSiteName.Text = sitePropSiteName;
-                    string countryCode = Regex.Match(OpenFile, @"\(([^)]*)\)").Groups[1].Value;
+                    string countryCode = Regex.Match(OpenFileLocation, @"\(([^)]*)\)").Groups[1].Value;
                     foreach (countryCodesTimes country in countriesData)
                     {
                         if (countryCode == country.countryCode)
@@ -257,9 +259,9 @@ namespace WindowsFormsApplication1
         }
         public void openMetaForDataSet()
         {
-            if (OpenFile.Contains("("))
+            if (OpenFileLocation.Contains("("))
             {
-                string siteName = OpenFile.Substring(0, OpenFile.IndexOf("("));
+                string siteName = OpenFileLocation.Substring(0, OpenFileLocation.IndexOf("("));
                 string metaFile = siteName + ".meta";
                 if (File.Exists(System.Windows.Forms.Application.StartupPath + @"\Meta\" + metaFile))
                 {
@@ -308,7 +310,7 @@ namespace WindowsFormsApplication1
 
         public void openMeta(string filepath)
         {
-               //  if (File.Exists(System.Windows.Forms.Application.StartupPath + @"\Meta\" + OpenFile))
+               //  if (File.Exists(System.Windows.Forms.Application.StartupPath + @"\Meta\" + OpenFileLocation))
                // {
                     try
                     {
@@ -360,6 +362,10 @@ namespace WindowsFormsApplication1
                         Control comboMaintemp = panelVariableControls.Controls[comboMainName];
                         ComboBox comboMain = comboMaintemp as ComboBox;
                         comboMain.Text = "DateTime";
+                        string ButtonName = "0Btn";
+                        Control ButtonTemp = panelVariableControls.Controls[ButtonName];
+                        Button ButtonNewHeader = ButtonTemp as Button;
+                        ButtonNewHeader.Enabled = true;
                         for (int i = 0; i <= iss; i++)
                         {
                             
@@ -419,11 +425,15 @@ namespace WindowsFormsApplication1
 
                             if (!String.IsNullOrEmpty(sen))
                             {
+                                comboMain.Text = "Variable";
 
                                 hdrSplitTwo[0] = hdrSplitTwo[0].TrimStart(sen[0]);
                                 combo2.Text = hdrSplit[0];
+                                combo2.Enabled = true;
                                 combo3.Text = hdrSplitTwo[1];
+                                combo3.Enabled = true;
                                 combo4.Text = sen;
+                                combo4.Enabled = true;
                                 Text1.Text = hdrSplitTwo[0];
                                 ButtonNewHeader.Text = header;
                                 ButtonNewHeader.Enabled = true;
@@ -437,11 +447,11 @@ namespace WindowsFormsApplication1
     }
         private void openNotes()
         {
-            if (File.Exists(OpenFile.Substring(0, OpenFile.IndexOf('.')) + ".notes"))
+            if (File.Exists(OpenFileLocation.Substring(0, OpenFileLocation.IndexOf('.')) + ".notes"))
             {
                 try
                 {
-                    StreamReader reader = new StreamReader(OpenFile.Substring(0, OpenFile.IndexOf('.')) + ".notes");
+                    StreamReader reader = new StreamReader(OpenFileLocation.Substring(0, OpenFileLocation.IndexOf('.')) + ".notes");
                     txtDataSetNotes.Text = reader.ReadToEnd();
                 }
                 catch (Exception excep)
@@ -511,6 +521,7 @@ namespace WindowsFormsApplication1
                 for (int i = tableHeight - 1; i >= 0; i--)
                 {
                     bool rowWastage = false;
+                    int numEmpty = 0;
                     for (int j = 0; j < tableWidth; j++)
                     {
                         if (String.IsNullOrWhiteSpace(InputTable.Rows[i].ItemArray[j].ToString()))
@@ -524,12 +535,20 @@ namespace WindowsFormsApplication1
                     if (rowWastage)
                     {
                         
+                        if (numEmpty > (tableWidth/2))
+                        {
+                            InputTable.Rows[i].Delete();
+
+                        }
+                        else{
 
                         foreach (DataGridViewCell dCell in dataViewer.Rows[i].Cells)
                         {
                             dCell.Style.ForeColor = Color.Red;
                             //dCell.Style.BackColor = Color.LightYellow;
                         }
+                        }
+
                     }
                 }
             }
@@ -1009,12 +1028,9 @@ namespace WindowsFormsApplication1
             }
             else if (comboChanged.Text == "DateTime")
             {
-                combo2.Enabled = true;
-                combo2.Items.Add("UTC");
-                combo2.Text = "UTC";
-                combo3.Enabled = true;
-                setAllOthersToVariableDateTime(index);
+              updateNewHeaderButton(index);
             }
+           /*
             else if (comboChanged.Text == "Time")
             {
                 combo2.Enabled = true;
@@ -1026,7 +1042,7 @@ namespace WindowsFormsApplication1
             else if (comboChanged.Text == "Date")
             {
                 setAllOthersToVariableDateAndTime();
-            }
+            } */
             updateComboWidths(index);
             updateNewHeaderButton(index);
         }
@@ -2601,7 +2617,27 @@ namespace WindowsFormsApplication1
         #region Menu Strip
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFile(getFiletoRead("All Files (*.*)|*.*",null));
+            FrmLoadIn open = new FrmLoadIn();
+            this.Hide();
+            open.ShowDialog();
+            if (open.exitByCancel == false)
+            {
+                OpenFileLocation = open.dataFileLoc;
+                MetaFileLocation = open.metaFileLoc;
+                openFile(OpenFileLocation);
+                stripMetadata();
+                standardizeDateColumn();
+                openMeta(MetaFileLocation);
+                open.Close();
+                this.Show();
+            }
+            else
+            {
+                this.Show();
+                open.Close();
+            }
+
+
         }
 
 

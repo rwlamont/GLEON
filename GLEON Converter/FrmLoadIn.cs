@@ -11,6 +11,11 @@ namespace WindowsFormsApplication1
 {
     public partial class FrmLoadIn : Form
     {
+        public bool exitByCancel;
+        public string metaFileLoc;
+        public string dataFileLoc;
+        public bool noMeta;
+
         public FrmLoadIn()
         {
             InitializeComponent();
@@ -28,6 +33,10 @@ namespace WindowsFormsApplication1
                 txtData.Text = dialog.FileName;
                 btnNext.Enabled = true;
             } 
+            else
+            {
+                MessageBox.Show("No data file was selected, please select your data file.", "Data file needed");
+            }
         }
 
         private void btnMeta_Click(object sender, EventArgs e)
@@ -39,7 +48,11 @@ namespace WindowsFormsApplication1
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 txtMeta.Text = dialog.FileName;
-            } 
+            }
+            else
+            {
+                MessageBox.Show("No meta file was selected, please select your meta file.", "Meta file error");
+            }
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -49,17 +62,29 @@ namespace WindowsFormsApplication1
 
                 if (!String.IsNullOrWhiteSpace(txtMeta.Text))
                 {
-                    FrmMain m = new FrmMain();
-                    m.OpenFile = txtData.Text;
-                    
-                    m.openFile(txtData.Text);
-                    
-                    m.standardizeDateColumn();
-                    m.openMeta(txtMeta.Text);
-                    m.Show();
+                    dataFileLoc = txtData.Text;
+                    metaFileLoc = txtMeta.Text;
+                    this.Hide();
+                }
+                else
+                {
+                    dataFileLoc = txtData.Text;
+                    noMeta = true;
+                    this.Hide();
                 }
             }
+            else
+            {
+                MessageBox.Show("No data file was selected, please select your data file.", "Data file needed");
+            }
 
+
+        }
+
+        private void brnCancel_Click(object sender, EventArgs e)
+        {
+            exitByCancel = true;
+            this.Hide();
         }
 
 

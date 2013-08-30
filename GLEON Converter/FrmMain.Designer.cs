@@ -258,7 +258,7 @@
             // 
             this.loadInMetaFileToolStripMenuItem.Name = "loadInMetaFileToolStripMenuItem";
             this.loadInMetaFileToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.loadInMetaFileToolStripMenuItem.Text = "Load In MetaFile";
+            this.loadInMetaFileToolStripMenuItem.Text = "Load In MetaFileLocation";
             // 
             // dataToolStripMenuItem
             // 
