@@ -27,9 +27,13 @@ namespace WindowsFormsApplication1
         public char newDelimiter;
         public bool OpenEmptyRowStrip;
         public bool OpenHeaderRowDetect;
+        public int headerRow, unitRow;
         private void Form1_Load(object sender, EventArgs e)
         {
             exitByCancel = false;
+            btnAccept.Enabled = false;
+            unitRow = -1;
+            headerRow = -1;
             comboDelimiters.Items.Add("Tab");
             comboDelimiters.Items.Add("Comma");
             comboDelimiters.Items.Add("Space");
@@ -191,5 +195,34 @@ namespace WindowsFormsApplication1
             exitByCancel = true;
             this.Hide();
         }
+
+        private void btnHeaderRow_Click(object sender, EventArgs e)
+        {
+            if (dataTemp.SelectedRows.Count == 1)
+            {
+                headerRow = dataTemp.SelectedRows[0].Index;
+                MessageBox.Show("You have selected row number " + dataTemp.SelectedRows[0].Index.ToString() + " as your header row", "Selected Header Row");
+                btnAccept.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show(" You have not selected a singular row, please select the header row", "Error");
+            }
+        }
+
+        private void btnUnitRow_Click(object sender, EventArgs e)
+            {
+            if (dataTemp.SelectedRows.Count == 1)
+            {
+                unitRow = dataTemp.SelectedRows[0].Index;
+                MessageBox.Show("You have selected row number " + dataTemp.SelectedRows[0].Index.ToString() + " as your unit row", "Selected Unit Row");
+            }
+            else
+            {
+                MessageBox.Show(" You have not selected a  singular row, please select the unit row", "Error");
+            }
+        }
+
+        }
     }
-}
+

@@ -33,6 +33,7 @@ namespace WindowsFormsApplication1
         public char delimiter;
         private bool OpenEmptyRowStrip;
         private bool OpenHeaderDetect;
+        private int headerRow, unitRow;
         private string blankPhrase;
         public FrmMain()
         {
@@ -86,9 +87,10 @@ namespace WindowsFormsApplication1
             blankPhrase = "!Empty";
         }
         #region OpenFileLocation
-        public void openFile(string filepath)
+        public bool openFile(string filepath)
         {
-            //string filepath = 
+            bool toReturn = false;
+
             if (filepath != "")
             {
                 FrmDelimiterSelection dSelect = new FrmDelimiterSelection();
@@ -99,15 +101,22 @@ namespace WindowsFormsApplication1
                     delimiter = dSelect.newDelimiter;
                     OpenEmptyRowStrip = dSelect.OpenEmptyRowStrip;
                     OpenHeaderDetect = dSelect.OpenHeaderRowDetect;
+                    headerRow = dSelect.headerRow;
+                    unitRow = dSelect.unitRow;
                     dSelect.Close();
                     this.Focus();
                     Cursor.Current = Cursors.WaitCursor;
                     ReadinNewFile(filepath);
                     setVarBoxesInPanel();
-                    if (OpenHeaderDetect)
+                    if (unitRow != -1)
                     {
-                        headerRowDetection();
+                       // setUnits();
                     }
+                   // if (OpenHeaderDetect)
+                   // {
+                      // headerRowDetection();
+                   // }
+                    setHeaderRow();
                     if (OpenEmptyRowStrip)
                     {
                         stripMetadata();
@@ -117,9 +126,16 @@ namespace WindowsFormsApplication1
                     openNotes();
                     setColOrderingToNatural();
                     Cursor.Current = Cursors.Default;
-                    
+
                 }
-              
+                toReturn = dSelect.exitByCancel;
+                dSelect.Close();
+                return toReturn;
+
+            }
+            else
+            {
+                return false;
             }
         }
         public string getFiletoRead(string filter,string startLocation)
@@ -461,6 +477,22 @@ namespace WindowsFormsApplication1
             }
         }
 
+        private void setHeaderRow()
+        {
+            if (headerRow != 0)
+            {
+                DataRow dRow = InputTable.NewRow();
+                dRow.ItemArray = InputTable.Rows[headerRow].ItemArray;
+                InputTable.Rows.RemoveAt(headerRow);
+                InputTable.Rows.InsertAt(dRow, 0);
+            }
+            foreach (DataGridViewCell dCell in dataViewer.Rows[0].Cells)
+            {
+                dCell.Style.ForeColor = Color.LightYellow;
+            }
+            HeaderSelected = true;
+        }
+
         //Only scans the first 30 rows for strings the fit the header pattern.
         private void headerRowDetection()
         {
@@ -527,7 +559,7 @@ namespace WindowsFormsApplication1
                         if (String.IsNullOrWhiteSpace(InputTable.Rows[i].ItemArray[j].ToString()))
                         {
 
-                           
+                            numEmpty++;
                             rowWastage = true;
                         }
 
@@ -772,7 +804,7 @@ namespace WindowsFormsApplication1
             panelVariableControls.Controls.Clear();
             int locationX = dataViewer.RowHeadersWidth;
             int colNum = 0;
-            for (int i = 0; i <= dataViewer.Columns.Count - 1; i++)
+            for (int i = 0; i <= dataViewer.Columns.Count - 2; i++)
             {
                 int defaultWidth = dataViewer.Columns[colNum].Width;
                 int defaultHeight = 21;
@@ -1327,10 +1359,20 @@ namespace WindowsFormsApplication1
         }
         private void useNewHeaderClicked(object sender, EventArgs e)
         {
+            int index;
+            
             if (HeaderSelected)
             {
                 Button btnClicked = sender as Button;
-                int index = Convert.ToInt32(btnClicked.Name.Substring(0, 1));
+                var indexParse = btnClicked.Name.Substring(0, 2); 
+                if(indexParse.Contains('B'))
+                {
+                    //indexParse.Trim('B');
+                    index = Int32.Parse(indexParse.Substring(0,1)); 
+                }
+                else{
+                    index = Int32.Parse(indexParse);
+                }
                 InputTable.Rows[0][index] = btnClicked.Text;
                 if(Regex.IsMatch(btnClicked.Text,@"DateTime[a-z,A-Z]{3}[\+,\-][[0]?[1-9]|1[0-4]](:[1,3,4][0,5])?"))
                 {
@@ -1445,15 +1487,11 @@ namespace WindowsFormsApplication1
             }
             else if (comboMain.Text == "DateTime")
             {
-                ButtonNewHeader.Text = "DateTime" + combo2.Text+ combo3.Text;
-                if (Regex.IsMatch(ButtonNewHeader.Text, @"DateTime[a-z,A-Z]{3}[\+,\-][[0]?[1-9]|1[0-4]](:[1,3,4][0,5])?"))
-                {
-                    ButtonNewHeader.Enabled = true;
-                }
-                else
-                {
-                    ButtonNewHeader.Enabled = false;
-                }
+                ButtonNewHeader.Text = "DateTime";
+               // if (Regex.IsMatch(ButtonNewHeader.Text, @"DateTime[a-z,A-Z]{3}[\+,\-][[0]?[1-9]|1[0-4]](:[1,3,4][0,5])?"))
+              
+                ButtonNewHeader.Enabled = true;
+               
             }
             else if (comboMain.Text == "Time")
             {
@@ -1582,8 +1620,10 @@ namespace WindowsFormsApplication1
                         {
                             foreach (DataGridViewColumn dCol in dataViewer.SelectedColumns)
                             {
+                                int index = dCol.Index;
                                 InputTable.Columns.RemoveAt(dCol.Index) ;
-                                setVarBoxesInPanel();
+                                //setVarBoxesInPanel();
+                                moveHeadersOver(index);
                             }
                         }
                 }
@@ -1591,6 +1631,71 @@ namespace WindowsFormsApplication1
                     MessageBox.Show("You must select atleast one row or column to delete.");
             }
         }
+        /// <summary>
+        /// Moves all the header buttons and combos over one to replace the hole of the one removed
+        /// </summary>
+        /// <param name="index"></param>
+        private void moveHeadersOver(int index)
+        {
+            int oldIndex = 0;
+            for (int i = index; i < dataViewer.Columns.Count - 1; i++) // how many minus of 
+            {
+                oldIndex = i + 1;
+                string comboMainName = i + "ComboMain";
+                Control comboMaintemp = panelVariableControls.Controls[comboMainName];
+                ComboBox comboMain = comboMaintemp as ComboBox;
+                string combo2Name = i + "Combo2";
+                Control combo2temp = panelVariableControls.Controls[combo2Name];
+                ComboBox combo2 = combo2temp as ComboBox;
+                string combo3Name = i + "Combo3";
+                Control combo3temp = panelVariableControls.Controls[combo3Name];
+                ComboBox combo3 = combo3temp as ComboBox;
+                string combo4Name = i + "Combo4";
+                Control combo4temp = panelVariableControls.Controls[combo4Name];
+                ComboBox combo4 = combo4temp as ComboBox;
+                string Text1Name = i + "Text1";
+                Control Text1temp = panelVariableControls.Controls[Text1Name];
+                TextBox Text1 = Text1temp as TextBox;
+                string Text2Name = i + "Text2";
+                Control Text2temp = panelVariableControls.Controls[Text2Name];
+                TextBox Text2 = Text2temp as TextBox;
+                string BtnName = i + "Btn";
+                Control Btntemp = panelVariableControls.Controls[BtnName];
+                Button Btn = Btntemp as Button;
+
+                string comboMainNameOld = oldIndex + "ComboMain";
+                Control comboMaintempOld = panelVariableControls.Controls[comboMainNameOld];
+                ComboBox comboMainOld = comboMaintempOld as ComboBox;
+                string combo2NameOld = oldIndex+ "Combo2";
+                Control combo2tempOld = panelVariableControls.Controls[combo2NameOld];
+                ComboBox combo2Old = combo2tempOld as ComboBox;
+                string combo3NameOld = oldIndex+ "Combo3";
+                Control combo3tempOld = panelVariableControls.Controls[combo3NameOld];
+                ComboBox combo3Old = combo3tempOld as ComboBox;
+                string combo4NameOld = oldIndex+ "Combo4";
+                Control combo4tempOld = panelVariableControls.Controls[combo4NameOld];
+                ComboBox combo4Old = combo4tempOld as ComboBox;
+                string Text1NameOld = oldIndex+ "Text1";
+                Control Text1tempOld = panelVariableControls.Controls[Text1NameOld];
+                TextBox Text1Old = Text1tempOld as TextBox;
+                string Text2NameOld = oldIndex+ "Text2";
+                Control Text2tempOld = panelVariableControls.Controls[Text2NameOld];
+                TextBox Text2Old = Text2temp as TextBox;
+                string BtnNameOld = oldIndex+ "Btn";
+                Control BtntempOld = panelVariableControls.Controls[BtnNameOld];
+                Button BtnOld = BtntempOld as Button;
+
+                comboMain.Text = comboMainOld.Text;
+                combo2.Text = combo2Old.Text;
+                combo3.Text = combo3Old.Text;
+                combo4.Text = combo4Old.Text;
+                Text1.Text = Text1Old.Text;
+                Text2.Text = Text2Old.Text;
+                Btn.Text = BtnOld.Text;
+                Btn.Enabled = true;
+            }
+        }
+
         private void resetColumnNames()
         {
             int index = 0;
@@ -2097,17 +2202,39 @@ namespace WindowsFormsApplication1
             else
                 MessageBox.Show("Time Column not found");
         }
+
+        /// <summary>
+        /// Saves the meta data about the lake and the dataset into the .meta format used by both this and B3
+        /// </summary>
         private void saveMeta()
         {
             using (StreamWriter sWriter = new StreamWriter(@"Meta\" + comboSiteName.Text + ".meta"))
             {
-                sWriter.WriteLine(sitePropOwnerName);
-                sWriter.WriteLine(sitePropContactName);
-                sWriter.WriteLine(sitePropContactNumber);
-                sWriter.WriteLine(sitePropContactEmail);
-                sWriter.WriteLine(sitePropElevation);
-                sWriter.WriteLine(sitePropGPSLat.ToString());
-                sWriter.WriteLine(sitePropGPSLong.ToString());
+                sWriter.WriteLine("Associated File: " + txtFileNameAppend.Text);
+                sWriter.WriteLine("Site Name: " + comboSiteName.Text);
+                sWriter.WriteLine("Owner: " + sitePropOwnerName);
+                sWriter.WriteLine("Latitude/Northing: " + sitePropGPSLat.ToString());
+                sWriter.WriteLine("Longitude/Easting: " + sitePropGPSLong.ToString());
+                sWriter.WriteLine("GPS Grid System: " + txtGPSGridSystem.Text);
+                sWriter.WriteLine("Elevation: " + sitePropElevation);
+                sWriter.WriteLine("Contact");
+                sWriter.WriteLine("Name: " + sitePropContactName);
+                sWriter.WriteLine("Organisation: " + txtOrg.Text);
+                sWriter.WriteLine("Phone: " + sitePropContactNumber);
+                sWriter.WriteLine("Email: " + sitePropContactEmail);
+                sWriter.WriteLine("Number of Sensors: " + (InputTable.Columns.Count - 1).ToString());
+                sWriter.WriteLine("Sensor Details");
+                sWriter.WriteLine("");
+
+                for (int i = 1; i < dataViewer.Columns.Count; i++)
+                {
+                    sWriter.WriteLine(dataViewer.Rows[0].Cells[i].Value);
+                    sWriter.WriteLine("");
+                }
+                sWriter.WriteLine("Dataset Notes");
+                sWriter.WriteLine(txtDataSetNotes.Text);
+                sWriter.WriteLine("");
+                sWriter.WriteLine("Site Notes");
                 sWriter.WriteLine(sitePropNotes);
                 sWriter.Close();
             }
@@ -2282,8 +2409,9 @@ namespace WindowsFormsApplication1
         {
             
         }
-        public void standardizeDateColumn()
+        public bool standardizeDateColumn()
         {
+            bool toReturn = false;
             DateConverter dateConverter = new DateConverter();
             int dateCol = -1;
             foreach (DataGridViewCell dCell in dataViewer.Rows[0].Cells)
@@ -2298,6 +2426,7 @@ namespace WindowsFormsApplication1
                 MergeDateTime();
                 resetColumnNames();
                 standardizeDateColumn();
+                return false;
             }
             else
             {
@@ -2333,7 +2462,9 @@ namespace WindowsFormsApplication1
                         MessageBox.Show("Conversion incomplete.An unconvertable value was encountered.\n\rPlease add the date format to the 'Formats.txt' Control File.\n\rAlternatively remove the errored row before attempting to standardize dates.");
                     }
                 }
+                toReturn = getDateFormat.cancel;
                 getDateFormat.Close();
+                return toReturn;
             }
         }
 
@@ -2617,19 +2748,43 @@ namespace WindowsFormsApplication1
         #region Menu Strip
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            bool exitEarly = false;
             FrmLoadIn open = new FrmLoadIn();
             this.Hide();
             open.ShowDialog();
-            if (open.exitByCancel == false)
+            if (open.exitByCancel == false) // Check to see if open exited by cancel
             {
                 OpenFileLocation = open.dataFileLoc;
                 MetaFileLocation = open.metaFileLoc;
-                openFile(OpenFileLocation);
-                stripMetadata();
-                standardizeDateColumn();
-                openMeta(MetaFileLocation);
-                open.Close();
-                this.Show();
+                exitEarly = openFile(OpenFileLocation);
+                if (!exitEarly) // Check to see if delimiter exited by cancel
+                {
+                    stripMetadata();
+                    exitEarly = standardizeDateColumn();
+                    if (!exitEarly) // Check to see if dateFormat exited by cancel
+                    {
+                        if (!String.IsNullOrWhiteSpace(MetaFileLocation)) // Make sure there is a meta file to open
+                        {
+                            openMeta(MetaFileLocation);
+                        }
+                        else
+                        {
+                            HeaderGuess();
+                        }
+                        open.Close();
+                        this.Show();
+                    }
+                    else
+                    {
+                        this.Show();
+                        open.Close();
+                    }
+                }
+                else
+                {
+                    this.Show();
+                    open.Close();
+                }
             }
             else
             {
@@ -3586,6 +3741,16 @@ namespace WindowsFormsApplication1
         private void markIncompleteRowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             stripMetadata();
+        }
+
+        private void label25_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
         }
 
 

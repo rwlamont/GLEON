@@ -36,8 +36,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtDelimiter = new System.Windows.Forms.TextBox();
             this.checkBoxRowStripping = new System.Windows.Forms.CheckBox();
-            this.checkBoxHeaderDetect = new System.Windows.Forms.CheckBox();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.btnUnitRow = new System.Windows.Forms.Button();
+            this.btnHeaderRow = new System.Windows.Forms.Button();
+            this.checkBoxHeaderDetect = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataTemp)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,24 +109,12 @@
             // checkBoxRowStripping
             // 
             this.checkBoxRowStripping.AutoSize = true;
-            this.checkBoxRowStripping.Location = new System.Drawing.Point(181, 465);
+            this.checkBoxRowStripping.Location = new System.Drawing.Point(464, 28);
             this.checkBoxRowStripping.Name = "checkBoxRowStripping";
             this.checkBoxRowStripping.Size = new System.Drawing.Size(160, 17);
             this.checkBoxRowStripping.TabIndex = 7;
             this.checkBoxRowStripping.Text = "Strip incomplete rows shown";
             this.checkBoxRowStripping.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxHeaderDetect
-            // 
-            this.checkBoxHeaderDetect.AutoSize = true;
-            this.checkBoxHeaderDetect.Checked = true;
-            this.checkBoxHeaderDetect.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxHeaderDetect.Location = new System.Drawing.Point(347, 465);
-            this.checkBoxHeaderDetect.Name = "checkBoxHeaderDetect";
-            this.checkBoxHeaderDetect.Size = new System.Drawing.Size(114, 17);
-            this.checkBoxHeaderDetect.TabIndex = 8;
-            this.checkBoxHeaderDetect.Text = "Detect header row";
-            this.checkBoxHeaderDetect.UseVisualStyleBackColor = true;
             // 
             // btnCancel
             // 
@@ -136,12 +126,46 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btnUnitRow
+            // 
+            this.btnUnitRow.Location = new System.Drawing.Point(332, 461);
+            this.btnUnitRow.Name = "btnUnitRow";
+            this.btnUnitRow.Size = new System.Drawing.Size(116, 23);
+            this.btnUnitRow.TabIndex = 10;
+            this.btnUnitRow.Text = "Unit Row (optional)";
+            this.btnUnitRow.UseVisualStyleBackColor = true;
+            this.btnUnitRow.Click += new System.EventHandler(this.btnUnitRow_Click);
+            // 
+            // btnHeaderRow
+            // 
+            this.btnHeaderRow.Location = new System.Drawing.Point(168, 461);
+            this.btnHeaderRow.Name = "btnHeaderRow";
+            this.btnHeaderRow.Size = new System.Drawing.Size(116, 23);
+            this.btnHeaderRow.TabIndex = 11;
+            this.btnHeaderRow.Text = "Header Row";
+            this.btnHeaderRow.UseVisualStyleBackColor = true;
+            this.btnHeaderRow.Click += new System.EventHandler(this.btnHeaderRow_Click);
+            // 
+            // checkBoxHeaderDetect
+            // 
+            this.checkBoxHeaderDetect.AutoSize = true;
+            this.checkBoxHeaderDetect.Checked = true;
+            this.checkBoxHeaderDetect.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxHeaderDetect.Location = new System.Drawing.Point(12, 12);
+            this.checkBoxHeaderDetect.Name = "checkBoxHeaderDetect";
+            this.checkBoxHeaderDetect.Size = new System.Drawing.Size(114, 17);
+            this.checkBoxHeaderDetect.TabIndex = 8;
+            this.checkBoxHeaderDetect.Text = "Detect header row";
+            this.checkBoxHeaderDetect.UseVisualStyleBackColor = true;
+            // 
             // FrmDelimiterSelection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(636, 495);
             this.ControlBox = false;
+            this.Controls.Add(this.btnHeaderRow);
+            this.Controls.Add(this.btnUnitRow);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.checkBoxHeaderDetect);
             this.Controls.Add(this.checkBoxRowStripping);
@@ -172,7 +196,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtDelimiter;
         private System.Windows.Forms.CheckBox checkBoxRowStripping;
-        private System.Windows.Forms.CheckBox checkBoxHeaderDetect;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnUnitRow;
+        private System.Windows.Forms.Button btnHeaderRow;
+        private System.Windows.Forms.CheckBox checkBoxHeaderDetect;
     }
 }
