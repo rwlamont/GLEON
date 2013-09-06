@@ -226,7 +226,7 @@ namespace WindowsFormsApplication1
                 case "Time 24hr - short - seconds - eg 2:15:30":
                     return "H:mm:ss";
                 case "Time 24hr - long - no seconds - eg 02:15":
-                    return "HH:mm:ss";
+                    return "HH:mm";
                 case "Time 24hr - long  - seconds - eg 02:15:30":
                     return "HH:mm:ss";
                 case "Time 12hr - no am/pm - no seconds - eg 2:15":

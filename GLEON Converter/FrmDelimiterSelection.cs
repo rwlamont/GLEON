@@ -171,7 +171,6 @@ namespace WindowsFormsApplication1
         private void btnAccept_Click(object sender, EventArgs e)
         {
             OpenEmptyRowStrip = checkBoxRowStripping.Checked;
-            OpenHeaderRowDetect = checkBoxHeaderDetect.Checked;
             this.Hide();
         }
 

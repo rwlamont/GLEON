@@ -35,6 +35,7 @@ namespace WindowsFormsApplication1
         private bool OpenHeaderDetect;
         private int headerRow, unitRow;
         private string blankPhrase;
+       
         public FrmMain()
         {
             InitializeComponent();
@@ -52,9 +53,9 @@ namespace WindowsFormsApplication1
             comboFileExtension.Items.Add(".wtr");
             comboFileExtension.Items.Add(".wnd");
             comboFileExtension.Items.Add(".sal");
-            comboFileExtension.Items.Add(".txt");
+            comboFileExtension.Items.Add(".tsv");
             comboFileExtension.Items.Add(".csv");
-            comboFileExtension.SelectedText = ".gln";
+            comboFileExtension.SelectedText = ".tsv";
 
             txtGPSLat.Text = "Decimal";
             txtGPSLat.ForeColor = Color.Gray;
@@ -86,6 +87,7 @@ namespace WindowsFormsApplication1
 
             blankPhrase = "!Empty";
         }
+       
         #region OpenFileLocation
         public bool openFile(string filepath)
         {
@@ -110,7 +112,7 @@ namespace WindowsFormsApplication1
                     setVarBoxesInPanel();
                     if (unitRow != -1)
                     {
-                       // setUnits();
+                       setUnitRow();
                     }
                    // if (OpenHeaderDetect)
                    // {
@@ -326,8 +328,6 @@ namespace WindowsFormsApplication1
 
         public void openMeta(string filepath)
         {
-               //  if (File.Exists(System.Windows.Forms.Application.StartupPath + @"\Meta\" + OpenFileLocation))
-               // {
                     try
                     {
                         int iss;
@@ -342,7 +342,7 @@ namespace WindowsFormsApplication1
                         sitePropElevation = reader.ReadLine();
                         reader.ReadLine(); // Throwing away contact header
                         sitePropContactName = reader.ReadLine();
-                        reader.ReadLine(); // throwing away contact org
+                        sitePropOrgnisation = reader.ReadLine(); 
                         sitePropContactNumber = reader.ReadLine();
                         sitePropContactEmail = reader.ReadLine();
                         //sitePropNotes = reader.ReadToEnd();
@@ -371,8 +371,10 @@ namespace WindowsFormsApplication1
                         txtContactNumber.Text = CleanMetaIn(sitePropContactNumber, 7);
                         txtContactEmail.Text = CleanMetaIn(sitePropContactEmail, 7);
                         txtElevation.Text = CleanMetaIn(sitePropElevation, 17);
+                        txtGPSGridSystem.Text = CleanMetaIn(sitePropGPSGrid, 17);
                         txtGPSLat.Text = CleanMetaIn(sitePropGPSLat.ToString(), 19);
                         txtGPSLong.Text = CleanMetaIn(sitePropGPSLong.ToString(), 19);
+                        txtOrg.Text = CleanMetaIn(sitePropOrgnisation, 14);  
                         txtSiteNotes.Text = sitePropNotes;
                         string comboMainName = "0ComboMain";
                         Control comboMaintemp = panelVariableControls.Controls[comboMainName];
@@ -393,7 +395,7 @@ namespace WindowsFormsApplication1
                     {
                         MessageBox.Show(excep.ToString());
                     }
-               // }
+               
         }
 
         private void addSensorData(int colNum, string header)
@@ -475,6 +477,29 @@ namespace WindowsFormsApplication1
                     MessageBox.Show(excep.ToString());
                 }
             }
+        }
+
+        private void setUnitRow()
+        {
+            if (unitRow != -1)
+            {
+                var unitArray = InputTable.Rows[unitRow].ItemArray.Cast<string>().ToArray();
+                for (int i = 0; i < (unitArray.Count()); i++)
+                {
+
+                    if (i > 2)
+                    {
+                        string combo3Name = (i -1)  + "Combo3";
+                        Control combo3temp = panelVariableControls.Controls[combo3Name];
+                        ComboBox combo3 = combo3temp as ComboBox;
+                        combo3.Text = unitArray[i - 1];
+                    }
+
+                }
+                
+
+            }
+
         }
 
         private void setHeaderRow()
@@ -2249,12 +2274,13 @@ namespace WindowsFormsApplication1
 #endregion
 
         #region Site MetaData
-        public string sitePropSiteName, sitePropOwnerName, sitePropContactName, sitePropContactNumber, sitePropGPSGrid, sitePropName, sitePropContactEmail, sitePropElevation, sitePropNotes, sitePropGPSLat, sitePropGPSLong;
+        public string sitePropSiteName, sitePropOwnerName, sitePropContactName, sitePropContactNumber, sitePropGPSGrid, sitePropName, sitePropContactEmail, sitePropElevation, sitePropNotes, sitePropGPSLat, sitePropGPSLong, sitePropOrgnisation;
 
         private void comboFileExtension_SelectedIndexChanged(object sender, EventArgs e)
         {
             updateFileNameLabel();
         }
+
         private void comboSiteName_Leave(object sender, EventArgs e)
         {
             try
@@ -2371,37 +2397,37 @@ namespace WindowsFormsApplication1
 
         private void comboCountries_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (Control controlTemp in panelVariableControls.Controls)
-            {
-                if (controlTemp.Name.Length == 10 && controlTemp.Name.Substring(1, 9) == "ComboMain")
-                {
-                    ComboBox combo = controlTemp as ComboBox;
-                    if (combo.Text == "DateTime")
-                    {
-                        string colNum = combo.Name.Substring(0, 1);
-                        string combo3Name = colNum + "Combo3";
-                        Control combo3temp = panelVariableControls.Controls[combo3Name];
-                        ComboBox combo3 = combo3temp as ComboBox;
-                        combo3.Enabled = true;
-                        combo3.Items.Clear();
-                        if (comboCountries.Text != "")
-                        {
-                            string countryCode = Regex.Match(comboCountries.Text, @"\(([^)]*)\)").Groups[1].Value;
-                            foreach (countryCodesTimes testCountry in countriesData)
-                            {
-                                if (testCountry.countryCode == countryCode)
-                                {
-                                    foreach (string timeZone in testCountry.countryTimeZone)
-                                    {
-                                        combo3.Items.Add(timeZone);
-                                    }
+            //foreach (Control controlTemp in panelVariableControls.Controls)
+            //{
+            //    if (controlTemp.Name.Length == 10 && controlTemp.Name.Substring(1, 9) == "ComboMain")
+            //    {
+            //        ComboBox combo = controlTemp as ComboBox;
+            //        if (combo.Text == "DateTime")
+            //        {
+            //            string colNum = combo.Name.Substring(0, 1);
+            //            string combo3Name = colNum + "Combo3";
+            //            Control combo3temp = panelVariableControls.Controls[combo3Name];
+            //            ComboBox combo3 = combo3temp as ComboBox;
+            //            combo3.Enabled = true;
+            //            combo3.Items.Clear();
+            //            if (comboCountries.Text != "")
+            //            {
+            //                string countryCode = Regex.Match(comboCountries.Text, @"\(([^)]*)\)").Groups[1].Value;
+            //                foreach (countryCodesTimes testCountry in countriesData)
+            //                {
+            //                    if (testCountry.countryCode == countryCode)
+            //                    {
+            //                        foreach (string timeZone in testCountry.countryTimeZone)
+            //                        {
+            //                            combo3.Items.Add(timeZone);
+            //                        }
 
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
             updateFileNameLabel();
         }
 
@@ -2770,7 +2796,9 @@ namespace WindowsFormsApplication1
                         else
                         {
                             HeaderGuess();
+                            
                         }
+                        getStartEndDates();
                         open.Close();
                         this.Show();
                     }
@@ -3471,7 +3499,7 @@ namespace WindowsFormsApplication1
 
         private void gLEONConverterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Developed at The University of Waikato.\n\rBy Chris McBride and Sam Shute.");
+            MessageBox.Show("Developed at The University of Waikato.\n\rBy Chris McBride, Richard Lamont and Sam Shute.");
         }
 
         private void dataViewer_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -3754,10 +3782,11 @@ namespace WindowsFormsApplication1
         }
 
 
+
+
     }
     
-
-
+    //public enum unitAbrev { "%", "%sat", "1/m", "deg", "degC", "FTU", "g/m^3", "mg/m^3", "hits/cm^2","hPa","m","m/s","m^-1","m^3","masl","mg/L","mm","mS/cm","mV","mW/cm^2","ppm","RFU","s","ug/L","umol/m^2/s","V", "W/m^2", "W/m^2" };
     public struct testTypeUnits
     {
         public string testCode;

@@ -43,7 +43,6 @@
             this.saveHeadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadHeadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadInMetaFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.markIncompleteRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertDatesToStandardFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.headerGuessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -226,8 +225,7 @@
             this.openSiteInfoToolStripMenuItem,
             this.saveHeadersToolStripMenuItem,
             this.loadHeadersToolStripMenuItem,
-            this.loadInMetaFileToolStripMenuItem,
-            this.markIncompleteRowsToolStripMenuItem});
+            this.loadInMetaFileToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -265,13 +263,6 @@
             this.loadInMetaFileToolStripMenuItem.Name = "loadInMetaFileToolStripMenuItem";
             this.loadInMetaFileToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.loadInMetaFileToolStripMenuItem.Text = "Load In MetaFileLocation";
-            // 
-            // markIncompleteRowsToolStripMenuItem
-            // 
-            this.markIncompleteRowsToolStripMenuItem.Name = "markIncompleteRowsToolStripMenuItem";
-            this.markIncompleteRowsToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
-            this.markIncompleteRowsToolStripMenuItem.Text = "mark incomplete rows";
-            this.markIncompleteRowsToolStripMenuItem.Click += new System.EventHandler(this.markIncompleteRowsToolStripMenuItem_Click);
             // 
             // dataToolStripMenuItem
             // 
@@ -659,6 +650,7 @@
             this.comboCountries.Name = "comboCountries";
             this.comboCountries.Size = new System.Drawing.Size(224, 21);
             this.comboCountries.TabIndex = 101;
+            this.comboCountries.SelectedIndexChanged += new System.EventHandler(this.comboCountries_SelectedIndexChanged);
             // 
             // label24
             // 
@@ -915,6 +907,7 @@
             this.comboFileExtension.Name = "comboFileExtension";
             this.comboFileExtension.Size = new System.Drawing.Size(94, 21);
             this.comboFileExtension.TabIndex = 26;
+            this.comboFileExtension.SelectedIndexChanged += new System.EventHandler(this.comboFileExtension_SelectedIndexChanged);
             // 
             // label23
             // 
@@ -1068,7 +1061,6 @@
         private System.Windows.Forms.ToolStripMenuItem loadHeadersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadInMetaFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem markIncompleteRowsToolStripMenuItem;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtGPSGridSystem;
         private System.Windows.Forms.Label label4;
