@@ -114,10 +114,6 @@ namespace WindowsFormsApplication1
                     {
                        setUnitRow();
                     }
-                   // if (OpenHeaderDetect)
-                   // {
-                      // headerRowDetection();
-                   // }
                     setHeaderRow();
                     if (OpenEmptyRowStrip)
                     {
@@ -479,24 +475,26 @@ namespace WindowsFormsApplication1
             }
         }
 
+        /// <summary>
+        /// If there is a unit row in the raw dataset it puts he units nto the unit combo box.
+        /// </summary>
         private void setUnitRow()
         {
             if (unitRow != -1)
             {
                 var unitArray = InputTable.Rows[unitRow].ItemArray.Cast<string>().ToArray();
-                for (int i = 0; i < (unitArray.Count()); i++)
+                for (int i = 2; i < (unitArray.Count()); i++)
                 {
 
-                    if (i > 2)
-                    {
+
                         string combo3Name = (i -1)  + "Combo3";
                         Control combo3temp = panelVariableControls.Controls[combo3Name];
                         ComboBox combo3 = combo3temp as ComboBox;
-                        combo3.Text = unitArray[i - 1];
-                    }
+                        combo3.Text = unitArray[i];
+                  
 
                 }
-                
+                InputTable.Rows.RemoveAt(unitRow);
 
             }
 
@@ -597,7 +595,8 @@ namespace WindowsFormsApplication1
                             InputTable.Rows[i].Delete();
 
                         }
-                        else{
+                        else if (numEmpty >(tableWidth/4))
+                        {
 
                         foreach (DataGridViewCell dCell in dataViewer.Rows[i].Cells)
                         {
@@ -1576,7 +1575,8 @@ namespace WindowsFormsApplication1
         private void dataViewer_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
             int colNum = e.Column.Index;
-            string comboMainName = colNum + "ComboMain";
+            string comboMainName = "";
+            comboMainName = colNum + "ComboMain";
             Control comboMaintemp = panelVariableControls.Controls[comboMainName];
             ComboBox comboMain = comboMaintemp as ComboBox;
             int locationX = comboMain.Location.X;
@@ -2590,6 +2590,10 @@ namespace WindowsFormsApplication1
 
                     }
                     InputTable.Columns.RemoveAt(timeColNum);
+                    string comboMainName = 0 + "ComboMain";
+                    Control comboMaintemp = panelVariableControls.Controls[comboMainName];
+                    ComboBox comboMain = comboMaintemp as ComboBox;
+                    comboMain.Text = "DateTime";
                 }
                 else if (numTimeCols > 1)
                 {
@@ -2785,7 +2789,6 @@ namespace WindowsFormsApplication1
                 exitEarly = openFile(OpenFileLocation);
                 if (!exitEarly) // Check to see if delimiter exited by cancel
                 {
-                    stripMetadata();
                     exitEarly = standardizeDateColumn();
                     if (!exitEarly) // Check to see if dateFormat exited by cancel
                     {

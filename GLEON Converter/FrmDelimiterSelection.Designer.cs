@@ -108,7 +108,7 @@
             // checkBoxRowStripping
             // 
             this.checkBoxRowStripping.AutoSize = true;
-            this.checkBoxRowStripping.Location = new System.Drawing.Point(470, 5);
+            this.checkBoxRowStripping.Location = new System.Drawing.Point(464, 31);
             this.checkBoxRowStripping.Name = "checkBoxRowStripping";
             this.checkBoxRowStripping.Size = new System.Drawing.Size(160, 17);
             this.checkBoxRowStripping.TabIndex = 7;
