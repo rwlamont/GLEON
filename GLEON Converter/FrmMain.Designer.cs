@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataViewer = new System.Windows.Forms.DataGridView();
             this.panelVariableControls = new System.Windows.Forms.Panel();
             this.btnExport = new System.Windows.Forms.Button();
@@ -35,25 +38,18 @@
             this.label6 = new System.Windows.Forms.Label();
             this.lblFileName = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.btdMergeDateTime = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openSiteInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveHeadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadHeadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadInMetaFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.convertDatesToStandardFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.headerGuessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortDatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.setSelectedAsHeaderRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stripIncompleteRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewVaribleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gLEONConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.testerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label15 = new System.Windows.Forms.Label();
             this.comboEmpty = new System.Windows.Forms.ComboBox();
             this.checkMeta = new System.Windows.Forms.CheckBox();
@@ -76,7 +72,6 @@
             this.label20 = new System.Windows.Forms.Label();
             this.txtFileNameAppend = new System.Windows.Forms.TextBox();
             this.checkExportEmpty = new System.Windows.Forms.CheckBox();
-            this.btnLoadAllHeaders = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label25 = new System.Windows.Forms.Label();
             this.comboCountries = new System.Windows.Forms.ComboBox();
@@ -109,6 +104,7 @@
             this.label23 = new System.Windows.Forms.Label();
             this.btnSetToEmpty = new System.Windows.Forms.Button();
             this.txtSetToEmpty = new System.Windows.Forms.TextBox();
+            this.mergeDateTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataViewer)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -120,13 +116,27 @@
             // 
             this.dataViewer.AllowUserToAddRows = false;
             this.dataViewer.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black;
+            this.dataViewer.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
             this.dataViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataViewer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.Desktop;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataViewer.DefaultCellStyle = dataGridViewCellStyle14;
             this.dataViewer.Location = new System.Drawing.Point(3, 242);
             this.dataViewer.Name = "dataViewer";
             this.dataViewer.ReadOnly = true;
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black;
+            this.dataViewer.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.dataViewer.Size = new System.Drawing.Size(915, 608);
             this.dataViewer.TabIndex = 0;
             this.dataViewer.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataViewer_CellContentDoubleClick);
@@ -140,6 +150,7 @@
             this.panelVariableControls.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelVariableControls.AutoScroll = true;
+            this.panelVariableControls.ForeColor = System.Drawing.Color.Black;
             this.panelVariableControls.Location = new System.Drawing.Point(0, 56);
             this.panelVariableControls.Name = "panelVariableControls";
             this.panelVariableControls.Size = new System.Drawing.Size(915, 180);
@@ -149,6 +160,7 @@
             // btnExport
             // 
             this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExport.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnExport.Location = new System.Drawing.Point(924, 827);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(326, 23);
@@ -181,6 +193,7 @@
             // lblFileName
             // 
             this.lblFileName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFileName.ForeColor = System.Drawing.Color.Black;
             this.lblFileName.Location = new System.Drawing.Point(1016, 775);
             this.lblFileName.Name = "lblFileName";
             this.lblFileName.Size = new System.Drawing.Size(234, 18);
@@ -189,21 +202,12 @@
             // label7
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.ForeColor = System.Drawing.Color.Black;
             this.label7.Location = new System.Drawing.Point(921, 775);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(91, 18);
             this.label7.TabIndex = 53;
             this.label7.Text = "Output file name:";
-            // 
-            // btdMergeDateTime
-            // 
-            this.btdMergeDateTime.Location = new System.Drawing.Point(12, 27);
-            this.btdMergeDateTime.Name = "btdMergeDateTime";
-            this.btdMergeDateTime.Size = new System.Drawing.Size(113, 23);
-            this.btdMergeDateTime.TabIndex = 3;
-            this.btdMergeDateTime.Text = "Merge/Split datetime";
-            this.btdMergeDateTime.UseVisualStyleBackColor = true;
-            this.btdMergeDateTime.Click += new System.EventHandler(this.btdMergeDateTime_Click);
             // 
             // menuStrip1
             // 
@@ -223,9 +227,8 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFileToolStripMenuItem,
             this.openSiteInfoToolStripMenuItem,
-            this.saveHeadersToolStripMenuItem,
-            this.loadHeadersToolStripMenuItem,
-            this.loadInMetaFileToolStripMenuItem});
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -233,81 +236,46 @@
             // openFileToolStripMenuItem
             // 
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.openFileToolStripMenuItem.Text = "Open dataset";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
             // 
             // openSiteInfoToolStripMenuItem
             // 
             this.openSiteInfoToolStripMenuItem.Name = "openSiteInfoToolStripMenuItem";
-            this.openSiteInfoToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.openSiteInfoToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.openSiteInfoToolStripMenuItem.Text = "Open .meta file";
             this.openSiteInfoToolStripMenuItem.Click += new System.EventHandler(this.openSiteInfoToolStripMenuItem_Click);
             // 
-            // saveHeadersToolStripMenuItem
+            // exitToolStripMenuItem
             // 
-            this.saveHeadersToolStripMenuItem.Name = "saveHeadersToolStripMenuItem";
-            this.saveHeadersToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
-            this.saveHeadersToolStripMenuItem.Text = "Save Headers";
-            this.saveHeadersToolStripMenuItem.Click += new System.EventHandler(this.saveHeadersToolStripMenuItem_Click);
-            // 
-            // loadHeadersToolStripMenuItem
-            // 
-            this.loadHeadersToolStripMenuItem.Name = "loadHeadersToolStripMenuItem";
-            this.loadHeadersToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
-            this.loadHeadersToolStripMenuItem.Text = "Load Headers";
-            this.loadHeadersToolStripMenuItem.Click += new System.EventHandler(this.loadHeadersToolStripMenuItem_Click);
-            // 
-            // loadInMetaFileToolStripMenuItem
-            // 
-            this.loadInMetaFileToolStripMenuItem.Name = "loadInMetaFileToolStripMenuItem";
-            this.loadInMetaFileToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
-            this.loadInMetaFileToolStripMenuItem.Text = "Load In MetaFileLocation";
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.loadInMetaFileToolStripMenuItem_Click);
             // 
             // dataToolStripMenuItem
             // 
             this.dataToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.convertDatesToStandardFormatToolStripMenuItem,
-            this.headerGuessToolStripMenuItem,
             this.sortDatesToolStripMenuItem,
-            this.setSelectedAsHeaderRowToolStripMenuItem,
-            this.stripIncompleteRowsToolStripMenuItem});
+            this.stripIncompleteRowsToolStripMenuItem,
+            this.mergeDateTimeToolStripMenuItem});
+            this.dataToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.dataToolStripMenuItem.Name = "dataToolStripMenuItem";
             this.dataToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.dataToolStripMenuItem.Text = "Data";
             // 
-            // convertDatesToStandardFormatToolStripMenuItem
-            // 
-            this.convertDatesToStandardFormatToolStripMenuItem.Name = "convertDatesToStandardFormatToolStripMenuItem";
-            this.convertDatesToStandardFormatToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
-            this.convertDatesToStandardFormatToolStripMenuItem.Text = "Convert dates to standard format";
-            this.convertDatesToStandardFormatToolStripMenuItem.Click += new System.EventHandler(this.convertDatesToStandardFormatToolStripMenuItem_Click);
-            // 
-            // headerGuessToolStripMenuItem
-            // 
-            this.headerGuessToolStripMenuItem.Name = "headerGuessToolStripMenuItem";
-            this.headerGuessToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
-            this.headerGuessToolStripMenuItem.Text = "Header guess";
-            this.headerGuessToolStripMenuItem.Click += new System.EventHandler(this.headerGuessToolStripMenuItem_Click);
-            // 
             // sortDatesToolStripMenuItem
             // 
             this.sortDatesToolStripMenuItem.Name = "sortDatesToolStripMenuItem";
-            this.sortDatesToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.sortDatesToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.sortDatesToolStripMenuItem.Text = "Sort dates";
             this.sortDatesToolStripMenuItem.Click += new System.EventHandler(this.sortDatesToolStripMenuItem_Click);
-            // 
-            // setSelectedAsHeaderRowToolStripMenuItem
-            // 
-            this.setSelectedAsHeaderRowToolStripMenuItem.Name = "setSelectedAsHeaderRowToolStripMenuItem";
-            this.setSelectedAsHeaderRowToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
-            this.setSelectedAsHeaderRowToolStripMenuItem.Text = "Set selected as header row";
-            this.setSelectedAsHeaderRowToolStripMenuItem.Click += new System.EventHandler(this.setSelectedAsHeaderRowToolStripMenuItem_Click);
             // 
             // stripIncompleteRowsToolStripMenuItem
             // 
             this.stripIncompleteRowsToolStripMenuItem.Name = "stripIncompleteRowsToolStripMenuItem";
-            this.stripIncompleteRowsToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.stripIncompleteRowsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.stripIncompleteRowsToolStripMenuItem.Text = "Strip incomplete rows";
             this.stripIncompleteRowsToolStripMenuItem.Click += new System.EventHandler(this.stripIncompleteRowsToolStripMenuItem_Click);
             // 
@@ -315,9 +283,11 @@
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addNewVaribleToolStripMenuItem});
+            this.optionsToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // addNewVaribleToolStripMenuItem
             // 
@@ -329,8 +299,8 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.gLEONConverterToolStripMenuItem,
-            this.testerToolStripMenuItem});
+            this.gLEONConverterToolStripMenuItem});
+            this.aboutToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
@@ -342,16 +312,10 @@
             this.gLEONConverterToolStripMenuItem.Text = "Data Standardizer";
             this.gLEONConverterToolStripMenuItem.Click += new System.EventHandler(this.gLEONConverterToolStripMenuItem_Click);
             // 
-            // testerToolStripMenuItem
-            // 
-            this.testerToolStripMenuItem.Name = "testerToolStripMenuItem";
-            this.testerToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.testerToolStripMenuItem.Text = "tester";
-            this.testerToolStripMenuItem.Click += new System.EventHandler(this.testerToolStripMenuItem_Click);
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
+            this.label15.ForeColor = System.Drawing.Color.Black;
             this.label15.Location = new System.Drawing.Point(230, 32);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(100, 13);
@@ -375,11 +339,12 @@
             this.checkMeta.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkMeta.Checked = true;
             this.checkMeta.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkMeta.Location = new System.Drawing.Point(1182, 804);
+            this.checkMeta.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.checkMeta.Location = new System.Drawing.Point(1163, 804);
             this.checkMeta.Name = "checkMeta";
-            this.checkMeta.Size = new System.Drawing.Size(68, 17);
+            this.checkMeta.Size = new System.Drawing.Size(87, 17);
             this.checkMeta.TabIndex = 29;
-            this.checkMeta.Text = ".meta file";
+            this.checkMeta.Text = "Metadata file";
             this.checkMeta.UseVisualStyleBackColor = true;
             // 
             // checkData
@@ -389,7 +354,8 @@
             this.checkData.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkData.Checked = true;
             this.checkData.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkData.Location = new System.Drawing.Point(1123, 804);
+            this.checkData.ForeColor = System.Drawing.Color.Black;
+            this.checkData.Location = new System.Drawing.Point(1108, 804);
             this.checkData.Name = "checkData";
             this.checkData.Size = new System.Drawing.Size(49, 17);
             this.checkData.TabIndex = 28;
@@ -398,6 +364,7 @@
             // 
             // btnAggregate
             // 
+            this.btnAggregate.ForeColor = System.Drawing.Color.Black;
             this.btnAggregate.Location = new System.Drawing.Point(3, 66);
             this.btnAggregate.Name = "btnAggregate";
             this.btnAggregate.Size = new System.Drawing.Size(318, 23);
@@ -409,6 +376,7 @@
             // comboAggregatorPeriod
             // 
             this.comboAggregatorPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboAggregatorPeriod.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.comboAggregatorPeriod.FormattingEnabled = true;
             this.comboAggregatorPeriod.Location = new System.Drawing.Point(214, 8);
             this.comboAggregatorPeriod.Name = "comboAggregatorPeriod";
@@ -451,6 +419,7 @@
             // radioForward
             // 
             this.radioForward.AutoSize = true;
+            this.radioForward.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.radioForward.Location = new System.Drawing.Point(258, 35);
             this.radioForward.Name = "radioForward";
             this.radioForward.Size = new System.Drawing.Size(63, 17);
@@ -484,6 +453,7 @@
             this.panel3.Controls.Add(this.label16);
             this.panel3.Controls.Add(this.btnAggregate);
             this.panel3.Controls.Add(this.comboAggregatorPeriod);
+            this.panel3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.panel3.Location = new System.Drawing.Point(7, 50);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(326, 93);
@@ -512,8 +482,8 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.ForeColor = System.Drawing.Color.Gray;
-            this.label21.Location = new System.Drawing.Point(140, 8);
+            this.label21.ForeColor = System.Drawing.Color.OrangeRed;
+            this.label21.Location = new System.Drawing.Point(28, 8);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(91, 13);
             this.label21.TabIndex = 94;
@@ -557,6 +527,7 @@
             // 
             this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label20.AutoSize = true;
+            this.label20.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label20.Location = new System.Drawing.Point(931, 735);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(133, 13);
@@ -566,6 +537,7 @@
             // txtFileNameAppend
             // 
             this.txtFileNameAppend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFileNameAppend.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.txtFileNameAppend.Location = new System.Drawing.Point(934, 751);
             this.txtFileNameAppend.Name = "txtFileNameAppend";
             this.txtFileNameAppend.Size = new System.Drawing.Size(216, 20);
@@ -577,22 +549,13 @@
             this.checkExportEmpty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkExportEmpty.AutoSize = true;
             this.checkExportEmpty.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkExportEmpty.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.checkExportEmpty.Location = new System.Drawing.Point(924, 804);
             this.checkExportEmpty.Name = "checkExportEmpty";
             this.checkExportEmpty.Size = new System.Drawing.Size(116, 17);
             this.checkExportEmpty.TabIndex = 27;
             this.checkExportEmpty.Text = "Include empty lines";
             this.checkExportEmpty.UseVisualStyleBackColor = true;
-            // 
-            // btnLoadAllHeaders
-            // 
-            this.btnLoadAllHeaders.Location = new System.Drawing.Point(131, 27);
-            this.btnLoadAllHeaders.Name = "btnLoadAllHeaders";
-            this.btnLoadAllHeaders.Size = new System.Drawing.Size(93, 23);
-            this.btnLoadAllHeaders.TabIndex = 4;
-            this.btnLoadAllHeaders.Text = "Load all headers";
-            this.btnLoadAllHeaders.UseVisualStyleBackColor = true;
-            this.btnLoadAllHeaders.Click += new System.EventHandler(this.btnLoadAllHeaders_Click);
             // 
             // panel2
             // 
@@ -628,6 +591,7 @@
             this.panel2.Controls.Add(this.txtOwner);
             this.panel2.Controls.Add(this.comboSiteName);
             this.panel2.Controls.Add(this.label1);
+            this.panel2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.panel2.Location = new System.Drawing.Point(924, 27);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(326, 550);
@@ -720,12 +684,12 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.label3.ForeColor = System.Drawing.Color.OrangeRed;
             this.label3.Location = new System.Drawing.Point(27, 7);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(87, 13);
+            this.label3.Size = new System.Drawing.Size(85, 13);
             this.label3.TabIndex = 92;
-            this.label3.Text = ".meta information";
+            this.label3.Text = "Meta information";
             // 
             // txtContactEmail
             // 
@@ -902,6 +866,7 @@
             // comboFileExtension
             // 
             this.comboFileExtension.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboFileExtension.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.comboFileExtension.FormattingEnabled = true;
             this.comboFileExtension.Location = new System.Drawing.Point(1156, 751);
             this.comboFileExtension.Name = "comboFileExtension";
@@ -913,7 +878,8 @@
             // 
             this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(1072, 805);
+            this.label23.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label23.Location = new System.Drawing.Point(1057, 805);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(45, 13);
             this.label23.TabIndex = 97;
@@ -921,12 +887,14 @@
             // 
             // btnSetToEmpty
             // 
+            this.btnSetToEmpty.BackColor = System.Drawing.Color.Transparent;
+            this.btnSetToEmpty.ForeColor = System.Drawing.Color.Black;
             this.btnSetToEmpty.Location = new System.Drawing.Point(579, 27);
             this.btnSetToEmpty.Name = "btnSetToEmpty";
             this.btnSetToEmpty.Size = new System.Drawing.Size(80, 23);
             this.btnSetToEmpty.TabIndex = 98;
             this.btnSetToEmpty.Text = "Set as empty";
-            this.btnSetToEmpty.UseVisualStyleBackColor = true;
+            this.btnSetToEmpty.UseVisualStyleBackColor = false;
             this.btnSetToEmpty.Click += new System.EventHandler(this.btnSetToEmpty_Click);
             // 
             // txtSetToEmpty
@@ -936,10 +904,18 @@
             this.txtSetToEmpty.Size = new System.Drawing.Size(117, 20);
             this.txtSetToEmpty.TabIndex = 99;
             // 
+            // mergeDateTimeToolStripMenuItem
+            // 
+            this.mergeDateTimeToolStripMenuItem.Name = "mergeDateTimeToolStripMenuItem";
+            this.mergeDateTimeToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.mergeDateTimeToolStripMenuItem.Text = "Merge and standardise date time";
+            this.mergeDateTimeToolStripMenuItem.Click += new System.EventHandler(this.mergeDateTimeToolStripMenuItem_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1264, 862);
             this.Controls.Add(this.txtSetToEmpty);
             this.Controls.Add(this.btnSetToEmpty);
@@ -947,7 +923,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.comboFileExtension);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.btnLoadAllHeaders);
             this.Controls.Add(this.checkExportEmpty);
             this.Controls.Add(this.txtFileNameAppend);
             this.Controls.Add(this.label20);
@@ -956,13 +931,13 @@
             this.Controls.Add(this.checkMeta);
             this.Controls.Add(this.comboEmpty);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.btdMergeDateTime);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.panelVariableControls);
             this.Controls.Add(this.dataViewer);
             this.Controls.Add(this.menuStrip1);
+            this.ForeColor = System.Drawing.Color.Transparent;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(1024, 780);
             this.Name = "FrmMain";
@@ -993,14 +968,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblFileName;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button btdMergeDateTime;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dataToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem convertDatesToStandardFormatToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem headerGuessToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openSiteInfoToolStripMenuItem;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox comboEmpty;
         private System.Windows.Forms.CheckBox checkMeta;
@@ -1020,13 +988,9 @@
         private System.Windows.Forms.DateTimePicker dateTimeAggregateEnd;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addNewVaribleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem gLEONConverterToolStripMenuItem;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TextBox txtFileNameAppend;
         private System.Windows.Forms.CheckBox checkExportEmpty;
-        private System.Windows.Forms.ToolStripMenuItem sortDatesToolStripMenuItem;
-        private System.Windows.Forms.Button btnLoadAllHeaders;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label8;
@@ -1055,18 +1019,22 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnSetToEmpty;
         private System.Windows.Forms.TextBox txtSetToEmpty;
-        private System.Windows.Forms.ToolStripMenuItem setSelectedAsHeaderRowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem stripIncompleteRowsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveHeadersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadHeadersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem testerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadInMetaFileToolStripMenuItem;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtGPSGridSystem;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtOrg;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.ComboBox comboCountries;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gLEONConverterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortDatesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stripIncompleteRowsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openSiteInfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mergeDateTimeToolStripMenuItem;
     }
 }
 

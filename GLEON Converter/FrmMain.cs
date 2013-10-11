@@ -53,9 +53,9 @@ namespace WindowsFormsApplication1
             comboFileExtension.Items.Add(".wtr");
             comboFileExtension.Items.Add(".wnd");
             comboFileExtension.Items.Add(".sal");
-            comboFileExtension.Items.Add(".tsv");
+            comboFileExtension.Items.Add(".txt");
             comboFileExtension.Items.Add(".csv");
-            comboFileExtension.SelectedText = ".tsv";
+            comboFileExtension.SelectedText = ".txt";
 
             txtGPSLat.Text = "Decimal";
             txtGPSLat.ForeColor = Color.Gray;
@@ -120,8 +120,6 @@ namespace WindowsFormsApplication1
                         stripMetadata();
                     }
                     getStartEndDates();
-                    openMetaForDataSet();
-                    openNotes();
                     setColOrderingToNatural();
                     Cursor.Current = Cursors.Default;
 
@@ -271,44 +269,6 @@ namespace WindowsFormsApplication1
                 dateTimeAggregateEnd.Text = "";
             }
         }
-        public void openMetaForDataSet()
-        {
-            if (OpenFileLocation.Contains("("))
-            {
-                string siteName = OpenFileLocation.Substring(0, OpenFileLocation.IndexOf("("));
-                string metaFile = siteName + ".meta";
-                if (File.Exists(System.Windows.Forms.Application.StartupPath + @"\Meta\" + metaFile))
-                {
-                    try
-                    {
-                        StreamReader reader = new StreamReader(System.Windows.Forms.Application.StartupPath + @"\Meta\" + metaFile);
-                        sitePropOwnerName = reader.ReadLine();
-                        sitePropContactName = reader.ReadLine();
-                        sitePropContactNumber = reader.ReadLine();
-                        sitePropContactEmail = reader.ReadLine();
-                        sitePropElevation = reader.ReadLine();
-                        sitePropGPSLat = reader.ReadLine();
-                        sitePropGPSLong = reader.ReadLine();
-                        sitePropNotes = reader.ReadToEnd();
-
-                        txtOwner.Text = sitePropOwnerName;
-                        txtContactName.Text = sitePropContactName;
-                        txtContactNumber.Text = sitePropContactNumber;
-                        txtContactEmail.Text = sitePropContactEmail;
-                        txtElevation.Text = sitePropElevation;
-                        txtGPSLat.Text = sitePropGPSLat.ToString();
-                        txtGPSLong.Text = sitePropGPSLong.ToString();
-                        txtSiteNotes.Text = sitePropNotes;
-
-                    }
-                    catch (Exception excep)
-                    {
-                        MessageBox.Show(excep.ToString());
-                    }
-                }
-
-            }
-        }
         /// <summary>
         /// removes the parts of the meta file that make it user firendly to read 
         /// </summary>
@@ -324,34 +284,38 @@ namespace WindowsFormsApplication1
 
         public void openMeta(string filepath)
         {
-                    try
-                    {
-                        int iss;
-                        string numSensors, loopStr;
-                        StreamReader reader = new StreamReader(filepath);
-                        reader.ReadLine(); // Throwing away asscoiated file
-                        sitePropName = reader.ReadLine();
-                        sitePropOwnerName = reader.ReadLine();
-                        sitePropGPSLat = reader.ReadLine();
-                        sitePropGPSLong = reader.ReadLine();
-                        sitePropGPSGrid = reader.ReadLine();
-                        sitePropElevation = reader.ReadLine();
-                        reader.ReadLine(); // Throwing away contact header
-                        sitePropContactName = reader.ReadLine();
-                        sitePropOrgnisation = reader.ReadLine(); 
-                        sitePropContactNumber = reader.ReadLine();
-                        sitePropContactEmail = reader.ReadLine();
-                        //sitePropNotes = reader.ReadToEnd();
-                        numSensors = reader.ReadLine();
+                try
+                {
+                    int iss;
+                    string numSensors, loopStr, countryName;
+                    StreamReader reader = new StreamReader(filepath);
+                    reader.ReadLine(); // Throwing away asscoiated file
+                    sitePropName = reader.ReadLine();
+                    sitePropOwnerName = reader.ReadLine();
+                    sitePropGPSLat = reader.ReadLine();
+                    sitePropGPSLong = reader.ReadLine();
+                    sitePropGPSGrid = reader.ReadLine();
+                    sitePropElevation = reader.ReadLine();
+                    countryName = reader.ReadLine();
+                    reader.ReadLine(); // Throwing away contact header
+                    sitePropContactName = reader.ReadLine();
+                    sitePropOrgnisation = reader.ReadLine();
+                    sitePropContactNumber = reader.ReadLine();
+                    sitePropContactEmail = reader.ReadLine();
+                    //sitePropNotes = reader.ReadToEnd();
+                    numSensors = reader.ReadLine();
 
-                        iss = Int32.Parse(CleanMetaIn(numSensors, 19));
-                        reader.ReadLine();
-                        string[] arr4 = new string[iss + 1];
+                    iss = Int32.Parse(CleanMetaIn(numSensors, 19));
+                    string[] arr4 = new string[iss + 1];
+                    reader.ReadLine();
+                    if (iss != 0)
+                    {
+                        
                         for (int i = 0; i <= iss; i++)
                         {
                             loopStr = reader.ReadLine();
                             arr4[i] = loopStr;
-                            
+
                             while (!string.IsNullOrEmpty(loopStr))
                             {
 
@@ -360,37 +324,54 @@ namespace WindowsFormsApplication1
                             }
                         }
 
-                        
-                        comboSiteName.Text = CleanMetaIn(sitePropName, 11);
-                        txtOwner.Text = CleanMetaIn(sitePropOwnerName, 7);
-                        txtContactName.Text = CleanMetaIn(sitePropContactName, 6);
-                        txtContactNumber.Text = CleanMetaIn(sitePropContactNumber, 7);
-                        txtContactEmail.Text = CleanMetaIn(sitePropContactEmail, 7);
-                        txtElevation.Text = CleanMetaIn(sitePropElevation, 17);
-                        txtGPSGridSystem.Text = CleanMetaIn(sitePropGPSGrid, 17);
-                        txtGPSLat.Text = CleanMetaIn(sitePropGPSLat.ToString(), 19);
-                        txtGPSLong.Text = CleanMetaIn(sitePropGPSLong.ToString(), 19);
-                        txtOrg.Text = CleanMetaIn(sitePropOrgnisation, 14);  
-                        txtSiteNotes.Text = sitePropNotes;
-                        string comboMainName = "0ComboMain";
-                        Control comboMaintemp = panelVariableControls.Controls[comboMainName];
-                        ComboBox comboMain = comboMaintemp as ComboBox;
-                        comboMain.Text = "DateTime";
-                        string ButtonName = "0Btn";
-                        Control ButtonTemp = panelVariableControls.Controls[ButtonName];
-                        Button ButtonNewHeader = ButtonTemp as Button;
-                        ButtonNewHeader.Enabled = true;
+                    }
+                    reader.ReadLine();// Throws away Dataset Header
+                    string note = reader.ReadLine();
+                    do
+                    {
+                        txtDataSetNotes.AppendText(note);
+                        note = reader.ReadLine();
+                    } while (!String.IsNullOrWhiteSpace(note));
+                    reader.ReadLine(); // Throws away site note header
+                    txtSiteNotes.Text = reader.ReadToEnd();
+
+                    comboSiteName.Text = CleanMetaIn(sitePropName, 11);
+                    txtOwner.Text = CleanMetaIn(sitePropOwnerName, 7);
+                    txtContactName.Text = CleanMetaIn(sitePropContactName, 6);
+                    txtContactNumber.Text = CleanMetaIn(sitePropContactNumber, 7);
+                    txtContactEmail.Text = CleanMetaIn(sitePropContactEmail, 7);
+                    txtElevation.Text = CleanMetaIn(sitePropElevation, 17);
+                    txtGPSGridSystem.Text = CleanMetaIn(sitePropGPSGrid, 17);
+                    txtGPSLat.Text = CleanMetaIn(sitePropGPSLat.ToString(), 19);
+                    txtGPSLong.Text = CleanMetaIn(sitePropGPSLong.ToString(), 19);
+                    txtOrg.Text = CleanMetaIn(sitePropOrgnisation, 14);
+                    txtSiteNotes.Text = sitePropNotes;
+                    comboCountries.Text = CleanMetaIn(countryName, 8);
+
+                    string comboMainName = "0ComboMain";
+                    Control comboMaintemp = panelVariableControls.Controls[comboMainName];
+                    ComboBox comboMain = comboMaintemp as ComboBox;
+                    comboMain.Text = "DateTime";
+                    string ButtonName = "0Btn";
+                    Control ButtonTemp = panelVariableControls.Controls[ButtonName];
+                    Button ButtonNewHeader = ButtonTemp as Button;
+                    ButtonNewHeader.Enabled = true;
+                    if (iss != 0)
+                    {
                         for (int i = 0; i <= iss; i++)
                         {
-                            
-                            addSensorData(i+1, arr4[i]);
-                        }
 
+                            addSensorData(i + 1, arr4[i]);
+                        }
                     }
-                    catch (Exception excep)
-                    {
-                        MessageBox.Show(excep.ToString());
-                    }
+
+
+                }
+                catch (Exception excep)
+                {
+                    MessageBox.Show(excep.ToString());
+                }
+            
                
         }
 
@@ -459,21 +440,6 @@ namespace WindowsFormsApplication1
         }
 
     }
-        private void openNotes()
-        {
-            if (File.Exists(OpenFileLocation.Substring(0, OpenFileLocation.IndexOf('.')) + ".notes"))
-            {
-                try
-                {
-                    StreamReader reader = new StreamReader(OpenFileLocation.Substring(0, OpenFileLocation.IndexOf('.')) + ".notes");
-                    txtDataSetNotes.Text = reader.ReadToEnd();
-                }
-                catch (Exception excep)
-                {
-                    MessageBox.Show(excep.ToString());
-                }
-            }
-        }
 
         /// <summary>
         /// If there is a unit row in the raw dataset it puts he units nto the unit combo box.
@@ -696,8 +662,7 @@ namespace WindowsFormsApplication1
                 {
                     lineCount++;
                     lineparts = line.Split('\t');
-                    if (lineCount != 1)
-                    {
+
                         string recUnit;
                         testTypeUnits units = new testTypeUnits();
                         units.possibleUnits = new List<string>();
@@ -718,8 +683,8 @@ namespace WindowsFormsApplication1
                             }
                         }
                         GLEONCodeData.Add(units);
-                    }
 
+                    
                 }
                 return true;
             }
@@ -1564,10 +1529,13 @@ namespace WindowsFormsApplication1
 
         private void openSiteInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //if (, System.Windows.Forms.Application.StartupPath + @"\Meta\") != null)
-            //{
-            openMeta(getFiletoRead("Meta Files (*.meta)| *.meta", System.Windows.Forms.Application.StartupPath));
-            //}
+            if (dataViewer.RowCount <= 0)
+            {
+                MessageBox.Show("Please load a dataset before loading in a meta file", "Error importing metadata");
+            }
+            else{
+            openMeta(getFiletoRead("Metadata files (*.txt)| *.txt", System.Windows.Forms.Application.StartupPath));
+            }
         }
         #endregion
         #region dataViewer
@@ -1580,7 +1548,7 @@ namespace WindowsFormsApplication1
             Control comboMaintemp = panelVariableControls.Controls[comboMainName];
             ComboBox comboMain = comboMaintemp as ComboBox;
             int locationX = comboMain.Location.X;
-            for (int i = colNum; i <= dataViewer.Columns.Count - 1; i++)
+            for (int i = colNum; i < dataViewer.Columns.Count - 1; i++)
             {
                 comboMainName = i + "ComboMain";
                 comboMaintemp = panelVariableControls.Controls[comboMainName];
@@ -1736,6 +1704,7 @@ namespace WindowsFormsApplication1
         #region Saving
         private void btnExport_Click(object sender, EventArgs e)
         {
+            bool contin = false;
             string siteName = comboSiteName.Text;
             string countryCode = Regex.Match(comboCountries.Text, @"\(([^)]*)\)").Groups[1].Value;
             string startDate = dateTimeAggregateStart.Value.ToString("yyyyMM");
@@ -1752,53 +1721,73 @@ namespace WindowsFormsApplication1
             else if (fileExtension == "")
                 MessageBox.Show("Please enter a file extension", "Invalid Metadata", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             else if (HeaderSelected == false)
-                MessageBox.Show("Please select a header row.\n\rThis is to guarantee the header row you want is used.","", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            else if (wasteCheck())
-                MessageBox.Show("Some of your rows have been detected as 'waste rows'.\n\rYou can clear these rows by using the 'Strip Metadata button'.","Your table contains waste rows" ,MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            else
-            {
-                if (checkData.Checked == true)
+                MessageBox.Show("Please select a header row.\n\rThis is to guarantee the header row you want is used.", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            else if(wasteCheck())
                 {
-                    if (checkExportEmpty.Checked)
+                    if (MessageBox.Show("Some of your rows have been detected as 'waste rows'.\n\rYou can clear these rows by using the 'Strip incomplete rows' button. Continue with current format?", "Your table contains waste rows", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                     {
-                        FillMissingRows();
+                        contin = true;
                     }
-                    string fileName;
-                    if (txtFileNameAppend.Text == "")
-                    {
-                        fileName = @"Output\" + siteName + "(" + countryCode + ")_" + startDate + "-" + endDate +fileExtension;
-                    }
-                    else
-                    {
-                        fileName = @"Output\" + siteName + "(" + countryCode + ")_" + startDate + "-" + endDate + "_" + txtFileNameAppend.Text + fileExtension;
-                    }
-                    if (File.Exists(fileName))
-                    {
-                        DialogResult result = MessageBox.Show("File \"" + fileName + "\" already exists.\n\rDo you want to overwrite this file?", "File already exists", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                        if (result == DialogResult.Yes)
-                        {
-                            saveOutput(fileName);
-                        }
-                    }
-                    else
-                        saveOutput(fileName);
                 }
-                if (checkMeta.Checked == true)
+                else
                 {
-                    string fileName = siteName + "(" + countryCode + ").meta";
-                    MessageBox.Show(fileName);
-                    if (File.Exists(@"Meta\" + fileName))
-                    {
-                        DialogResult result = MessageBox.Show("File \"" + fileName + "\" already exists.\n\rDo you want to overwrite this file?", "File already exists", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                        if (result == DialogResult.Yes)
-                        {
-                            saveMeta();
-                        }
-                    }
-                    else
-                        saveMeta();
+                    contin = true;
                 }
-            }
+
+            if(contin)
+             {
+
+                        FolderBrowserDialog exportTo = new FolderBrowserDialog();
+                        if(exportTo.ShowDialog() == DialogResult.OK)
+                        {
+                        if (checkData.Checked == true)
+                        {
+                            if (checkExportEmpty.Checked)
+                            {
+                                FillMissingRows();
+                            }
+                            string fileName;
+                            if (txtFileNameAppend.Text == "")
+                            {
+                                fileName = exportTo.SelectedPath + "\\" + siteName + "(" + countryCode + ")_" + startDate + "-" + endDate + fileExtension;
+                            }
+                            else
+                            {
+                                fileName = exportTo.SelectedPath + "\\" + siteName + "(" + countryCode + ")_" + startDate + "-" + endDate + "_" + txtFileNameAppend.Text + fileExtension;
+                            }
+                            if (File.Exists(fileName))
+                            {
+                                DialogResult result = MessageBox.Show("File \"" + fileName + "\" already exists.\n\rDo you want to overwrite this file?", "File already exists", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                                if (result == DialogResult.Yes)
+                                {
+                                    saveOutput(fileName);
+                                }
+                            }
+                            else
+                                saveOutput(fileName);
+                        }
+
+
+                        if (checkMeta.Checked == true)
+                        {
+                            string fileName = exportTo.SelectedPath + "\\"  + siteName + "(" + countryCode + ").txt";
+                            if (File.Exists(fileName))
+                            {
+                                DialogResult result = MessageBox.Show("File \"" + fileName + "\" already exists.\n\rDo you want to overwrite this file?", "File already exists", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                                if (result == DialogResult.Yes)
+                                {
+                                    saveMeta(fileName);
+                                }
+                            }
+                            else
+                                saveMeta(fileName);
+                        }
+
+
+                    }
+                    }
+            
+            
             
         }
         public void FillMissingRows()
@@ -1897,7 +1886,7 @@ namespace WindowsFormsApplication1
                 }
                 if (headersFormatedCorrectly)
                 {
-                        saveDataSetNotes(fileName);
+                        
                         switch (comboFileExtension.Text)
                         {
                             case (".wtr"):
@@ -1922,7 +1911,7 @@ namespace WindowsFormsApplication1
                     DialogResult result = MessageBox.Show("Some of your headers appear to be incorrectly formatted.\n\rDo you wish to save anyway?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     if (result == DialogResult.Yes)
                     {
-                        saveDataSetNotes(fileName);
+                        
                         switch (comboFileExtension.Text)
                         {
                             case (".wtr"):
@@ -2231,9 +2220,9 @@ namespace WindowsFormsApplication1
         /// <summary>
         /// Saves the meta data about the lake and the dataset into the .meta format used by both this and B3
         /// </summary>
-        private void saveMeta()
+        private void saveMeta(string fileName)
         {
-            using (StreamWriter sWriter = new StreamWriter(@"Meta\" + comboSiteName.Text + ".meta"))
+            using (StreamWriter sWriter = new StreamWriter(fileName))
             {
                 sWriter.WriteLine("Associated File: " + txtFileNameAppend.Text);
                 sWriter.WriteLine("Site Name: " + comboSiteName.Text);
@@ -2242,6 +2231,7 @@ namespace WindowsFormsApplication1
                 sWriter.WriteLine("Longitude/Easting: " + sitePropGPSLong.ToString());
                 sWriter.WriteLine("GPS Grid System: " + txtGPSGridSystem.Text);
                 sWriter.WriteLine("Elevation: " + sitePropElevation);
+                sWriter.WriteLine("Country: " + comboCountries.Text);
                 sWriter.WriteLine("Contact");
                 sWriter.WriteLine("Name: " + sitePropContactName);
                 sWriter.WriteLine("Organisation: " + txtOrg.Text);
@@ -2264,13 +2254,7 @@ namespace WindowsFormsApplication1
                 sWriter.Close();
             }
         }
-        private void saveDataSetNotes(string fileName)
-        {
-            using (StreamWriter sWriter = new StreamWriter(fileName.Substring(0, fileName.IndexOf('.')) + ".notes"))
-            {
-                sWriter.WriteLine(txtDataSetNotes.Text);
-            }
-        }
+
 #endregion
 
         #region Site MetaData
@@ -2397,37 +2381,6 @@ namespace WindowsFormsApplication1
 
         private void comboCountries_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //foreach (Control controlTemp in panelVariableControls.Controls)
-            //{
-            //    if (controlTemp.Name.Length == 10 && controlTemp.Name.Substring(1, 9) == "ComboMain")
-            //    {
-            //        ComboBox combo = controlTemp as ComboBox;
-            //        if (combo.Text == "DateTime")
-            //        {
-            //            string colNum = combo.Name.Substring(0, 1);
-            //            string combo3Name = colNum + "Combo3";
-            //            Control combo3temp = panelVariableControls.Controls[combo3Name];
-            //            ComboBox combo3 = combo3temp as ComboBox;
-            //            combo3.Enabled = true;
-            //            combo3.Items.Clear();
-            //            if (comboCountries.Text != "")
-            //            {
-            //                string countryCode = Regex.Match(comboCountries.Text, @"\(([^)]*)\)").Groups[1].Value;
-            //                foreach (countryCodesTimes testCountry in countriesData)
-            //                {
-            //                    if (testCountry.countryCode == countryCode)
-            //                    {
-            //                        foreach (string timeZone in testCountry.countryTimeZone)
-            //                        {
-            //                            combo3.Items.Add(timeZone);
-            //                        }
-
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
             updateFileNameLabel();
         }
 
@@ -2449,19 +2402,27 @@ namespace WindowsFormsApplication1
             }
             if (dateCol == -1)
             {
-                MergeDateTime();
-                resetColumnNames();
-                standardizeDateColumn();
-                return false;
+                bool j = MergeDateTime();
+                if (j == true)
+                {
+
+                    resetColumnNames();
+                    standardizeDateColumn();
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
             else
             {
                 bool errorRows = false;
                 FrmDateFormat getDateFormat = new FrmDateFormat();
                 getDateFormat.input = dataViewer.Rows[1].Cells[dateCol].Value.ToString();
-                getDateFormat.ShowDialog();
-                if (getDateFormat.cancel == false)
-                {
+                getDateFormat.tryCustom();
+               // if (getDateFormat.cancel == false)
+               // {
                     if (getDateFormat.validFormat)
                     {
                         dateConverter.acceptedFormat = getDateFormat.format;
@@ -2487,8 +2448,8 @@ namespace WindowsFormsApplication1
                     {
                         MessageBox.Show("Conversion incomplete.An unconvertable value was encountered.\n\rPlease add the date format to the 'Formats.txt' Control File.\n\rAlternatively remove the errored row before attempting to standardize dates.");
                     }
-                }
-                toReturn = getDateFormat.cancel;
+                //}
+                toReturn = true;
                 getDateFormat.Close();
                 return toReturn;
             }
@@ -2782,7 +2743,7 @@ namespace WindowsFormsApplication1
             FrmLoadIn open = new FrmLoadIn();
             this.Hide();
             open.ShowDialog();
-            if (open.exitByCancel == false) // Check to see if open exited by cancel
+            if (open.exitByCancel == false && !String.IsNullOrWhiteSpace(open.dataFileLoc)) // Check to see if open exited by cancel
             {
                 OpenFileLocation = open.dataFileLoc;
                 MetaFileLocation = open.metaFileLoc;
@@ -2796,11 +2757,7 @@ namespace WindowsFormsApplication1
                         {
                             openMeta(MetaFileLocation);
                         }
-                        else
-                        {
-                            HeaderGuess();
-                            
-                        }
+
                         getStartEndDates();
                         open.Close();
                         this.Show();
@@ -3059,22 +3016,28 @@ namespace WindowsFormsApplication1
                     }
                     else
                     {
-                        btnAggregate.Text = "Revert to full data set";
-                        string periodType = comboAggregatorPeriod.Text;
+                        
                         if (radioBackward.Checked)
                         {
+                            btnAggregate.Text = "Revert to full data set";
+                            string periodType = comboAggregatorPeriod.Text;
                             direction = "Backward";
                             Aggregate(direction, periodNumber, periodType);
                             getStartEndDates();
+
                         }
                         else if (radioCentered.Checked)
                         {
+                            btnAggregate.Text = "Revert to full data set";
+                            string periodType = comboAggregatorPeriod.Text;
                             direction = "Centered";
                             Aggregate(direction, periodNumber, periodType);
                             getStartEndDates();
                         }
                         else if (radioForward.Checked)
                         {
+                            btnAggregate.Text = "Revert to full data set";
+                            string periodType = comboAggregatorPeriod.Text;
                             direction = "Forward";
                             Aggregate(direction, periodNumber, periodType);
                             getStartEndDates();
@@ -3204,7 +3167,8 @@ namespace WindowsFormsApplication1
             int lastValRow;
             tempTime = DateTime.MinValue;
             periodEndTime = startTime;
-            aggregatedTable.ImportRow(InputTable.Rows[0]);
+            DataRow headers = InputTable.Rows[0];
+            aggregatedTable.ImportRow(headers);
             int runNum = 1;
             int firstRowHolder = 1;
             int lastRowHolder = 1;
@@ -3459,44 +3423,51 @@ namespace WindowsFormsApplication1
 
         private void addNewVaribleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmNewVariable newVariable = new FrmNewVariable();
-            newVariable.ShowDialog();
-            if (newVariable.exitByCancel == false)
+            if (InputTable != null)
             {
-                try
+                FrmNewVariable newVariable = new FrmNewVariable();
+                newVariable.ShowDialog();
+                if (newVariable.exitByCancel == false)
                 {
-                    //Assembly assembly = Assembly.GetExecutingAssembly();
-                    //Stream objStream = assembly.GetManifestResourceStream("GetPropertiesSample.License.txt");
-                    StreamWriter writer = File.AppendText(@"Control Files\ABBREVIATIONS.txt");
-                    string output = newVariable.testCode + '\t' + newVariable.testName;
-                    testTypeUnits newTest = new testTypeUnits();
-                    newTest.possibleUnits = new List<string>();
-                    newTest.testCode = newVariable.testCode;
-                    newTest.testName = newVariable.testName;
-                    if (newVariable.RecommendedUnits != "")
+                    try
                     {
-                        output += '\t' + newVariable.RecommendedUnits;
-                        newTest.RecommendedUnits = newVariable.RecommendedUnits;
-                        newTest.possibleUnits.Add(newVariable.RecommendedUnits);
-                        if (newVariable.possibleUnits.Count != 0)
+                        //Assembly assembly = Assembly.GetExecutingAssembly();
+                        //Stream objStream = assembly.GetManifestResourceStream("GetPropertiesSample.License.txt");
+                        StreamWriter writer = File.AppendText(@"Control Files\ABBREVIATIONS.txt");
+                        string output = newVariable.testCode + '\t' + newVariable.testName;
+                        testTypeUnits newTest = new testTypeUnits();
+                        newTest.possibleUnits = new List<string>();
+                        newTest.testCode = newVariable.testCode;
+                        newTest.testName = newVariable.testName;
+                        if (newVariable.RecommendedUnits != "")
                         {
-                            output += '\t';
-                            foreach (string posUnits in newVariable.possibleUnits)
+                            output += '\t' + newVariable.RecommendedUnits;
+                            newTest.RecommendedUnits = newVariable.RecommendedUnits;
+                            newTest.possibleUnits.Add(newVariable.RecommendedUnits);
+                            if (newVariable.possibleUnits.Count != 0)
                             {
-                                output += posUnits;
-                                newTest.possibleUnits.Add(posUnits);
+                                output += '\t';
+                                foreach (string posUnits in newVariable.possibleUnits)
+                                {
+                                    output += posUnits;
+                                    newTest.possibleUnits.Add(posUnits);
+                                }
                             }
                         }
+                        writer.WriteLine(output);
+                        writer.Close();
+                        GLEONCodeData.Add(newTest);
+                        newVariable.Close();
                     }
-                    writer.WriteLine(output);
-                    writer.Close();
-                    GLEONCodeData.Add(newTest);
-                    newVariable.Close();
+                    catch (Exception excep)
+                    {
+                        MessageBox.Show(excep.ToString());
+                    }
                 }
-                catch (Exception excep)
-                {
-                    MessageBox.Show(excep.ToString());
-                }
+            }
+            else
+            {
+                MessageBox.Show("You have not opened a valid data table yet", "Invalid Data", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -3645,52 +3616,66 @@ namespace WindowsFormsApplication1
 
         private void btnSetToEmpty_Click(object sender, EventArgs e)
         {
-            for (int y = 0; y < InputTable.Rows.Count; y++)
+            if (InputTable != null)
             {
-                for (int x = 0; x < InputTable.Columns.Count; x++)
+                for (int y = 0; y < InputTable.Rows.Count; y++)
                 {
-                    if (InputTable.Rows[y].ItemArray[x].ToString() == txtSetToEmpty.Text)
+                    for (int x = 0; x < InputTable.Columns.Count; x++)
                     {
-                        InputTable.Rows[y].ItemArray[x] = blankPhrase;
+                        if (InputTable.Rows[y].ItemArray[x].ToString() == txtSetToEmpty.Text)
+                        {
+                            InputTable.Rows[y].ItemArray[x] = blankPhrase;
+                        }
                     }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please load a data table first", "No data table loaded");
             }
         }
 
         private void saveHeadersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmEnterFileName enterFileName = new FrmEnterFileName();
-            enterFileName.ShowDialog();
-            if (enterFileName.exitByCancel == false)
+            if (InputTable != null)
             {
-                using (StreamWriter sWriter = new StreamWriter(System.Windows.Forms.Application.StartupPath + @"\Headers\" + enterFileName.filename+".hdr"))
+                FrmEnterFileName enterFileName = new FrmEnterFileName();
+                enterFileName.ShowDialog();
+                if (enterFileName.exitByCancel == false)
                 {
-                    sWriter.WriteLine(InputTable.Columns.Count);
-                    for (int i = 0; i < InputTable.Columns.Count; i++)
+                    using (StreamWriter sWriter = new StreamWriter(System.Windows.Forms.Application.StartupPath + @"\Headers\" + enterFileName.filename + ".hdr"))
                     {
-                        int index = i;
-                        string comboMainName = index + "ComboMain";
-                        Control comboMaintemp = panelVariableControls.Controls[comboMainName];
-                        ComboBox comboMain = comboMaintemp as ComboBox;
-                        string combo2Name = index + "Combo2";
-                        Control combo2temp = panelVariableControls.Controls[combo2Name];
-                        ComboBox combo2 = combo2temp as ComboBox;
-                        string combo3Name = index + "Combo3";
-                        Control combo3temp = panelVariableControls.Controls[combo3Name];
-                        ComboBox combo3 = combo3temp as ComboBox;
-                        string combo4Name = index + "Combo4";
-                        Control combo4temp = panelVariableControls.Controls[combo4Name];
-                        ComboBox combo4 = combo4temp as ComboBox;
-                        string Text1Name = index + "Text1";
-                        Control Text1temp = panelVariableControls.Controls[Text1Name];
-                        TextBox Text1 = Text1temp as TextBox;
-                        string Text2Name = index + "Text2";
-                        Control Text2temp = panelVariableControls.Controls[Text2Name];
-                        TextBox Text2 = Text2temp as TextBox;
-                        sWriter.WriteLine(comboMain.Text + "\t" + combo2.Text + "\t" + combo3.Text + "\t" + combo4.Text + "\t" + Text1.Text + "\t" + Text2.Text);
+                        sWriter.WriteLine(InputTable.Columns.Count);
+                        for (int i = 0; i < InputTable.Columns.Count; i++)
+                        {
+                            int index = i;
+                            string comboMainName = index + "ComboMain";
+                            Control comboMaintemp = panelVariableControls.Controls[comboMainName];
+                            ComboBox comboMain = comboMaintemp as ComboBox;
+                            string combo2Name = index + "Combo2";
+                            Control combo2temp = panelVariableControls.Controls[combo2Name];
+                            ComboBox combo2 = combo2temp as ComboBox;
+                            string combo3Name = index + "Combo3";
+                            Control combo3temp = panelVariableControls.Controls[combo3Name];
+                            ComboBox combo3 = combo3temp as ComboBox;
+                            string combo4Name = index + "Combo4";
+                            Control combo4temp = panelVariableControls.Controls[combo4Name];
+                            ComboBox combo4 = combo4temp as ComboBox;
+                            string Text1Name = index + "Text1";
+                            Control Text1temp = panelVariableControls.Controls[Text1Name];
+                            TextBox Text1 = Text1temp as TextBox;
+                            string Text2Name = index + "Text2";
+                            Control Text2temp = panelVariableControls.Controls[Text2Name];
+                            TextBox Text2 = Text2temp as TextBox;
+                            sWriter.WriteLine(comboMain.Text + "\t" + combo2.Text + "\t" + combo3.Text + "\t" + combo4.Text + "\t" + Text1.Text + "\t" + Text2.Text);
+                        }
+                        MessageBox.Show("File saved");
                     }
-                    MessageBox.Show("File saved");
                 }
+            }
+            else
+            {
+                MessageBox.Show("No data table loaded, please load a datatable first", "Please load data table");
             }
         }
 
@@ -3764,11 +3749,6 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void testerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            checkFoldersExist();
-        }
-
         private void markIncompleteRowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             stripMetadata();
@@ -3783,6 +3763,32 @@ namespace WindowsFormsApplication1
         {
 
         }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void loadInMetaFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+
+        }
+
+        private void mergeDateTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(InputTable != null)
+            {
+                standardizeDateColumn();
+                getStartEndDates();
+            }
+
+            else{
+                MessageBox.Show("Please load a input file first", "No data loaded");
+            }
+        }
+
+
 
 
 

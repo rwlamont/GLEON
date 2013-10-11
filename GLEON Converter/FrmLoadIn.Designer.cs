@@ -41,6 +41,7 @@
             // lblData
             // 
             this.lblData.AutoSize = true;
+            this.lblData.BackColor = System.Drawing.Color.White;
             this.lblData.Location = new System.Drawing.Point(59, 53);
             this.lblData.Name = "lblData";
             this.lblData.Size = new System.Drawing.Size(49, 13);
@@ -50,6 +51,7 @@
             // lblMeta
             // 
             this.lblMeta.AutoSize = true;
+            this.lblMeta.BackColor = System.Drawing.Color.White;
             this.lblMeta.Location = new System.Drawing.Point(59, 130);
             this.lblMeta.Name = "lblMeta";
             this.lblMeta.Size = new System.Drawing.Size(50, 13);
@@ -114,6 +116,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(603, 352);
             this.Controls.Add(this.brnCancel);
             this.Controls.Add(this.btnNext);
@@ -125,6 +128,7 @@
             this.Controls.Add(this.lblData);
             this.Name = "FrmLoadIn";
             this.Text = "LoadIn";
+            this.Load += new System.EventHandler(this.FrmLoadIn_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

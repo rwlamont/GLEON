@@ -168,6 +168,11 @@ namespace WindowsFormsApplication1
             }
 
         }
+        public void tryCustom()
+        {
+            checkCustom.Checked = true;
+            update();
+        }
         private void update()
         {
             //Update format

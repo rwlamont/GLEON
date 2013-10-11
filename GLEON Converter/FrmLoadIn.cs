@@ -42,7 +42,7 @@ namespace WindowsFormsApplication1
         private void btnMeta_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "meta files (*.meta)|*.meta|All files (*.*)|*.*";
+            dialog.Filter = "Metadata files (*.txt)|*.txt|All files (*.*)|*.*";
             dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             dialog.Title = "Please select a Data File";
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -85,6 +85,11 @@ namespace WindowsFormsApplication1
         {
             exitByCancel = true;
             this.Hide();
+        }
+
+        private void FrmLoadIn_Load(object sender, EventArgs e)
+        {
+
         }
 
 
