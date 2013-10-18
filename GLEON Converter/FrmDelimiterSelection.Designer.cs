@@ -137,12 +137,14 @@
             // 
             // btnHeaderRow
             // 
+            this.btnHeaderRow.BackColor = System.Drawing.Color.OrangeRed;
+            this.btnHeaderRow.ForeColor = System.Drawing.Color.Black;
             this.btnHeaderRow.Location = new System.Drawing.Point(168, 461);
             this.btnHeaderRow.Name = "btnHeaderRow";
             this.btnHeaderRow.Size = new System.Drawing.Size(116, 23);
             this.btnHeaderRow.TabIndex = 11;
-            this.btnHeaderRow.Text = "Header Row";
-            this.btnHeaderRow.UseVisualStyleBackColor = true;
+            this.btnHeaderRow.Text = "Set Header Row";
+            this.btnHeaderRow.UseVisualStyleBackColor = false;
             this.btnHeaderRow.Click += new System.EventHandler(this.btnHeaderRow_Click);
             // 
             // FrmDelimiterSelection

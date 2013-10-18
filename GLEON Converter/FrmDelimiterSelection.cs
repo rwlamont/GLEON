@@ -205,7 +205,7 @@ namespace WindowsFormsApplication1
             }
             else
             {
-                MessageBox.Show(" You have not selected a singular row, please select the header row", "Error");
+                MessageBox.Show(" Please select a single header row, please select the header row", "Error");
             }
         }
 

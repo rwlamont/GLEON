@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataViewer = new System.Windows.Forms.DataGridView();
             this.panelVariableControls = new System.Windows.Forms.Panel();
             this.btnExport = new System.Windows.Forms.Button();
@@ -46,6 +48,7 @@
             this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortDatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stripIncompleteRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mergeDateTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewVaribleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,7 +107,7 @@
             this.label23 = new System.Windows.Forms.Label();
             this.btnSetToEmpty = new System.Windows.Forms.Button();
             this.txtSetToEmpty = new System.Windows.Forms.TextBox();
-            this.mergeDateTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pullUpStuffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataViewer)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -116,27 +119,45 @@
             // 
             this.dataViewer.AllowUserToAddRows = false;
             this.dataViewer.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black;
-            this.dataViewer.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.dataViewer.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.Desktop;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataViewer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataViewer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.Desktop;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataViewer.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.Desktop;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataViewer.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataViewer.Location = new System.Drawing.Point(3, 242);
             this.dataViewer.Name = "dataViewer";
             this.dataViewer.ReadOnly = true;
-            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black;
-            this.dataViewer.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.Desktop;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataViewer.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
+            this.dataViewer.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            this.dataViewer.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
+            this.dataViewer.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
             this.dataViewer.Size = new System.Drawing.Size(915, 608);
             this.dataViewer.TabIndex = 0;
             this.dataViewer.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataViewer_CellContentDoubleClick);
@@ -150,6 +171,7 @@
             this.panelVariableControls.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelVariableControls.AutoScroll = true;
+            this.panelVariableControls.BackColor = System.Drawing.Color.Transparent;
             this.panelVariableControls.ForeColor = System.Drawing.Color.Black;
             this.panelVariableControls.Location = new System.Drawing.Point(0, 56);
             this.panelVariableControls.Name = "panelVariableControls";
@@ -164,7 +186,7 @@
             this.btnExport.Location = new System.Drawing.Point(924, 827);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(326, 23);
-            this.btnExport.TabIndex = 30;
+            this.btnExport.TabIndex = 34;
             this.btnExport.Text = "Export";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
@@ -177,7 +199,7 @@
             this.txtDataSetNotes.Name = "txtDataSetNotes";
             this.txtDataSetNotes.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtDataSetNotes.Size = new System.Drawing.Size(306, 127);
-            this.txtDataSetNotes.TabIndex = 16;
+            this.txtDataSetNotes.TabIndex = 19;
             this.txtDataSetNotes.TextChanged += new System.EventHandler(this.txtDataSetNotes_TextChanged);
             // 
             // label6
@@ -197,7 +219,7 @@
             this.lblFileName.Location = new System.Drawing.Point(1016, 775);
             this.lblFileName.Name = "lblFileName";
             this.lblFileName.Size = new System.Drawing.Size(234, 18);
-            this.lblFileName.TabIndex = 52;
+            this.lblFileName.TabIndex = 30;
             // 
             // label7
             // 
@@ -219,7 +241,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1264, 24);
-            this.menuStrip1.TabIndex = 72;
+            this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
@@ -259,7 +281,8 @@
             this.dataToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sortDatesToolStripMenuItem,
             this.stripIncompleteRowsToolStripMenuItem,
-            this.mergeDateTimeToolStripMenuItem});
+            this.mergeDateTimeToolStripMenuItem,
+            this.pullUpStuffToolStripMenuItem});
             this.dataToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.dataToolStripMenuItem.Name = "dataToolStripMenuItem";
             this.dataToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
@@ -268,16 +291,23 @@
             // sortDatesToolStripMenuItem
             // 
             this.sortDatesToolStripMenuItem.Name = "sortDatesToolStripMenuItem";
-            this.sortDatesToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.sortDatesToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.sortDatesToolStripMenuItem.Text = "Sort dates";
             this.sortDatesToolStripMenuItem.Click += new System.EventHandler(this.sortDatesToolStripMenuItem_Click);
             // 
             // stripIncompleteRowsToolStripMenuItem
             // 
             this.stripIncompleteRowsToolStripMenuItem.Name = "stripIncompleteRowsToolStripMenuItem";
-            this.stripIncompleteRowsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.stripIncompleteRowsToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.stripIncompleteRowsToolStripMenuItem.Text = "Strip incomplete rows";
             this.stripIncompleteRowsToolStripMenuItem.Click += new System.EventHandler(this.stripIncompleteRowsToolStripMenuItem_Click);
+            // 
+            // mergeDateTimeToolStripMenuItem
+            // 
+            this.mergeDateTimeToolStripMenuItem.Name = "mergeDateTimeToolStripMenuItem";
+            this.mergeDateTimeToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.mergeDateTimeToolStripMenuItem.Text = "Merge and standardise date time";
+            this.mergeDateTimeToolStripMenuItem.Click += new System.EventHandler(this.mergeDateTimeToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -328,7 +358,7 @@
             this.comboEmpty.Location = new System.Drawing.Point(336, 28);
             this.comboEmpty.Name = "comboEmpty";
             this.comboEmpty.Size = new System.Drawing.Size(114, 21);
-            this.comboEmpty.TabIndex = 5;
+            this.comboEmpty.TabIndex = 3;
             this.comboEmpty.SelectedIndexChanged += new System.EventHandler(this.comboEmpty_SelectedIndexChanged);
             this.comboEmpty.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboEmpty_KeyDown);
             // 
@@ -343,7 +373,7 @@
             this.checkMeta.Location = new System.Drawing.Point(1163, 804);
             this.checkMeta.Name = "checkMeta";
             this.checkMeta.Size = new System.Drawing.Size(87, 17);
-            this.checkMeta.TabIndex = 29;
+            this.checkMeta.TabIndex = 33;
             this.checkMeta.Text = "Metadata file";
             this.checkMeta.UseVisualStyleBackColor = true;
             // 
@@ -358,7 +388,7 @@
             this.checkData.Location = new System.Drawing.Point(1108, 804);
             this.checkData.Name = "checkData";
             this.checkData.Size = new System.Drawing.Size(49, 17);
-            this.checkData.TabIndex = 28;
+            this.checkData.TabIndex = 32;
             this.checkData.Text = "Data";
             this.checkData.UseVisualStyleBackColor = true;
             // 
@@ -368,7 +398,7 @@
             this.btnAggregate.Location = new System.Drawing.Point(3, 66);
             this.btnAggregate.Name = "btnAggregate";
             this.btnAggregate.Size = new System.Drawing.Size(318, 23);
-            this.btnAggregate.TabIndex = 24;
+            this.btnAggregate.TabIndex = 27;
             this.btnAggregate.Text = "Aggregate";
             this.btnAggregate.UseVisualStyleBackColor = true;
             this.btnAggregate.Click += new System.EventHandler(this.btnAggregate_Click);
@@ -381,7 +411,7 @@
             this.comboAggregatorPeriod.Location = new System.Drawing.Point(214, 8);
             this.comboAggregatorPeriod.Name = "comboAggregatorPeriod";
             this.comboAggregatorPeriod.Size = new System.Drawing.Size(107, 21);
-            this.comboAggregatorPeriod.TabIndex = 20;
+            this.comboAggregatorPeriod.TabIndex = 23;
             this.comboAggregatorPeriod.SelectedIndexChanged += new System.EventHandler(this.comboAggregatorPeriod_SelectedIndexChanged);
             // 
             // label16
@@ -399,7 +429,7 @@
             this.radioBackward.Location = new System.Drawing.Point(61, 35);
             this.radioBackward.Name = "radioBackward";
             this.radioBackward.Size = new System.Drawing.Size(73, 17);
-            this.radioBackward.TabIndex = 21;
+            this.radioBackward.TabIndex = 24;
             this.radioBackward.TabStop = true;
             this.radioBackward.Text = "Backward";
             this.radioBackward.UseVisualStyleBackColor = true;
@@ -411,7 +441,7 @@
             this.radioCentered.Location = new System.Drawing.Point(155, 35);
             this.radioCentered.Name = "radioCentered";
             this.radioCentered.Size = new System.Drawing.Size(68, 17);
-            this.radioCentered.TabIndex = 22;
+            this.radioCentered.TabIndex = 25;
             this.radioCentered.TabStop = true;
             this.radioCentered.Text = "Centered";
             this.radioCentered.UseVisualStyleBackColor = true;
@@ -423,7 +453,7 @@
             this.radioForward.Location = new System.Drawing.Point(258, 35);
             this.radioForward.Name = "radioForward";
             this.radioForward.Size = new System.Drawing.Size(63, 17);
-            this.radioForward.TabIndex = 23;
+            this.radioForward.TabIndex = 26;
             this.radioForward.TabStop = true;
             this.radioForward.Text = "Forward";
             this.radioForward.UseVisualStyleBackColor = true;
@@ -465,7 +495,7 @@
             this.txtAggregatorPeriodNumber.Location = new System.Drawing.Point(119, 8);
             this.txtAggregatorPeriodNumber.Name = "txtAggregatorPeriodNumber";
             this.txtAggregatorPeriodNumber.Size = new System.Drawing.Size(89, 20);
-            this.txtAggregatorPeriodNumber.TabIndex = 19;
+            this.txtAggregatorPeriodNumber.TabIndex = 22;
             this.txtAggregatorPeriodNumber.Text = "Quantity";
             this.txtAggregatorPeriodNumber.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtAggregatorPeriodNumber_MouseClick);
             this.txtAggregatorPeriodNumber.TextChanged += new System.EventHandler(this.txtAggregatorPeriodNumber_TextChanged);
@@ -512,7 +542,7 @@
             this.dateTimeAggregateStart.Location = new System.Drawing.Point(7, 24);
             this.dateTimeAggregateStart.Name = "dateTimeAggregateStart";
             this.dateTimeAggregateStart.Size = new System.Drawing.Size(160, 20);
-            this.dateTimeAggregateStart.TabIndex = 17;
+            this.dateTimeAggregateStart.TabIndex = 20;
             this.dateTimeAggregateStart.ValueChanged += new System.EventHandler(this.dateTimeAggregateStart_ValueChanged);
             // 
             // dateTimeAggregateEnd
@@ -520,7 +550,7 @@
             this.dateTimeAggregateEnd.Location = new System.Drawing.Point(173, 24);
             this.dateTimeAggregateEnd.Name = "dateTimeAggregateEnd";
             this.dateTimeAggregateEnd.Size = new System.Drawing.Size(160, 20);
-            this.dateTimeAggregateEnd.TabIndex = 18;
+            this.dateTimeAggregateEnd.TabIndex = 21;
             this.dateTimeAggregateEnd.ValueChanged += new System.EventHandler(this.dateTimeAggregateEnd_ValueChanged);
             // 
             // label20
@@ -541,7 +571,7 @@
             this.txtFileNameAppend.Location = new System.Drawing.Point(934, 751);
             this.txtFileNameAppend.Name = "txtFileNameAppend";
             this.txtFileNameAppend.Size = new System.Drawing.Size(216, 20);
-            this.txtFileNameAppend.TabIndex = 25;
+            this.txtFileNameAppend.TabIndex = 28;
             this.txtFileNameAppend.TextChanged += new System.EventHandler(this.txtFileNameAppend_TextChanged);
             // 
             // checkExportEmpty
@@ -553,7 +583,7 @@
             this.checkExportEmpty.Location = new System.Drawing.Point(924, 804);
             this.checkExportEmpty.Name = "checkExportEmpty";
             this.checkExportEmpty.Size = new System.Drawing.Size(116, 17);
-            this.checkExportEmpty.TabIndex = 27;
+            this.checkExportEmpty.TabIndex = 31;
             this.checkExportEmpty.Text = "Include empty lines";
             this.checkExportEmpty.UseVisualStyleBackColor = true;
             // 
@@ -613,7 +643,7 @@
             this.comboCountries.Location = new System.Drawing.Point(91, 261);
             this.comboCountries.Name = "comboCountries";
             this.comboCountries.Size = new System.Drawing.Size(224, 21);
-            this.comboCountries.TabIndex = 101;
+            this.comboCountries.TabIndex = 17;
             this.comboCountries.SelectedIndexChanged += new System.EventHandler(this.comboCountries_SelectedIndexChanged);
             // 
             // label24
@@ -632,7 +662,7 @@
             this.txtGPSGridSystem.Location = new System.Drawing.Point(102, 212);
             this.txtGPSGridSystem.Name = "txtGPSGridSystem";
             this.txtGPSGridSystem.Size = new System.Drawing.Size(213, 20);
-            this.txtGPSGridSystem.TabIndex = 95;
+            this.txtGPSGridSystem.TabIndex = 14;
             // 
             // label9
             // 
@@ -650,7 +680,7 @@
             this.txtElevation.Location = new System.Drawing.Point(276, 183);
             this.txtElevation.Name = "txtElevation";
             this.txtElevation.Size = new System.Drawing.Size(39, 20);
-            this.txtElevation.TabIndex = 12;
+            this.txtElevation.TabIndex = 13;
             this.txtElevation.TextChanged += new System.EventHandler(this.txtElevation_TextChanged);
             // 
             // label4
@@ -669,7 +699,7 @@
             this.txtOrg.Location = new System.Drawing.Point(91, 157);
             this.txtOrg.Name = "txtOrg";
             this.txtOrg.Size = new System.Drawing.Size(224, 20);
-            this.txtOrg.TabIndex = 93;
+            this.txtOrg.TabIndex = 12;
             // 
             // label2
             // 
@@ -730,7 +760,7 @@
             this.txtSiteNotes.Name = "txtSiteNotes";
             this.txtSiteNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtSiteNotes.Size = new System.Drawing.Size(306, 74);
-            this.txtSiteNotes.TabIndex = 15;
+            this.txtSiteNotes.TabIndex = 18;
             this.txtSiteNotes.TextChanged += new System.EventHandler(this.txtSiteNotes_TextChanged);
             // 
             // label10
@@ -778,7 +808,7 @@
             this.txtGPSLat.Location = new System.Drawing.Point(58, 235);
             this.txtGPSLat.Name = "txtGPSLat";
             this.txtGPSLat.Size = new System.Drawing.Size(99, 20);
-            this.txtGPSLat.TabIndex = 13;
+            this.txtGPSLat.TabIndex = 15;
             this.txtGPSLat.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtGPSLat_MouseClick);
             this.txtGPSLat.TextChanged += new System.EventHandler(this.txtGPSLat_TextChanged);
             // 
@@ -788,7 +818,7 @@
             this.txtGPSLong.Location = new System.Drawing.Point(218, 235);
             this.txtGPSLong.Name = "txtGPSLong";
             this.txtGPSLong.Size = new System.Drawing.Size(97, 20);
-            this.txtGPSLong.TabIndex = 14;
+            this.txtGPSLong.TabIndex = 16;
             this.txtGPSLong.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtGPSLong_MouseClick);
             this.txtGPSLong.TextChanged += new System.EventHandler(this.txtGPSLong_TextChanged);
             // 
@@ -871,7 +901,7 @@
             this.comboFileExtension.Location = new System.Drawing.Point(1156, 751);
             this.comboFileExtension.Name = "comboFileExtension";
             this.comboFileExtension.Size = new System.Drawing.Size(94, 21);
-            this.comboFileExtension.TabIndex = 26;
+            this.comboFileExtension.TabIndex = 29;
             this.comboFileExtension.SelectedIndexChanged += new System.EventHandler(this.comboFileExtension_SelectedIndexChanged);
             // 
             // label23
@@ -892,7 +922,7 @@
             this.btnSetToEmpty.Location = new System.Drawing.Point(579, 27);
             this.btnSetToEmpty.Name = "btnSetToEmpty";
             this.btnSetToEmpty.Size = new System.Drawing.Size(80, 23);
-            this.btnSetToEmpty.TabIndex = 98;
+            this.btnSetToEmpty.TabIndex = 5;
             this.btnSetToEmpty.Text = "Set as empty";
             this.btnSetToEmpty.UseVisualStyleBackColor = false;
             this.btnSetToEmpty.Click += new System.EventHandler(this.btnSetToEmpty_Click);
@@ -902,14 +932,14 @@
             this.txtSetToEmpty.Location = new System.Drawing.Point(456, 29);
             this.txtSetToEmpty.Name = "txtSetToEmpty";
             this.txtSetToEmpty.Size = new System.Drawing.Size(117, 20);
-            this.txtSetToEmpty.TabIndex = 99;
+            this.txtSetToEmpty.TabIndex = 4;
             // 
-            // mergeDateTimeToolStripMenuItem
+            // pullUpStuffToolStripMenuItem
             // 
-            this.mergeDateTimeToolStripMenuItem.Name = "mergeDateTimeToolStripMenuItem";
-            this.mergeDateTimeToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.mergeDateTimeToolStripMenuItem.Text = "Merge and standardise date time";
-            this.mergeDateTimeToolStripMenuItem.Click += new System.EventHandler(this.mergeDateTimeToolStripMenuItem_Click);
+            this.pullUpStuffToolStripMenuItem.Name = "pullUpStuffToolStripMenuItem";
+            this.pullUpStuffToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.pullUpStuffToolStripMenuItem.Text = "Pull up stuff";
+            this.pullUpStuffToolStripMenuItem.Click += new System.EventHandler(this.pullUpStuffToolStripMenuItem_Click);
             // 
             // FrmMain
             // 
@@ -1035,6 +1065,7 @@
         private System.Windows.Forms.ToolStripMenuItem openSiteInfoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mergeDateTimeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pullUpStuffToolStripMenuItem;
     }
 }
 

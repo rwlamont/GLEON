@@ -35,6 +35,7 @@ namespace WindowsFormsApplication1
         private bool OpenHeaderDetect;
         private int headerRow, unitRow;
         private string blankPhrase;
+        private string[] headerList;
        
         public FrmMain()
         {
@@ -56,6 +57,9 @@ namespace WindowsFormsApplication1
             comboFileExtension.Items.Add(".txt");
             comboFileExtension.Items.Add(".csv");
             comboFileExtension.SelectedText = ".txt";
+
+            dataViewer.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dataViewer.EnableHeadersVisualStyles = false;
 
             txtGPSLat.Text = "Decimal";
             txtGPSLat.ForeColor = Color.Gray;
@@ -856,6 +860,9 @@ namespace WindowsFormsApplication1
                 newCombo4.Items.Add("i - Integrated depth range");
                 newCombo4.Items.Add("v - Variable depth");
                 newCombo4.Items.Add("n - Position NA");
+                newCombo4.AutoCompleteMode = AutoCompleteMode.Suggest;
+                newCombo4.AutoCompleteSource = AutoCompleteSource.ListItems;
+
                 currentYLoc += defaultHeight;
                 panelVariableControls.Controls.Add(newCombo4);
                 EventInfo combo4Changed = newCombo4.GetType().GetEvent("TextChanged");
@@ -1051,19 +1058,15 @@ namespace WindowsFormsApplication1
             {
               updateNewHeaderButton(index);
             }
-           /*
+          
             else if (comboChanged.Text == "Time")
             {
-                combo2.Enabled = true;
-                combo2.Items.Add("UTC");
-                combo2.Text = "UTC";
-                combo3.Enabled = true;
-                setAllOthersToVariableDateAndTime();
+               updateNewHeaderButton(index);
             }
             else if (comboChanged.Text == "Date")
             {
-                setAllOthersToVariableDateAndTime();
-            } */
+                updateNewHeaderButton(index);
+            }
             updateComboWidths(index);
             updateNewHeaderButton(index);
         }
@@ -1473,6 +1476,28 @@ namespace WindowsFormsApplication1
                 {
                     ButtonNewHeader.Text += "(" + units + ")";
                 }
+                if (ButtonNewHeader.Enabled == true)
+                {
+                    foreach (string s in headerList)
+                    {
+                        if (ButtonNewHeader.Text == s)
+                        {
+                            if (s == headerList[colNum])
+                                continue;
+                            else
+                            {
+                                ButtonNewHeader.Enabled = false;
+                                string message = "Error: duplicate column header for " + colNum + ". If necessary, offset the sensor elevation/position by a centimeter, e.g. from 0.0 to 0.01";
+                                MessageBox.Show(message, "Header format error");
+                                return;
+                            }
+                        }
+                        
+                    }
+                    headerList[colNum] = ButtonNewHeader.Text;
+                }
+
+                
             }
             else if (comboMain.Text == "DateTime")
             {
@@ -1484,15 +1509,9 @@ namespace WindowsFormsApplication1
             }
             else if (comboMain.Text == "Time")
             {
-                ButtonNewHeader.Text = "Time" + combo2.Text + combo3.Text;
-                if (Regex.IsMatch(ButtonNewHeader.Text, @"Time[a-z,A-Z]{3}[\+,\-][[0]?[1-9]|1[0-4]](:[1,3,4][0,5])?"))
-                {
+                ButtonNewHeader.Text = "Time";
+              
                     ButtonNewHeader.Enabled = true;
-                }
-                else
-                {
-                    ButtonNewHeader.Enabled = false;
-                }
             }
             else if (comboMain.Text == "Date")
             {
@@ -1749,11 +1768,11 @@ namespace WindowsFormsApplication1
                             string fileName;
                             if (txtFileNameAppend.Text == "")
                             {
-                                fileName = exportTo.SelectedPath + "\\" + siteName + "(" + countryCode + ")_" + startDate + "-" + endDate + fileExtension;
+                                fileName = exportTo.SelectedPath + "\\" + siteName + "\\" + siteName + "(" + countryCode + ")_" + startDate + "-" + endDate + fileExtension;
                             }
                             else
                             {
-                                fileName = exportTo.SelectedPath + "\\" + siteName + "(" + countryCode + ")_" + startDate + "-" + endDate + "_" + txtFileNameAppend.Text + fileExtension;
+                                fileName = exportTo.SelectedPath + "\\" + siteName + "\\" + siteName +"(" + countryCode + ")_" + startDate + "-" + endDate + "_" + txtFileNameAppend.Text + fileExtension;
                             }
                             if (File.Exists(fileName))
                             {
@@ -1770,7 +1789,7 @@ namespace WindowsFormsApplication1
 
                         if (checkMeta.Checked == true)
                         {
-                            string fileName = exportTo.SelectedPath + "\\"  + siteName + "(" + countryCode + ").txt";
+                            string fileName = exportTo.SelectedPath + "\\"  + siteName + "\\" + siteName + "(" + countryCode + ")_Metadata.txt";
                             if (File.Exists(fileName))
                             {
                                 DialogResult result = MessageBox.Show("File \"" + fileName + "\" already exists.\n\rDo you want to overwrite this file?", "File already exists", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
@@ -2224,13 +2243,13 @@ namespace WindowsFormsApplication1
         {
             using (StreamWriter sWriter = new StreamWriter(fileName))
             {
-                sWriter.WriteLine("Associated File: " + txtFileNameAppend.Text);
+                sWriter.WriteLine("Associated File: " + Path.GetFileNameWithoutExtension(fileName));
                 sWriter.WriteLine("Site Name: " + comboSiteName.Text);
                 sWriter.WriteLine("Owner: " + sitePropOwnerName);
                 sWriter.WriteLine("Latitude/Northing: " + sitePropGPSLat.ToString());
                 sWriter.WriteLine("Longitude/Easting: " + sitePropGPSLong.ToString());
                 sWriter.WriteLine("GPS Grid System: " + txtGPSGridSystem.Text);
-                sWriter.WriteLine("Elevation: " + sitePropElevation);
+                sWriter.WriteLine("Elevation (MASL): " + sitePropElevation);
                 sWriter.WriteLine("Country: " + comboCountries.Text);
                 sWriter.WriteLine("Contact");
                 sWriter.WriteLine("Name: " + sitePropContactName);
@@ -2238,7 +2257,6 @@ namespace WindowsFormsApplication1
                 sWriter.WriteLine("Phone: " + sitePropContactNumber);
                 sWriter.WriteLine("Email: " + sitePropContactEmail);
                 sWriter.WriteLine("Number of Sensors: " + (InputTable.Columns.Count - 1).ToString());
-                sWriter.WriteLine("Sensor Details");
                 sWriter.WriteLine("");
 
                 for (int i = 1; i < dataViewer.Columns.Count; i++)
@@ -2750,6 +2768,7 @@ namespace WindowsFormsApplication1
                 exitEarly = openFile(OpenFileLocation);
                 if (!exitEarly) // Check to see if delimiter exited by cancel
                 {
+                    headerList = new string[InputTable.Columns.Count + 2];
                     exitEarly = standardizeDateColumn();
                     if (!exitEarly) // Check to see if dateFormat exited by cancel
                     {
@@ -3786,6 +3805,11 @@ namespace WindowsFormsApplication1
             else{
                 MessageBox.Show("Please load a input file first", "No data loaded");
             }
+        }
+
+        private void pullUpStuffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HeaderGuess();
         }
 
 

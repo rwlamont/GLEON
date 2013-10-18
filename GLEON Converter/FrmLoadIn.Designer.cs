@@ -54,23 +54,23 @@
             this.lblMeta.BackColor = System.Drawing.Color.White;
             this.lblMeta.Location = new System.Drawing.Point(59, 130);
             this.lblMeta.Name = "lblMeta";
-            this.lblMeta.Size = new System.Drawing.Size(50, 13);
+            this.lblMeta.Size = new System.Drawing.Size(96, 13);
             this.lblMeta.TabIndex = 1;
-            this.lblMeta.Text = "Meta File";
+            this.lblMeta.Text = "Meta File (optional)";
             // 
             // txtMeta
             // 
             this.txtMeta.Location = new System.Drawing.Point(190, 123);
             this.txtMeta.Name = "txtMeta";
             this.txtMeta.Size = new System.Drawing.Size(227, 20);
-            this.txtMeta.TabIndex = 2;
+            this.txtMeta.TabIndex = 3;
             // 
             // txtData
             // 
             this.txtData.Location = new System.Drawing.Point(190, 50);
             this.txtData.Name = "txtData";
             this.txtData.Size = new System.Drawing.Size(227, 20);
-            this.txtData.TabIndex = 3;
+            this.txtData.TabIndex = 2;
             // 
             // btnData
             // 

@@ -25,7 +25,7 @@ namespace WindowsFormsApplication1
         private void btnData_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+            dialog.Filter = "csv files (*.csv)|*.csv|tsv files (*.txt)|*.txt|All files (*.*)|*.*";
             dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             dialog.Title = "Please select a Data File";
             if (dialog.ShowDialog() == DialogResult.OK)
