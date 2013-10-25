@@ -26,6 +26,7 @@ namespace WindowsFormsApplication1
         public string _filename;
         public char newDelimiter;
         public bool OpenEmptyRowStrip;
+        public bool euroFormat;
         public bool OpenHeaderRowDetect;
         public int headerRow, unitRow;
         private void Form1_Load(object sender, EventArgs e)
@@ -140,7 +141,7 @@ namespace WindowsFormsApplication1
             {
                 column.SortMode = DataGridViewColumnSortMode.Programmatic;
             }
-
+            dataTemp.Rows[0].Selected = true;
         }
 
         private void comboDelimiters_SelectedIndexChanged(object sender, EventArgs e)
@@ -171,6 +172,7 @@ namespace WindowsFormsApplication1
         private void btnAccept_Click(object sender, EventArgs e)
         {
             OpenEmptyRowStrip = checkBoxRowStripping.Checked;
+            euroFormat = euroFormatCheckBox.Checked;
             this.Hide();
         }
 

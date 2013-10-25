@@ -39,6 +39,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnUnitRow = new System.Windows.Forms.Button();
             this.btnHeaderRow = new System.Windows.Forms.Button();
+            this.euroFormatCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataTemp)).BeginInit();
             this.SuspendLayout();
             // 
@@ -147,12 +148,23 @@
             this.btnHeaderRow.UseVisualStyleBackColor = false;
             this.btnHeaderRow.Click += new System.EventHandler(this.btnHeaderRow_Click);
             // 
+            // euroFormatCheckBox
+            // 
+            this.euroFormatCheckBox.AutoSize = true;
+            this.euroFormatCheckBox.Location = new System.Drawing.Point(464, 8);
+            this.euroFormatCheckBox.Name = "euroFormatCheckBox";
+            this.euroFormatCheckBox.Size = new System.Drawing.Size(147, 17);
+            this.euroFormatCheckBox.TabIndex = 12;
+            this.euroFormatCheckBox.Text = "European Number Format";
+            this.euroFormatCheckBox.UseVisualStyleBackColor = true;
+            // 
             // FrmDelimiterSelection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(636, 495);
             this.ControlBox = false;
+            this.Controls.Add(this.euroFormatCheckBox);
             this.Controls.Add(this.btnHeaderRow);
             this.Controls.Add(this.btnUnitRow);
             this.Controls.Add(this.btnCancel);
@@ -187,5 +199,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnUnitRow;
         private System.Windows.Forms.Button btnHeaderRow;
+        private System.Windows.Forms.CheckBox euroFormatCheckBox;
     }
 }

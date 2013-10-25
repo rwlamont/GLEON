@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace WindowsFormsApplication1
 {
@@ -15,24 +16,27 @@ namespace WindowsFormsApplication1
         public string metaFileLoc;
         public string dataFileLoc;
         public bool noMeta;
+        public string lastPath;
 
         public FrmLoadIn()
         {
             InitializeComponent();
             btnNext.Enabled = true;
+            lastPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
 
         private void btnData_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "csv files (*.csv)|*.csv|tsv files (*.txt)|*.txt|All files (*.*)|*.*";
-            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            dialog.Filter = "Data Files (*.csv,*.tsv,*.txt)|*.txt;*.txt;*.csv|csv files (*.csv)|*.csv|tsv files (*.txt)|*.txt|All files (*.*)|*.*";
+            dialog.InitialDirectory = lastPath;
             dialog.Title = "Please select a Data File";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 txtData.Text = dialog.FileName;
                 btnNext.Enabled = true;
-            } 
+                lastPath = Path.GetDirectoryName(dialog.FileName);
+            }  
             else
             {
                 MessageBox.Show("No data file was selected, please select your data file.", "Data file needed");
@@ -43,11 +47,12 @@ namespace WindowsFormsApplication1
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Metadata files (*.txt)|*.txt|All files (*.*)|*.*";
-            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            dialog.InitialDirectory = lastPath;
             dialog.Title = "Please select a Data File";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 txtMeta.Text = dialog.FileName;
+                lastPath = Path.GetDirectoryName(dialog.FileName);
             }
             else
             {

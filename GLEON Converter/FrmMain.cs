@@ -58,8 +58,7 @@ namespace WindowsFormsApplication1
             comboFileExtension.Items.Add(".csv");
             comboFileExtension.SelectedText = ".txt";
 
-            dataViewer.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
-            dataViewer.EnableHeadersVisualStyles = false;
+
 
             txtGPSLat.Text = "Decimal";
             txtGPSLat.ForeColor = Color.Gray;
@@ -112,7 +111,7 @@ namespace WindowsFormsApplication1
                     dSelect.Close();
                     this.Focus();
                     Cursor.Current = Cursors.WaitCursor;
-                    ReadinNewFile(filepath);
+                    ReadinNewFile(filepath, dSelect.euroFormat);
                     setVarBoxesInPanel();
                     if (unitRow != -1)
                     {
@@ -138,6 +137,8 @@ namespace WindowsFormsApplication1
                 return false;
             }
         }
+
+
         public string getFiletoRead(string filter,string startLocation)
         {
             string filepath = "";
@@ -154,7 +155,7 @@ namespace WindowsFormsApplication1
             }
             return filepath;
         }
-        public void ReadinNewFile(string _filename)
+        public void ReadinNewFile(string _filename, bool euro)
         {
             InputTable = new DataTable();
             string line;
@@ -192,11 +193,21 @@ namespace WindowsFormsApplication1
                     }
 
                     int index = 0;
+                    string s;
                     DataRow dRow = InputTable.NewRow();
                     foreach (string value in row)
                     {
-                        dRow[index.ToString()] = value.Trim();
-                        index++;
+                        if (euro)
+                        {
+                            s = value.Replace(",", ".");
+                            dRow[index.ToString()] = s.Trim();
+                            index++;
+                        }
+                        else
+                        {
+                            dRow[index.ToString()] = value.Trim();
+                            index++;
+                        }
 
                     }
                     InputTable.Rows.Add(dRow);
@@ -273,6 +284,7 @@ namespace WindowsFormsApplication1
                 dateTimeAggregateEnd.Text = "";
             }
         }
+
         /// <summary>
         /// removes the parts of the meta file that make it user firendly to read 
         /// </summary>
@@ -315,7 +327,7 @@ namespace WindowsFormsApplication1
                     if (iss != 0)
                     {
                         
-                        for (int i = 0; i <= iss; i++)
+                        for (int i = 0; i < iss; i++)
                         {
                             loopStr = reader.ReadLine();
                             arr4[i] = loopStr;
@@ -329,16 +341,23 @@ namespace WindowsFormsApplication1
                         }
 
                     }
-                    reader.ReadLine();// Throws away Dataset Header
-                    string note = reader.ReadLine();
-                    do
+                    string checkNext = reader.ReadLine();
+                    if (checkNext.Equals("Dataset Notes"))
                     {
-                        txtDataSetNotes.AppendText(note);
-                        note = reader.ReadLine();
-                    } while (!String.IsNullOrWhiteSpace(note));
-                    reader.ReadLine(); // Throws away site note header
-                    txtSiteNotes.Text = reader.ReadToEnd();
+                        loopStr = reader.ReadLine();
+                        while (!string.IsNullOrEmpty(loopStr))
+                        {
+                            txtDataSetNotes.AppendText(loopStr);
+                            loopStr = reader.ReadLine();
 
+                        }
+                    }
+
+                    checkNext = reader.ReadLine();
+                    if (checkNext.Equals("Site Notes"))
+                    {
+                        txtSiteNotes.Text = reader.ReadToEnd();
+                    }
                     comboSiteName.Text = CleanMetaIn(sitePropName, 11);
                     txtOwner.Text = CleanMetaIn(sitePropOwnerName, 7);
                     txtContactName.Text = CleanMetaIn(sitePropContactName, 6);
@@ -350,7 +369,7 @@ namespace WindowsFormsApplication1
                     txtGPSLong.Text = CleanMetaIn(sitePropGPSLong.ToString(), 19);
                     txtOrg.Text = CleanMetaIn(sitePropOrgnisation, 14);
                     txtSiteNotes.Text = sitePropNotes;
-                    comboCountries.Text = CleanMetaIn(countryName, 8);
+                    comboCountries.Text = GetCode(CleanMetaIn(countryName, 9));
 
                     string comboMainName = "0ComboMain";
                     Control comboMaintemp = panelVariableControls.Controls[comboMainName];
@@ -362,7 +381,7 @@ namespace WindowsFormsApplication1
                     ButtonNewHeader.Enabled = true;
                     if (iss != 0)
                     {
-                        for (int i = 0; i <= iss; i++)
+                        for (int i = 0; i < iss; i++)
                         {
 
                             addSensorData(i + 1, arr4[i]);
@@ -377,6 +396,21 @@ namespace WindowsFormsApplication1
                 }
             
                
+        }
+
+        public string GetCode(string p)
+        {
+            foreach (countryCodesTimes c in countriesData)
+            {
+                if (c.countryName.Equals(p))
+                {
+                    return c.countryName + " (" + c.countryCode + ")";
+
+                }
+            }
+
+            return "";
+
         }
 
         private void addSensorData(int colNum, string header)
@@ -396,9 +430,6 @@ namespace WindowsFormsApplication1
         string Text1Name = colNum + "Text1";
         Control Text1temp = panelVariableControls.Controls[Text1Name];
         TextBox Text1 = Text1temp as TextBox;
-        string Text2Name = colNum + "Text2";
-        Control Text2temp = panelVariableControls.Controls[Text2Name];
-        TextBox Text2 = Text2temp as TextBox;
         string ButtonName = colNum + "Btn";
         Control ButtonTemp = panelVariableControls.Controls[ButtonName];
         Button ButtonNewHeader = ButtonTemp as Button;
@@ -797,7 +828,7 @@ namespace WindowsFormsApplication1
             panelVariableControls.Controls.Clear();
             int locationX = dataViewer.RowHeadersWidth;
             int colNum = 0;
-            for (int i = 0; i <= dataViewer.Columns.Count - 2; i++)
+            for (int i = 0; i < dataViewer.Columns.Count; i++)
             {
                 int defaultWidth = dataViewer.Columns[colNum].Width;
                 int defaultHeight = 21;
@@ -831,6 +862,8 @@ namespace WindowsFormsApplication1
                 panelVariableControls.Controls.Add(newCombo2);
                 EventInfo combo2Changed = newCombo2.GetType().GetEvent("TextChanged");
                 combo2Changed.AddEventHandler(newCombo2, new EventHandler(this.combo2Changed));
+                newCombo2.AutoCompleteMode = AutoCompleteMode.Append;
+                newCombo2.AutoCompleteSource = AutoCompleteSource.ListItems;
 
                 //3rd comboBox (Units)
                 comboboxName = i + "Combo3";
@@ -860,7 +893,7 @@ namespace WindowsFormsApplication1
                 newCombo4.Items.Add("i - Integrated depth range");
                 newCombo4.Items.Add("v - Variable depth");
                 newCombo4.Items.Add("n - Position NA");
-                newCombo4.AutoCompleteMode = AutoCompleteMode.Suggest;
+                newCombo4.AutoCompleteMode = AutoCompleteMode.Append;
                 newCombo4.AutoCompleteSource = AutoCompleteSource.ListItems;
 
                 currentYLoc += defaultHeight;
@@ -880,19 +913,10 @@ namespace WindowsFormsApplication1
                 panelVariableControls.Controls.Add(newCombo5);
                 EventInfo Text1Changed = newCombo5.GetType().GetEvent("TextChanged");
                 Text1Changed.AddEventHandler(newCombo5, new EventHandler(this.Text1Changed));
+                newCombo5.KeyDown += new KeyEventHandler(Text1_KeyDown);
 
-                //TextBox2 (Sensor Displacement 2)
-                comboboxName = i + "Text2";
-                TextBox newCombo6 = new TextBox();
-                newCombo6.Name = comboboxName;
-                newCombo6.Width = defaultWidth;
-                newCombo6.Height = defaultHeight;
-                newCombo6.Enabled = false;
-                newCombo6.Location = new Point(locationX, currentYLoc);
-                currentYLoc += defaultHeight;
-                panelVariableControls.Controls.Add(newCombo6);
-                EventInfo Text2Changed = newCombo6.GetType().GetEvent("TextChanged");
-                Text2Changed.AddEventHandler(newCombo6, new EventHandler(this.Text2Changed));
+
+
 
                 //Button (Accept new Header)
                 comboboxName = i + "Btn";
@@ -934,9 +958,6 @@ namespace WindowsFormsApplication1
                     string Text1Name = index + "Text1";
                     Control Text1temp = panelVariableControls.Controls[Text1Name];
                     TextBox Text1 = Text1temp as TextBox;
-                    string Text2Name = index + "Text2";
-                    Control Text2temp = panelVariableControls.Controls[Text2Name];
-                    TextBox Text2 = Text2temp as TextBox;
                     if(hRec.getHeaderType(header.ToString()) == "DateTime")
                     {
                         comboMain.Text = "DateTime";
@@ -967,9 +988,6 @@ namespace WindowsFormsApplication1
                 string Text1Name = index + "Text1";
                 Control Text1temp = panelVariableControls.Controls[Text1Name];
                 TextBox Text1 = Text1temp as TextBox;
-                string Text2Name = index + "Text2";
-                Control Text2temp = panelVariableControls.Controls[Text2Name];
-                TextBox Text2 = Text2temp as TextBox;
                 string temp = "";
                 comboMain.Text = "Variable";
                 foreach(testTypeUnits tTU in GLEONCodeData)
@@ -993,7 +1011,6 @@ namespace WindowsFormsApplication1
                         if(hRec.getHeaderType(input) == "i")
                         {
                             Text1.Text = input.Substring(input.IndexOf(temp) + 1, input.IndexOf("-") - input.IndexOf(temp) + 1);
-                            Text2.Text = input.Substring(input.IndexOf("-") + 1, input.IndexOf("(") - input.IndexOf("-") + 1);
                         }
 
                     }
@@ -1019,9 +1036,6 @@ namespace WindowsFormsApplication1
             string Text1Name = index + "Text1";
             Control Text1temp = panelVariableControls.Controls[Text1Name];
             TextBox Text1 = Text1temp as TextBox;
-            string Text2Name = index + "Text2";
-            Control Text2temp = panelVariableControls.Controls[Text2Name];
-            TextBox Text2 = Text2temp as TextBox;
             combo2.Items.Clear();
             combo2.Text = "";
             combo3.Items.Clear();
@@ -1032,8 +1046,6 @@ namespace WindowsFormsApplication1
             combo4.Enabled = false;
             Text1.Text = "";
             Text1.Enabled = false;
-            Text2.Text = "";
-            Text2.Enabled = false;
 
             if (comboChanged.Text == "Variable")
             {
@@ -1153,15 +1165,11 @@ namespace WindowsFormsApplication1
                 string Text1Name = index + "Text1";
                 Control Text1temp = panelVariableControls.Controls[Text1Name];
                 TextBox Text1 = Text1temp as TextBox;
-                string Text2Name = index + "Text2";
-                Control Text2temp = panelVariableControls.Controls[Text2Name];
-                TextBox Text2 = Text2temp as TextBox;
                 combo4.Items.Clear();
                 combo4.Text = "";
                 Text1.Text = "";
                 Text1.Enabled = false;
-                Text2.Text = "";
-                Text2.Enabled = false;
+
             }
             else if (combo1.Text == "Variable")
             {
@@ -1221,24 +1229,18 @@ namespace WindowsFormsApplication1
                 string Text1Name = index + "Text1";
                 Control Text1temp = panelVariableControls.Controls[Text1Name];
                 TextBox Text1 = Text1temp as TextBox;
-                string Text2Name = index + "Text2";
-                Control Text2temp = panelVariableControls.Controls[Text2Name];
-                TextBox Text2 = Text2temp as TextBox;
 
                 if (sensorLocationIndicator == "d" || sensorLocationIndicator == "h" || sensorLocationIndicator == "e" || sensorLocationIndicator == "m")
                 {
                     Text1.Enabled = true;
-                    Text2.Enabled = false;
                 }
                 else if (sensorLocationIndicator == "i")
                 {
                     Text1.Enabled = true;
-                    Text2.Enabled = true;
                 }
                 else if (sensorLocationIndicator == "v" || sensorLocationIndicator == "n")
                 {
                     Text1.Enabled = false;
-                    Text2.Enabled = false;
                 }
             }
             updateComboWidths(index);
@@ -1250,7 +1252,9 @@ namespace WindowsFormsApplication1
             TextBox textChanged = sender as TextBox;
             foreach (Char input in textChanged.Text)
             {
-                if ((input < '0' || input > '9') && input != '.')
+                if(input == '-')
+                    outString += input;
+                else if ((input < '0' || input > '9') && input != '.')
                     textChanged.Text.Replace(input, '\0');
                 else
                     outString += input;
@@ -1259,20 +1263,21 @@ namespace WindowsFormsApplication1
             textChanged.SelectionStart = textChanged.Text.Length;
             updateNewHeaderButton(Convert.ToInt32(textChanged.Name.Substring(0, textChanged.Name.IndexOf("T"))));
         }
-        private void Text2Changed(object sender, EventArgs e)
+
+        private void Text1_KeyDown(object sender, KeyEventArgs e)
         {
-            string outString = "";
-            TextBox textChanged = sender as TextBox;
-            foreach (Char input in textChanged.Text)
-            {
-                if ((input < '0' || input > '9') && input != '.')
-                    textChanged.Text.Replace(input, '\0');
-                else
-                    outString += input;
-            }
-            textChanged.Text = outString;
-            textChanged.SelectionStart = textChanged.Text.Length;
-            updateNewHeaderButton(Convert.ToInt32(textChanged.Name.Substring(0, textChanged.Name.IndexOf("T"))));
+           if (e.KeyCode == Keys.Enter)
+           {
+               TextBox textChanged = sender as TextBox;
+               int colNum = Convert.ToInt32(textChanged.Name.Substring(0, textChanged.Name.IndexOf("T")));
+               string ButtonName = colNum + "Btn";
+               Control ButtonTemp = panelVariableControls.Controls[ButtonName];
+               Button ButtonNewHeader = ButtonTemp as Button;
+               if (ButtonNewHeader.Enabled == true)
+               {
+                   InputTable.Rows[0][colNum] = ButtonNewHeader.Text;
+               }
+           }
         }
 
         private void updateComboWidths(int index)
@@ -1394,9 +1399,6 @@ namespace WindowsFormsApplication1
             string Text1Name = colNum + "Text1";
             Control Text1temp = panelVariableControls.Controls[Text1Name];
             TextBox Text1 = Text1temp as TextBox;
-            string Text2Name = colNum + "Text2";
-            Control Text2temp = panelVariableControls.Controls[Text2Name];
-            TextBox Text2 = Text2temp as TextBox;
             string ButtonName = colNum + "Btn";
             Control ButtonTemp = panelVariableControls.Controls[ButtonName];
             Button ButtonNewHeader = ButtonTemp as Button;
@@ -1415,7 +1417,6 @@ namespace WindowsFormsApplication1
                 if (locationIndicator != "")
                     locationIndicator = combo4.Text.Substring(0, 1);
                 string sensorD1 = Text1.Text;
-                string sensorD2 = Text2.Text;
                 switch (locationIndicator)
                 {
                     case "d":
@@ -1447,8 +1448,8 @@ namespace WindowsFormsApplication1
                             ButtonNewHeader.Enabled = false;
                         break;
                     case "i":
-                        ButtonNewHeader.Text = testName + "_" + locationIndicator + sensorD1 + "-" + sensorD2;
-                        if (testName != ""  && locationIndicator != "" && sensorD1 != "" && sensorD2 != "")
+                        ButtonNewHeader.Text = testName + "_" + locationIndicator + sensorD1;
+                        if (testName != "" && locationIndicator != "" && sensorD1 != "")
                             ButtonNewHeader.Enabled = true;
                         else
                             ButtonNewHeader.Enabled = false;
@@ -1553,7 +1554,7 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("Please load a dataset before loading in a meta file", "Error importing metadata");
             }
             else{
-            openMeta(getFiletoRead("Metadata files (*.txt)| *.txt", System.Windows.Forms.Application.StartupPath));
+            openMeta(getFiletoRead("Metadata files (*.txt)| *.txt", Environment.SpecialFolder.Desktop.ToString()));
             }
         }
         #endregion
@@ -1584,9 +1585,6 @@ namespace WindowsFormsApplication1
                 string Text1Name = i + "Text1";
                 Control Text1temp = panelVariableControls.Controls[Text1Name];
                 TextBox Text1 = Text1temp as TextBox;
-                string Text2Name = i + "Text2";
-                Control Text2temp = panelVariableControls.Controls[Text2Name];
-                TextBox Text2 = Text2temp as TextBox;
                 string BtnName = i + "Btn";
                 Control Btntemp = panelVariableControls.Controls[BtnName];
                 Button Btn = Btntemp as Button;
@@ -1596,14 +1594,13 @@ namespace WindowsFormsApplication1
                 combo3.Location = new Point(locationX, combo3.Location.Y);
                 combo4.Location = new Point(locationX, combo4.Location.Y);
                 Text1.Location = new Point(locationX, Text1.Location.Y);
-                Text2.Location = new Point(locationX, Text2.Location.Y);
+               
                 Btn.Location = new Point(locationX, Btn.Location.Y);
                 comboMain.Width = dataViewer.Columns[i].Width;
                 combo2.Width = dataViewer.Columns[i].Width;
                 combo3.Width = dataViewer.Columns[i].Width;
                 combo4.Width = dataViewer.Columns[i].Width;
                 Text1.Width = dataViewer.Columns[i].Width;
-                Text2.Width = dataViewer.Columns[i].Width;
                 Btn.Width = dataViewer.Columns[i].Width;
 
                 locationX += dataViewer.Columns[i].Width;
@@ -1668,9 +1665,6 @@ namespace WindowsFormsApplication1
                 string Text1Name = i + "Text1";
                 Control Text1temp = panelVariableControls.Controls[Text1Name];
                 TextBox Text1 = Text1temp as TextBox;
-                string Text2Name = i + "Text2";
-                Control Text2temp = panelVariableControls.Controls[Text2Name];
-                TextBox Text2 = Text2temp as TextBox;
                 string BtnName = i + "Btn";
                 Control Btntemp = panelVariableControls.Controls[BtnName];
                 Button Btn = Btntemp as Button;
@@ -1690,9 +1684,6 @@ namespace WindowsFormsApplication1
                 string Text1NameOld = oldIndex+ "Text1";
                 Control Text1tempOld = panelVariableControls.Controls[Text1NameOld];
                 TextBox Text1Old = Text1tempOld as TextBox;
-                string Text2NameOld = oldIndex+ "Text2";
-                Control Text2tempOld = panelVariableControls.Controls[Text2NameOld];
-                TextBox Text2Old = Text2temp as TextBox;
                 string BtnNameOld = oldIndex+ "Btn";
                 Control BtntempOld = panelVariableControls.Controls[BtnNameOld];
                 Button BtnOld = BtntempOld as Button;
@@ -1702,7 +1693,6 @@ namespace WindowsFormsApplication1
                 combo3.Text = combo3Old.Text;
                 combo4.Text = combo4Old.Text;
                 Text1.Text = Text1Old.Text;
-                Text2.Text = Text2Old.Text;
                 Btn.Text = BtnOld.Text;
                 Btn.Enabled = true;
             }
@@ -1755,7 +1745,7 @@ namespace WindowsFormsApplication1
 
             if(contin)
              {
-
+                        
                         FolderBrowserDialog exportTo = new FolderBrowserDialog();
                         if(exportTo.ShowDialog() == DialogResult.OK)
                         {
@@ -1766,13 +1756,18 @@ namespace WindowsFormsApplication1
                                 FillMissingRows();
                             }
                             string fileName;
+                            Directory.CreateDirectory(exportTo.SelectedPath + "\\" + siteName);
                             if (txtFileNameAppend.Text == "")
                             {
-                                fileName = exportTo.SelectedPath + "\\" + siteName + "\\" + siteName + "(" + countryCode + ")_" + startDate + "-" + endDate + fileExtension;
+                                
+                                fileName = exportTo.SelectedPath + "\\" + siteName + "\\" + 
+                                    siteName + "(" + countryCode + ")_" + startDate + "-" + endDate + fileExtension;
                             }
                             else
                             {
-                                fileName = exportTo.SelectedPath + "\\" + siteName + "\\" + siteName +"(" + countryCode + ")_" + startDate + "-" + endDate + "_" + txtFileNameAppend.Text + fileExtension;
+                                fileName = exportTo.SelectedPath + "\\" + 
+                                    //siteName + "\\" + 
+                                    siteName +"(" + countryCode + ")_" + startDate + "-" + endDate + "_" + txtFileNameAppend.Text + fileExtension;
                             }
                             if (File.Exists(fileName))
                             {
@@ -2250,7 +2245,7 @@ namespace WindowsFormsApplication1
                 sWriter.WriteLine("Longitude/Easting: " + sitePropGPSLong.ToString());
                 sWriter.WriteLine("GPS Grid System: " + txtGPSGridSystem.Text);
                 sWriter.WriteLine("Elevation (MASL): " + sitePropElevation);
-                sWriter.WriteLine("Country: " + comboCountries.Text);
+                sWriter.WriteLine("Country: " + comboCountries.Text.Remove(comboCountries.Text.IndexOf(" ")));
                 sWriter.WriteLine("Contact");
                 sWriter.WriteLine("Name: " + sitePropContactName);
                 sWriter.WriteLine("Organisation: " + txtOrg.Text);
@@ -2265,10 +2260,10 @@ namespace WindowsFormsApplication1
                     sWriter.WriteLine("");
                 }
                 sWriter.WriteLine("Dataset Notes");
-                sWriter.WriteLine(txtDataSetNotes.Text);
+                sWriter.WriteLine(txtDataSetNotes.Text.Trim());
                 sWriter.WriteLine("");
                 sWriter.WriteLine("Site Notes");
-                sWriter.WriteLine(sitePropNotes);
+                sWriter.WriteLine(txtSiteNotes.Text.Trim());
                 sWriter.Close();
             }
         }
@@ -2464,9 +2459,40 @@ namespace WindowsFormsApplication1
                     Cursor.Current = Cursors.Default;
                     if (errorRows)
                     {
-                        MessageBox.Show("Conversion incomplete.An unconvertable value was encountered.\n\rPlease add the date format to the 'Formats.txt' Control File.\n\rAlternatively remove the errored row before attempting to standardize dates.");
-                    }
-                //}
+                        errorRows = false;
+                        getDateFormat.input = dataViewer.Rows[1].Cells[dateCol].Value.ToString();
+                        getDateFormat.Show();
+                        if (getDateFormat.cancel == false)
+                        {
+                            if (getDateFormat.validFormat)
+                            {
+                                dateConverter.acceptedFormat = getDateFormat.format;
+                            }
+                            Cursor.Current = Cursors.WaitCursor;
+                            foreach (DataGridViewRow dRow in dataViewer.Rows)
+                            {
+                                if (dRow.Index != 0)
+                                {
+                                    string convertedDate = dateConverter.ConvertDateToStandard(dRow.Cells[dateCol].Value.ToString());
+                                    if (convertedDate != null)
+                                    {
+                                        InputTable.Rows[dRow.Cells[dateCol].RowIndex][dRow.Cells[dateCol].ColumnIndex] = convertedDate;
+                                    }
+                                    else
+                                    {
+                                        errorRows = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (errorRows)
+                        {
+                            MessageBox.Show("Conversion incomplete.An unconvertable value was encountered.\n\rPlease add the date format to the 'Formats.txt' Control File.\n\rAlternatively remove the errored row before attempting to standardize dates.");
+                        }
+                }
+
+                
                 toReturn = true;
                 getDateFormat.Close();
                 return toReturn;
@@ -2769,9 +2795,9 @@ namespace WindowsFormsApplication1
                 if (!exitEarly) // Check to see if delimiter exited by cancel
                 {
                     headerList = new string[InputTable.Columns.Count + 2];
+                    
                     exitEarly = standardizeDateColumn();
-                    if (!exitEarly) // Check to see if dateFormat exited by cancel
-                    {
+                   
                         if (!String.IsNullOrWhiteSpace(MetaFileLocation)) // Make sure there is a meta file to open
                         {
                             openMeta(MetaFileLocation);
@@ -2779,10 +2805,12 @@ namespace WindowsFormsApplication1
 
                         getStartEndDates();
                         open.Close();
+                        
                         this.Show();
                     }
                     else
                     {
+                        getStartEndDates();
                         this.Show();
                         open.Close();
                     }
@@ -2792,14 +2820,15 @@ namespace WindowsFormsApplication1
                     this.Show();
                     open.Close();
                 }
-            }
-            else
+            
+
+            if (InputTable != null)
             {
-                this.Show();
-                open.Close();
+                dataViewer.Rows[0].DefaultCellStyle.ForeColor = Color.Black;
+                dataViewer.Rows[0].DefaultCellStyle.BackColor = Color.OrangeRed;
+                dataViewer.Rows[0].DefaultCellStyle.SelectionBackColor = Color.OrangeRed;
             }
-
-
+            
         }
 
 
@@ -3098,6 +3127,9 @@ namespace WindowsFormsApplication1
                         Cursor.Current = Cursors.WaitCursor;
                         AggregateColBased(direction, periodNumber, periodType, dateTimeColNum);
                         Cursor.Current = Cursors.Default;
+                        dataViewer.Rows[0].DefaultCellStyle.ForeColor = Color.Black;
+                        dataViewer.Rows[0].DefaultCellStyle.BackColor = Color.OrangeRed;
+                        dataViewer.Rows[0].DefaultCellStyle.SelectionBackColor = Color.OrangeRed;
                     }
                     else
                     {
@@ -3187,7 +3219,7 @@ namespace WindowsFormsApplication1
             tempTime = DateTime.MinValue;
             periodEndTime = startTime;
             DataRow headers = InputTable.Rows[0];
-            aggregatedTable.ImportRow(headers);
+            aggregatedTable.Rows.Add(headers.ItemArray);
             int runNum = 1;
             int firstRowHolder = 1;
             int lastRowHolder = 1;
@@ -3507,7 +3539,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void sortDatesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void sortDatesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (dataViewer.DataSource == null)
                 MessageBox.Show("You have not opened a valid Datatable yet", "Invalid Data", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -3683,10 +3715,7 @@ namespace WindowsFormsApplication1
                             string Text1Name = index + "Text1";
                             Control Text1temp = panelVariableControls.Controls[Text1Name];
                             TextBox Text1 = Text1temp as TextBox;
-                            string Text2Name = index + "Text2";
-                            Control Text2temp = panelVariableControls.Controls[Text2Name];
-                            TextBox Text2 = Text2temp as TextBox;
-                            sWriter.WriteLine(comboMain.Text + "\t" + combo2.Text + "\t" + combo3.Text + "\t" + combo4.Text + "\t" + Text1.Text + "\t" + Text2.Text);
+                            sWriter.WriteLine(comboMain.Text + "\t" + combo2.Text + "\t" + combo3.Text + "\t" + combo4.Text + "\t" + Text1.Text + "\t");
                         }
                         MessageBox.Show("File saved");
                     }
@@ -3731,9 +3760,6 @@ namespace WindowsFormsApplication1
                                     string Text1Name = index + "Text1";
                                     Control Text1temp = panelVariableControls.Controls[Text1Name];
                                     TextBox Text1 = Text1temp as TextBox;
-                                    string Text2Name = index + "Text2";
-                                    Control Text2temp = panelVariableControls.Controls[Text2Name];
-                                    TextBox Text2 = Text2temp as TextBox;
                                     string[] input = sReader.ReadLine().Split('\t');
                                     if (input.Length == 6)
                                     {
@@ -3742,7 +3768,6 @@ namespace WindowsFormsApplication1
                                         combo3.Text = input[2];
                                         combo4.Text = input[3];
                                         Text1.Text = input[4];
-                                        Text2.Text = input[5];
                                     }
                                     else
                                     {
@@ -3794,32 +3819,77 @@ namespace WindowsFormsApplication1
 
         }
 
-        private void mergeDateTimeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if(InputTable != null)
-            {
-                standardizeDateColumn();
-                getStartEndDates();
-            }
-
-            else{
-                MessageBox.Show("Please load a input file first", "No data loaded");
-            }
-        }
-
         private void pullUpStuffToolStripMenuItem_Click(object sender, EventArgs e)
         {
             HeaderGuess();
         }
 
+        private void mergeAndStandardiseDateTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (InputTable != null)
+            {
+                standardizeDateColumn();
+                getStartEndDates();
+            }
 
+            else
+            {
+                MessageBox.Show("Please load a input file first", "No data loaded");
+            }
+        }
 
+        private void standardiseDateTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (InputTable != null)
+            {
+                standardizeDateColumn();
+                getStartEndDates();
+            }
 
+            else
+            {
+                MessageBox.Show("Please load a input file first", "No data loaded");
+            }
+        }
+
+        private void setAllFromButtonsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < InputTable.Rows.Count; i++)
+            {
+                string ButtonName = i + "Btn";
+                Control ButtonTemp = panelVariableControls.Controls[ButtonName];
+                Button ButtonNewHeader = ButtonTemp as Button;
+                if (ButtonNewHeader != null)
+                {
+                    if (ButtonNewHeader.Enabled == true)
+                    {
+                        InputTable.Rows[0][i] = ButtonNewHeader.Text;
+                    }
+                }
+                
+            }
+        }
+
+        private void dateTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void setAllDataColumnToVariableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(InputTable.Rows[0][0].Equals("DateTime"))
+            {
+                setAllOthersToVariableDateTime(0);
+            }
+            else
+            {
+                MessageBox.Show("Please standardise you date/time columns to one row please", "Date/Time issues");
+            }
+        }
 
 
     }
     
-    //public enum unitAbrev { "%", "%sat", "1/m", "deg", "degC", "FTU", "g/m^3", "mg/m^3", "hits/cm^2","hPa","m","m/s","m^-1","m^3","masl","mg/L","mm","mS/cm","mV","mW/cm^2","ppm","RFU","s","ug/L","umol/m^2/s","V", "W/m^2", "W/m^2" };
     public struct testTypeUnits
     {
         public string testCode;

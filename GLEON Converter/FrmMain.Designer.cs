@@ -46,9 +46,14 @@
             this.openSiteInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sortDatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stripIncompleteRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mergeDateTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pullUpStuffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setAllFromButtonsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setAllDataColumnToVariableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dateTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standardiseDateTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mergeAndStandardiseDateTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortDatesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewVaribleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,7 +112,6 @@
             this.label23 = new System.Windows.Forms.Label();
             this.btnSetToEmpty = new System.Windows.Forms.Button();
             this.txtSetToEmpty = new System.Windows.Forms.TextBox();
-            this.pullUpStuffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataViewer)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -194,7 +198,7 @@
             // txtDataSetNotes
             // 
             this.txtDataSetNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDataSetNotes.Location = new System.Drawing.Point(9, 418);
+            this.txtDataSetNotes.Location = new System.Drawing.Point(7, 416);
             this.txtDataSetNotes.Multiline = true;
             this.txtDataSetNotes.Name = "txtDataSetNotes";
             this.txtDataSetNotes.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
@@ -206,7 +210,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 392);
+            this.label6.Location = new System.Drawing.Point(4, 390);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(76, 13);
             this.label6.TabIndex = 51;
@@ -236,6 +240,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.dataToolStripMenuItem,
+            this.dateTimeToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -258,56 +263,96 @@
             // openFileToolStripMenuItem
             // 
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.openFileToolStripMenuItem.Text = "Open dataset";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
             // 
             // openSiteInfoToolStripMenuItem
             // 
             this.openSiteInfoToolStripMenuItem.Name = "openSiteInfoToolStripMenuItem";
-            this.openSiteInfoToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.openSiteInfoToolStripMenuItem.Text = "Open .meta file";
+            this.openSiteInfoToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.openSiteInfoToolStripMenuItem.Text = "Open metadata file";
             this.openSiteInfoToolStripMenuItem.Click += new System.EventHandler(this.openSiteInfoToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.loadInMetaFileToolStripMenuItem_Click);
             // 
             // dataToolStripMenuItem
             // 
             this.dataToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sortDatesToolStripMenuItem,
             this.stripIncompleteRowsToolStripMenuItem,
-            this.mergeDateTimeToolStripMenuItem,
-            this.pullUpStuffToolStripMenuItem});
+            this.pullUpStuffToolStripMenuItem,
+            this.setAllFromButtonsToolStripMenuItem,
+            this.setAllDataColumnToVariableToolStripMenuItem});
             this.dataToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.dataToolStripMenuItem.Name = "dataToolStripMenuItem";
             this.dataToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.dataToolStripMenuItem.Text = "Data";
             // 
-            // sortDatesToolStripMenuItem
-            // 
-            this.sortDatesToolStripMenuItem.Name = "sortDatesToolStripMenuItem";
-            this.sortDatesToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.sortDatesToolStripMenuItem.Text = "Sort dates";
-            this.sortDatesToolStripMenuItem.Click += new System.EventHandler(this.sortDatesToolStripMenuItem_Click);
-            // 
             // stripIncompleteRowsToolStripMenuItem
             // 
             this.stripIncompleteRowsToolStripMenuItem.Name = "stripIncompleteRowsToolStripMenuItem";
-            this.stripIncompleteRowsToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.stripIncompleteRowsToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.stripIncompleteRowsToolStripMenuItem.Text = "Strip incomplete rows";
             this.stripIncompleteRowsToolStripMenuItem.Click += new System.EventHandler(this.stripIncompleteRowsToolStripMenuItem_Click);
             // 
-            // mergeDateTimeToolStripMenuItem
+            // pullUpStuffToolStripMenuItem
             // 
-            this.mergeDateTimeToolStripMenuItem.Name = "mergeDateTimeToolStripMenuItem";
-            this.mergeDateTimeToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.mergeDateTimeToolStripMenuItem.Text = "Merge and standardise date time";
-            this.mergeDateTimeToolStripMenuItem.Click += new System.EventHandler(this.mergeDateTimeToolStripMenuItem_Click);
+            this.pullUpStuffToolStripMenuItem.Name = "pullUpStuffToolStripMenuItem";
+            this.pullUpStuffToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.pullUpStuffToolStripMenuItem.Text = "Header guess";
+            this.pullUpStuffToolStripMenuItem.Click += new System.EventHandler(this.pullUpStuffToolStripMenuItem_Click);
+            // 
+            // setAllFromButtonsToolStripMenuItem
+            // 
+            this.setAllFromButtonsToolStripMenuItem.Name = "setAllFromButtonsToolStripMenuItem";
+            this.setAllFromButtonsToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.setAllFromButtonsToolStripMenuItem.Text = "Set all headers from buttons";
+            this.setAllFromButtonsToolStripMenuItem.Click += new System.EventHandler(this.setAllFromButtonsToolStripMenuItem_Click);
+            // 
+            // setAllDataColumnToVariableToolStripMenuItem
+            // 
+            this.setAllDataColumnToVariableToolStripMenuItem.Name = "setAllDataColumnToVariableToolStripMenuItem";
+            this.setAllDataColumnToVariableToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.setAllDataColumnToVariableToolStripMenuItem.Text = "Set all data column to variable";
+            this.setAllDataColumnToVariableToolStripMenuItem.Click += new System.EventHandler(this.setAllDataColumnToVariableToolStripMenuItem_Click);
+            // 
+            // dateTimeToolStripMenuItem
+            // 
+            this.dateTimeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.standardiseDateTimeToolStripMenuItem,
+            this.mergeAndStandardiseDateTimeToolStripMenuItem,
+            this.sortDatesToolStripMenuItem1});
+            this.dateTimeToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
+            this.dateTimeToolStripMenuItem.Name = "dateTimeToolStripMenuItem";
+            this.dateTimeToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.dateTimeToolStripMenuItem.Text = "Time";
+            this.dateTimeToolStripMenuItem.Click += new System.EventHandler(this.dateTimeToolStripMenuItem_Click);
+            // 
+            // standardiseDateTimeToolStripMenuItem
+            // 
+            this.standardiseDateTimeToolStripMenuItem.Name = "standardiseDateTimeToolStripMenuItem";
+            this.standardiseDateTimeToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.standardiseDateTimeToolStripMenuItem.Text = "Standardise date time";
+            this.standardiseDateTimeToolStripMenuItem.Click += new System.EventHandler(this.standardiseDateTimeToolStripMenuItem_Click);
+            // 
+            // mergeAndStandardiseDateTimeToolStripMenuItem
+            // 
+            this.mergeAndStandardiseDateTimeToolStripMenuItem.Name = "mergeAndStandardiseDateTimeToolStripMenuItem";
+            this.mergeAndStandardiseDateTimeToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.mergeAndStandardiseDateTimeToolStripMenuItem.Text = "Merge and standardise date time";
+            this.mergeAndStandardiseDateTimeToolStripMenuItem.Click += new System.EventHandler(this.mergeAndStandardiseDateTimeToolStripMenuItem_Click);
+            // 
+            // sortDatesToolStripMenuItem1
+            // 
+            this.sortDatesToolStripMenuItem1.Name = "sortDatesToolStripMenuItem1";
+            this.sortDatesToolStripMenuItem1.Size = new System.Drawing.Size(247, 22);
+            this.sortDatesToolStripMenuItem1.Text = "Sort dates";
+            this.sortDatesToolStripMenuItem1.Click += new System.EventHandler(this.sortDatesToolStripMenuItem1_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -322,8 +367,8 @@
             // addNewVaribleToolStripMenuItem
             // 
             this.addNewVaribleToolStripMenuItem.Name = "addNewVaribleToolStripMenuItem";
-            this.addNewVaribleToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.addNewVaribleToolStripMenuItem.Text = "Add new variable";
+            this.addNewVaribleToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.addNewVaribleToolStripMenuItem.Text = "Add new parameter";
             this.addNewVaribleToolStripMenuItem.Click += new System.EventHandler(this.addNewVaribleToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
@@ -592,7 +637,8 @@
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel2.Controls.Add(this.txtDataSetNotes);
             this.panel2.Controls.Add(this.label25);
             this.panel2.Controls.Add(this.label6);
@@ -621,7 +667,7 @@
             this.panel2.Controls.Add(this.txtOwner);
             this.panel2.Controls.Add(this.comboSiteName);
             this.panel2.Controls.Add(this.label1);
-            this.panel2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.panel2.ForeColor = System.Drawing.Color.Black;
             this.panel2.Location = new System.Drawing.Point(924, 27);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(326, 550);
@@ -650,7 +696,7 @@
             // 
             this.label24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(8, 214);
+            this.label24.Location = new System.Drawing.Point(6, 214);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(88, 13);
             this.label24.TabIndex = 100;
@@ -659,7 +705,7 @@
             // txtGPSGridSystem
             // 
             this.txtGPSGridSystem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtGPSGridSystem.Location = new System.Drawing.Point(102, 212);
+            this.txtGPSGridSystem.Location = new System.Drawing.Point(100, 212);
             this.txtGPSGridSystem.Name = "txtGPSGridSystem";
             this.txtGPSGridSystem.Size = new System.Drawing.Size(213, 20);
             this.txtGPSGridSystem.TabIndex = 14;
@@ -668,7 +714,7 @@
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 186);
+            this.label9.Location = new System.Drawing.Point(6, 186);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(81, 13);
             this.label9.TabIndex = 87;
@@ -677,7 +723,7 @@
             // txtElevation
             // 
             this.txtElevation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtElevation.Location = new System.Drawing.Point(276, 183);
+            this.txtElevation.Location = new System.Drawing.Point(274, 183);
             this.txtElevation.Name = "txtElevation";
             this.txtElevation.Size = new System.Drawing.Size(39, 20);
             this.txtElevation.TabIndex = 13;
@@ -687,7 +733,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 160);
+            this.label4.Location = new System.Drawing.Point(6, 160);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(66, 13);
             this.label4.TabIndex = 94;
@@ -696,7 +742,7 @@
             // txtOrg
             // 
             this.txtOrg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOrg.Location = new System.Drawing.Point(91, 157);
+            this.txtOrg.Location = new System.Drawing.Point(89, 157);
             this.txtOrg.Name = "txtOrg";
             this.txtOrg.Size = new System.Drawing.Size(224, 20);
             this.txtOrg.TabIndex = 12;
@@ -706,7 +752,7 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 188);
+            this.label2.Location = new System.Drawing.Point(9, 188);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 73;
@@ -724,7 +770,7 @@
             // txtContactEmail
             // 
             this.txtContactEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtContactEmail.Location = new System.Drawing.Point(91, 131);
+            this.txtContactEmail.Location = new System.Drawing.Point(89, 131);
             this.txtContactEmail.Name = "txtContactEmail";
             this.txtContactEmail.Size = new System.Drawing.Size(224, 20);
             this.txtContactEmail.TabIndex = 11;
@@ -734,7 +780,7 @@
             // 
             this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(8, 134);
+            this.label22.Location = new System.Drawing.Point(6, 134);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(71, 13);
             this.label22.TabIndex = 90;
@@ -744,7 +790,7 @@
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 289);
+            this.label8.Location = new System.Drawing.Point(4, 289);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(54, 13);
             this.label8.TabIndex = 89;
@@ -755,11 +801,11 @@
             // 
             this.txtSiteNotes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSiteNotes.Location = new System.Drawing.Point(9, 305);
+            this.txtSiteNotes.Location = new System.Drawing.Point(7, 305);
             this.txtSiteNotes.Multiline = true;
             this.txtSiteNotes.Name = "txtSiteNotes";
             this.txtSiteNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSiteNotes.Size = new System.Drawing.Size(306, 74);
+            this.txtSiteNotes.Size = new System.Drawing.Size(306, 72);
             this.txtSiteNotes.TabIndex = 18;
             this.txtSiteNotes.TextChanged += new System.EventHandler(this.txtSiteNotes_TextChanged);
             // 
@@ -767,7 +813,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(163, 238);
+            this.label10.Location = new System.Drawing.Point(161, 238);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(52, 13);
             this.label10.TabIndex = 86;
@@ -777,7 +823,7 @@
             // 
             this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(8, 238);
+            this.label11.Location = new System.Drawing.Point(6, 238);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(43, 13);
             this.label11.TabIndex = 85;
@@ -787,7 +833,7 @@
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(8, 108);
+            this.label12.Location = new System.Drawing.Point(6, 108);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(76, 13);
             this.label12.TabIndex = 84;
@@ -796,7 +842,7 @@
             // txtContactNumber
             // 
             this.txtContactNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtContactNumber.Location = new System.Drawing.Point(91, 105);
+            this.txtContactNumber.Location = new System.Drawing.Point(89, 105);
             this.txtContactNumber.Name = "txtContactNumber";
             this.txtContactNumber.Size = new System.Drawing.Size(224, 20);
             this.txtContactNumber.TabIndex = 10;
@@ -805,7 +851,7 @@
             // txtGPSLat
             // 
             this.txtGPSLat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtGPSLat.Location = new System.Drawing.Point(58, 235);
+            this.txtGPSLat.Location = new System.Drawing.Point(56, 235);
             this.txtGPSLat.Name = "txtGPSLat";
             this.txtGPSLat.Size = new System.Drawing.Size(99, 20);
             this.txtGPSLat.TabIndex = 15;
@@ -815,7 +861,7 @@
             // txtGPSLong
             // 
             this.txtGPSLong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtGPSLong.Location = new System.Drawing.Point(218, 235);
+            this.txtGPSLong.Location = new System.Drawing.Point(216, 235);
             this.txtGPSLong.Name = "txtGPSLong";
             this.txtGPSLong.Size = new System.Drawing.Size(97, 20);
             this.txtGPSLong.TabIndex = 16;
@@ -825,7 +871,7 @@
             // txtContactName
             // 
             this.txtContactName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtContactName.Location = new System.Drawing.Point(91, 79);
+            this.txtContactName.Location = new System.Drawing.Point(89, 79);
             this.txtContactName.Name = "txtContactName";
             this.txtContactName.Size = new System.Drawing.Size(224, 20);
             this.txtContactName.TabIndex = 9;
@@ -835,7 +881,7 @@
             // 
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(8, 82);
+            this.label13.Location = new System.Drawing.Point(6, 82);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(73, 13);
             this.label13.TabIndex = 78;
@@ -845,7 +891,7 @@
             // 
             this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(8, 60);
+            this.label14.Location = new System.Drawing.Point(6, 60);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(57, 13);
             this.label14.TabIndex = 77;
@@ -854,7 +900,7 @@
             // txtOwner
             // 
             this.txtOwner.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOwner.Location = new System.Drawing.Point(91, 53);
+            this.txtOwner.Location = new System.Drawing.Point(89, 53);
             this.txtOwner.Name = "txtOwner";
             this.txtOwner.Size = new System.Drawing.Size(224, 20);
             this.txtOwner.TabIndex = 8;
@@ -865,7 +911,7 @@
             this.comboSiteName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboSiteName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.comboSiteName.FormattingEnabled = true;
-            this.comboSiteName.Location = new System.Drawing.Point(91, 26);
+            this.comboSiteName.Location = new System.Drawing.Point(89, 26);
             this.comboSiteName.Name = "comboSiteName";
             this.comboSiteName.Size = new System.Drawing.Size(224, 21);
             this.comboSiteName.TabIndex = 6;
@@ -877,7 +923,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 34);
+            this.label1.Location = new System.Drawing.Point(4, 34);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(54, 13);
             this.label1.TabIndex = 72;
@@ -933,13 +979,6 @@
             this.txtSetToEmpty.Name = "txtSetToEmpty";
             this.txtSetToEmpty.Size = new System.Drawing.Size(117, 20);
             this.txtSetToEmpty.TabIndex = 4;
-            // 
-            // pullUpStuffToolStripMenuItem
-            // 
-            this.pullUpStuffToolStripMenuItem.Name = "pullUpStuffToolStripMenuItem";
-            this.pullUpStuffToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.pullUpStuffToolStripMenuItem.Text = "Pull up stuff";
-            this.pullUpStuffToolStripMenuItem.Click += new System.EventHandler(this.pullUpStuffToolStripMenuItem_Click);
             // 
             // FrmMain
             // 
@@ -1057,15 +1096,19 @@
         private System.Windows.Forms.ComboBox comboCountries;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gLEONConverterToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dataToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sortDatesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem stripIncompleteRowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openSiteInfoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mergeDateTimeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dateTimeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem standardiseDateTimeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mergeAndStandardiseDateTimeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortDatesToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem dataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stripIncompleteRowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pullUpStuffToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setAllFromButtonsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setAllDataColumnToVariableToolStripMenuItem;
     }
 }
 
