@@ -327,7 +327,7 @@ namespace WindowsFormsApplication1
                     if (iss != 0)
                     {
                         
-                        for (int i = 0; i < iss; i++)
+                        for (int i = 0; i <= iss; i++)
                         {
                             loopStr = reader.ReadLine();
                             arr4[i] = loopStr;
@@ -381,10 +381,10 @@ namespace WindowsFormsApplication1
                     ButtonNewHeader.Enabled = true;
                     if (iss != 0)
                     {
-                        for (int i = 0; i < iss; i++)
+                        for (int i = 0; i <= iss; i++)
                         {
 
-                            addSensorData(i + 1, arr4[i]);
+                            addSensorData(i, arr4[i]);
                         }
                     }
 
@@ -602,7 +602,6 @@ namespace WindowsFormsApplication1
                         foreach (DataGridViewCell dCell in dataViewer.Rows[i].Cells)
                         {
                             dCell.Style.ForeColor = Color.Red;
-                            //dCell.Style.BackColor = Color.LightYellow;
                         }
                         }
 
@@ -2245,7 +2244,7 @@ namespace WindowsFormsApplication1
                 sWriter.WriteLine("Longitude/Easting: " + sitePropGPSLong.ToString());
                 sWriter.WriteLine("GPS Grid System: " + txtGPSGridSystem.Text);
                 sWriter.WriteLine("Elevation (MASL): " + sitePropElevation);
-                sWriter.WriteLine("Country: " + comboCountries.Text.Remove(comboCountries.Text.IndexOf(" ")));
+                sWriter.WriteLine("Country: " + comboCountries.Text.Remove(comboCountries.Text.IndexOf(" (")));
                 sWriter.WriteLine("Contact");
                 sWriter.WriteLine("Name: " + sitePropContactName);
                 sWriter.WriteLine("Organisation: " + txtOrg.Text);
@@ -3320,7 +3319,7 @@ namespace WindowsFormsApplication1
                 lastRowHolder = lastValRow;
                 if (lastRowHolder <= 0)
                     lastRowHolder = 1;
-                DataRow newRow = AggregateColBasedPeriod(direction, periodNumber, firstValRow, lastValRow, dateTimeColNum, dateTimeToUse.ToString("yyyy-MM-dd HH:mm:ss"), result);
+                DataRow newRow = AggregateColBasedPeriod(direction, periodNumber, firstValRow, lastValRow, dateTimeColNum, dateTimeToUse.ToString("yyyy-MM-dd HH:mm"), result);
                 if (newRow != null)
                 {
                     aggregatedTable.Rows.Add(newRow);
@@ -3854,19 +3853,26 @@ namespace WindowsFormsApplication1
 
         private void setAllFromButtonsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < InputTable.Rows.Count; i++)
+            if (InputTable != null)
             {
-                string ButtonName = i + "Btn";
-                Control ButtonTemp = panelVariableControls.Controls[ButtonName];
-                Button ButtonNewHeader = ButtonTemp as Button;
-                if (ButtonNewHeader != null)
+                for (int i = 0; i < InputTable.Rows.Count; i++)
                 {
-                    if (ButtonNewHeader.Enabled == true)
+                    string ButtonName = i + "Btn";
+                    Control ButtonTemp = panelVariableControls.Controls[ButtonName];
+                    Button ButtonNewHeader = ButtonTemp as Button;
+                    if (ButtonNewHeader != null)
                     {
-                        InputTable.Rows[0][i] = ButtonNewHeader.Text;
+                        if (ButtonNewHeader.Enabled == true)
+                        {
+                            InputTable.Rows[0][i] = ButtonNewHeader.Text;
+                        }
                     }
+
                 }
-                
+            }
+            else
+            {
+                MessageBox.Show("Please load a input file first", "No data loaded");
             }
         }
 
