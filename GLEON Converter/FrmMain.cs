@@ -673,14 +673,7 @@ namespace WindowsFormsApplication1
                 Directory.CreateDirectory(System.Windows.Forms.Application.StartupPath + @"\Control Files\");
             if (!Directory.Exists(System.Windows.Forms.Application.StartupPath + @"\Headers\"))
                 Directory.CreateDirectory(System.Windows.Forms.Application.StartupPath + @"\Headers\");
-            if (!Directory.Exists(System.Windows.Forms.Application.StartupPath + @"\Meta\"))
-                Directory.CreateDirectory(System.Windows.Forms.Application.StartupPath + @"\Meta\");
-            if (!Directory.Exists(System.Windows.Forms.Application.StartupPath + @"\Output\"))
-                Directory.CreateDirectory(System.Windows.Forms.Application.StartupPath + @"\Output\");
-                
-
-
-        }
+       }
         private bool getAbbreviations()
         {
             int lineCount = 0;
