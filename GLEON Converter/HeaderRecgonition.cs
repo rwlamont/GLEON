@@ -190,7 +190,7 @@ namespace WindowsFormsApplication1
             {
                 return "vn";
             }
-            else if (Regex.IsMatch(input, @"DateTimeUTC\+[0-9]{1,2}"))
+            else if (Regex.IsMatch(input, @"DateTime"))
             {
                 return "DateTime";
             }

@@ -327,7 +327,7 @@ namespace WindowsFormsApplication1
                     if (iss != 0)
                     {
                         
-                        for (int i = 0; i <= iss; i++)
+                        for (int i = 1; i <= iss; i++)
                         {
                             loopStr = reader.ReadLine();
                             arr4[i] = loopStr;
@@ -381,7 +381,7 @@ namespace WindowsFormsApplication1
                     ButtonNewHeader.Enabled = true;
                     if (iss != 0)
                     {
-                        for (int i = 0; i <= iss; i++)
+                        for (int i = 1; i <= iss; i++)
                         {
 
                             addSensorData(i, arr4[i]);
@@ -3885,6 +3885,7 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("Please standardise you date/time columns to one row please", "Date/Time issues");
             }
         }
+
 
 
     }
