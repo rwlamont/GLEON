@@ -651,7 +651,7 @@ namespace WindowsFormsApplication1
                 }
                 MessageBox.Show(unRecWarning, "Invalid Column Headers", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            for (int i = 0; i < dataViewer.Columns.Count; i++)
+            for (int i = 1; i < dataViewer.Columns.Count; i++)
             {
                 setBoxesFromGLEONCoding(i, dataViewer.Rows[0].Cells[i].Value.ToString());
             }
@@ -820,8 +820,10 @@ namespace WindowsFormsApplication1
             panelVariableControls.Controls.Clear();
             int locationX = dataViewer.RowHeadersWidth;
             int colNum = 0;
-            for (int i = 0; i < dataViewer.Columns.Count; i++)
+            int j = 0; ;
+            for (int i = 1; i < dataViewer.Columns.Count; i++)
             {
+                j++;
                 int defaultWidth = dataViewer.Columns[colNum].Width;
                 int defaultHeight = 21;
                 int currentYLoc = 0;
@@ -928,6 +930,7 @@ namespace WindowsFormsApplication1
                 locationX += defaultWidth;
                 colNum++;
             }
+            
         }
         private void autoDetectHeadersForPanel()
         {
@@ -944,7 +947,7 @@ namespace WindowsFormsApplication1
                     string combo3Name = index + "Combo3";
                     Control combo3temp = panelVariableControls.Controls[combo3Name];
                     ComboBox combo3 = combo3temp as ComboBox;
-                    string combo4Name = index + "Combo4";
+                   string combo4Name = index + "Combo4";
                     Control combo4temp = panelVariableControls.Controls[combo4Name];
                     ComboBox combo4 = combo4temp as ComboBox;
                     string Text1Name = index + "Text1";
@@ -2960,6 +2963,7 @@ namespace WindowsFormsApplication1
                 MessageBox.Show(e.ToString());
                 return false;
             }
+            
         }
         private void comboEmpty_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -3474,8 +3478,6 @@ namespace WindowsFormsApplication1
                 {
                     try
                     {
-                        //Assembly assembly = Assembly.GetExecutingAssembly();
-                        //Stream objStream = assembly.GetManifestResourceStream("GetPropertiesSample.License.txt");
                         StreamWriter writer = File.AppendText(@"Control Files\ABBREVIATIONS.txt");
                         string output = newVariable.testCode + '\t' + newVariable.testName;
                         testTypeUnits newTest = new testTypeUnits();
@@ -3733,7 +3735,7 @@ namespace WindowsFormsApplication1
                             int colCount = Convert.ToInt32(sReader.ReadLine());
                             if (colCount == InputTable.Columns.Count)
                             {
-                                bool invalidData = false;
+                                bool invalidData = false; 
                                 for (int i = 0; i < InputTable.Columns.Count; i++)
                                 {
                                     int index = i;
@@ -3840,7 +3842,7 @@ namespace WindowsFormsApplication1
 
             else
             {
-                MessageBox.Show("Please load a input file first", "No data loaded");
+                MessageBox.Show("Please load an input file first", "No data loaded");
             }
         }
 

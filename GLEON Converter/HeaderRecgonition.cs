@@ -61,7 +61,7 @@ namespace WindowsFormsApplication1
                         Regex.IsMatch(inHeader, @"([a-z]|[A-Z]){2,6}_i([0-9]|[.])+\-([0-9]|[.])+([^),^(]*)") ||
                         Regex.IsMatch(inHeader, @"([a-z]|[A-Z]){2,6}_[v,n]([^),^(]*)"))
                 return inHeader;
-            if (Regex.IsMatch(inHeader, @"DateTimeUTC\+[0-9]{1,2}"))
+            if (Regex.IsMatch(inHeader, @"DateTime"))
                 return inHeader;
             if(TemperatureHeaderCheck(inHeader))
                 return TemperatureFormating(inHeader);
@@ -160,7 +160,7 @@ namespace WindowsFormsApplication1
             if (Regex.IsMatch(input, @"([a-z]|[A-Z]){2,6}_[d,h,e,m]([0-9]|[.])+([^),^(]*)") ||
                 Regex.IsMatch(input, @"([a-z]|[A-Z]){2,6}_i([0-9]|[.])+\-([0-9]|[.])+([^),^(]*)") ||
                 Regex.IsMatch(input, @"([a-z]|[A-Z]){2,6}_[v,n]([^),^(]*)") ||
-                Regex.IsMatch(input, @"DateTimeUTC\+[0-9]{1,2}"))
+                Regex.IsMatch(input, @"DateTime"))
             {
                 return true;
             }
