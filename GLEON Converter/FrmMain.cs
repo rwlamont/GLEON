@@ -2823,7 +2823,7 @@ namespace WindowsFormsApplication1
                 dataViewer.Rows[0].DefaultCellStyle.BackColor = Color.OrangeRed;
                 dataViewer.Rows[0].DefaultCellStyle.SelectionBackColor = Color.OrangeRed;
             }
-            
+            setVarBoxesInPanel();
         }
 
 
